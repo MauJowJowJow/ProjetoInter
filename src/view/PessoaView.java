@@ -23,7 +23,7 @@ public class PessoaView extends Application{
 		Parent root = FXMLLoader.load(getClass().getResource("PessoaView.fxml"));
 		
 		root.autosize();
-		window.setTitle("HotelApp");
+		window.setTitle("Cadastro de Pessoas");
 		
 		Scene scene = new Scene(root);
 		

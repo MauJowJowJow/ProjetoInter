@@ -26,7 +26,7 @@ public class PrincipalMenu extends Application{
 		Parent root = FXMLLoader.load(getClass().getResource("PrincipalMenu.fxml"));
 		
 		root.autosize();
-		window.setTitle("HotelApp");
+		window.setTitle("HotelDM");
 		
 		Scene scene = new Scene(root);
 		
