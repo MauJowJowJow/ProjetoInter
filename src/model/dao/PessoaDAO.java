@@ -5,7 +5,7 @@ import model.Pessoa;
 public class PessoaDAO extends GenericDAO<Integer, Pessoa>{
 	
 	PessoaDAO(){}
-
+	
     public static void main(String[] args){
     	Pessoa pessoa = new Pessoa();
     	pessoa.setNome("Hibernate JPA Customer");

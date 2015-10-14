@@ -1,79 +1,39 @@
 package view;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
+public class PessoaView extends Application{
 
-public class PessoaView extends JFrame {
-	private JButton btnSalvar;
-	private JLabel lblCodigo;
-	private JLabel lblNome;
-
-	private JPanel contentPane;
-	private JTextField lbCodigo;
-	private JTextField lbNome;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public PessoaView() {
-		this.initComponents();
+	Stage window;
+	BorderPane layout; 
+	
+	public Object Main(String[] args){
+		launch(args);
+		return this;
 	}
 	
-	private void initComponents(){
-		setTitle("Cadastro de Clientes");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+	@Override
+	public void start(Stage primaryStage) throws Exception{
+		window = primaryStage;
+		Parent root = FXMLLoader.load(getClass().getResource("PessoaView.fxml"));
 		
-		lblCodigo = new JLabel("Código");
-		lblCodigo.setBounds(20, 11, 46, 14);
-		contentPane.add(lblCodigo);
+		root.autosize();
+		window.setTitle("HotelApp");
 		
-		lblNome = new JLabel("Nome");
-		lblNome.setBounds(20, 36, 46, 14);
-		contentPane.add(lblNome);
+		Scene scene = new Scene(root);
 		
-		btnSalvar = new JButton("Salvar");
-		btnSalvar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-		});
-		btnSalvar.setBounds(77, 159, 89, 23);
-		contentPane.add(btnSalvar);
+		window.setScene(scene);
 		
-		lbCodigo = new JTextField();
-		lbCodigo.setBounds(63, 8, 86, 20);
-		contentPane.add(lbCodigo);
-		lbCodigo.setColumns(10);
+		window.setMaximized(true);
+		window.show();
 		
-		lbNome = new JTextField();
-		lbNome.setBounds(63, 33, 86, 20);
-		contentPane.add(lbNome);
-		lbNome.setColumns(10);
 	}
-
-	public JTextField getNome(){
-		return lbNome;
-	}
-
-	public JButton getBtnSalvar(){
-		return btnSalvar;
+	
+	public PessoaView() {
 	}
 }

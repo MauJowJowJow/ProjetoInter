@@ -32,9 +32,8 @@ public class Pessoa extends BindableModel {
 	@Column(name="tipPes", length=1)
 	private TipoPessoa tipoPessoa;
 	
-	//@CheckCGCValido(value = {"CNPJCPF", "tipoPessoa"})
-	//@NotNull(message = "Informe o CPF/CNPJ da pessoa!")
-	//@CheckCase(value = CaseMode.UPPER)
+	@NotNull(message = "Informe o CPF/CNPJ da pessoa!")
+	@CheckCGC(tipoPessoa = "tipoPessoa", CGC = "CNPJCPF")
 	@Column(name="CGCPes", length=18)
 	private String CNPJCPF;
 	

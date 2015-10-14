@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 public class PrincipalApp{
 	private static PrincipalMenuController principalMenuController;
 	
-	public static void main2(String[] args) {		
+	public static void main(String[] args) {		
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
