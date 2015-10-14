@@ -1,0 +1,26 @@
+<subsystem xmlns="urn:jboss:domain:logging:1.0">
+   <console-handler name="CONSOLE" autoflush="true">
+       <level name="DEBUG"/>
+       <formatter>
+           <pattern-formatter pattern="%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%E%n"/>
+       </formatter>
+   </console-handler>
+   <periodic-rotating-file-handler name="FILE" autoflush="true">
+       <formatter>
+           <pattern-formatter pattern="%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%E%n"/>
+       </formatter>
+       <file relative-to="jboss.server.log.dir" path="C:\Users\mauma\workspace\ProjetoInter\src"/>
+       <suffix value=".yyyy-MM-dd"/>
+   </periodic-rotating-file-handler>
+   <logger category="com.arjuna">
+       <level name="WARN"/>
+   </logger>
+   [...]
+   <root-logger>
+       <level name="DEBUG"/>
+       <handlers>
+           <handler name="CONSOLE"/>
+           <handler name="FILE"/>
+       </handlers>
+   </root-logger>
+</subsystem>

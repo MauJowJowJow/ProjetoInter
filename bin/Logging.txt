@@ -1,0 +1,10 @@
+out 12, 2015 2:31:38 AM model.bean.validations.CheckCGCValidator isValid
+INFORMA합ES: tipoPessoa
+out 12, 2015 2:31:38 AM model.bean.validations.CheckCGCValidator isValid
+INFORMA합ES: CNPJCPF
+out 12, 2015 2:31:38 AM model.bean.validations.CheckCGCValidator isValid
+INFORMA합ES: 36279367606
+out 12, 2015 2:31:38 AM model.bean.validations.CheckCGCValidator isValid
+INFORMA합ES: Fisica
+out 12, 2015 2:31:38 AM model.bean.validations.CheckCGCValidator isValid
+INFORMA합ES: Fisica

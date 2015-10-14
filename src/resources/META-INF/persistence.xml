@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence persistence.xsd" version="2.0">
+    <persistence-unit name="ProjetoInter">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		
+		<class>model.Pessoa</class>
+        <properties>	  
+            <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
+            <property name="hibernate.connection.driver_class" value="oracle.jdbc.OracleDriver" />
+            <property name="hibernate.connection.username" value="hotel" />
+            <property name="hibernate.connection.password" value="hotel" />
+            <property name="hibernate.connection.url" value="jdbc:oracle:thin:@localhost:1521:XE" />
+            <property name="hibernate.hbm2ddl.auto1" value="create" />
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="false"/>
+            <property name="javax.persistence.validation.mode"
+            	value="none">
+            </property></properties>
+    </persistence-unit>
+</persistence>
