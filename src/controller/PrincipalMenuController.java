@@ -39,7 +39,12 @@ public class PrincipalMenuController implements Initializable{
             @Override
             public void handle(ActionEvent event) {
             	pessoaController = new PessoaController();
-        		pessoaController.iniciaPessoa();            
+        		try {
+					pessoaController.iniciaMenu();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 	}
