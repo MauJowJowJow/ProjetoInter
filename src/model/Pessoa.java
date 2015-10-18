@@ -9,7 +9,6 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.constraints.NotNull;
 
-import model.bean.BindableModel;
 import model.bean.validations.CheckCGC;
 import model.enums.EstadoCivil;
 import model.enums.TipoPessoa;;
@@ -76,9 +75,7 @@ public class Pessoa {
 	}
 
 	public void setNome(String nome) {
-        final String oldValue = this.nome;
 		this.nome = nome;
-		this.firePropertyChange("nome", oldValue, nome);
 	}
 
 
@@ -87,9 +84,7 @@ public class Pessoa {
 	}
 
 	public void setCNPJCPF(String CNPJCPF) {
-		final String oldValue = this.CNPJCPF;
 		this.CNPJCPF = CNPJCPF;
-		this.firePropertyChange("CNPJCPF", oldValue, CNPJCPF);
 	}
 
 

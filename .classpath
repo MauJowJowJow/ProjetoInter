@@ -24,5 +24,6 @@
 	<classpathentry kind="lib" path="C:/Users/mauma/git/ProjetoInter/jar/hibernate-release-5.0.1.Final/lib/required/slf4j-simple-1.7.12.jar"/>
 	<classpathentry kind="lib" path="C:/Users/mauma/git/ProjetoInter/jar/hibernate-release-5.0.1.Final/lib/required/validation-api-1.1.0.Final.jar"/>
 	<classpathentry kind="lib" path="C:/Users/mauma/git/ProjetoInter/jar/ojdbc6.jar"/>
+	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
