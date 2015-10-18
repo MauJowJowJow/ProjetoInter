@@ -32,6 +32,7 @@ public class PrincipalMenu extends Application{
 		Scene scene = new Scene(root);
 		
 		window.setScene(scene);
+		window.setMaximized(true);
 		window.show();
 		
 	}
