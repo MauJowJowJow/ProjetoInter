@@ -7,7 +7,6 @@ import javax.validation.constraints.NotNull;;
 @Table(name="endereco")
 
 public class Endereco {
-	
 	@Id
 	@Column(name="codEnd", length=7)
 	@SequenceGenerator(name="EnderecoSequence", sequenceName="hotel.endereco_sequence", allocationSize=1)
