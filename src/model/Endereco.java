@@ -1,27 +1,16 @@
 package model;
 
-import java.util.Date;
-import java.util.Set;
-
 import javax.persistence.*;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.constraints.NotNull;
-
-import model.bean.BindableModel;
-import model.bean.validations.CheckCGC;
-import model.enums.EstadoCivil;
-import model.enums.TipoPessoa;;
+import javax.validation.constraints.NotNull;;
 
 @Entity
 @Table(name="endereco")
 
-public class Endereco extends BindableModel {
+public class Endereco {
 	
 	@Id
-	@Column=("codEnd", length=7)
-	@SequenceGenerator(name="EnderecoSequence", sequenceName="hotel.endereço_sequence" allocationSize=1)
+	@Column(name="codEnd", length=7)
+	@SequenceGenerator(name="EnderecoSequence", sequenceName="hotel.endereco_sequence", allocationSize=1)
 	@GeneratedValue(generator="EnderecoSequence", strategy = GenerationType.SEQUENCE)
 	private int codigo;
 	
@@ -36,7 +25,7 @@ public class Endereco extends BindableModel {
 	@Column(name="numEnd", length=9)
 	private int numeroEnd;
 	
-	@Column(name="comEnd", lenght=60)
+	@Column(name="comEnd", length=60)
 	private String complemento;
 	
 	@NotNull(message="Informe o bairro!")

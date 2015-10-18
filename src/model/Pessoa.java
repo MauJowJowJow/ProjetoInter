@@ -17,7 +17,7 @@ import model.enums.TipoPessoa;;
 @Entity
 @Table(name="pessoa")
 @CheckCGC(tipoPessoa="tipoPessoa", CGC="CNPJCPF")
-public class Pessoa extends BindableModel {
+public class Pessoa {
 	
 	@Id
 	@Column(name="codPes", length=7)
