@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 
 import model.bean.validations.CheckCGC;
 import model.enums.EstadoCivil;
+import model.enums.PessoaSexo;
 import model.enums.TipoPessoa;;
 
 @Entity
@@ -31,8 +32,6 @@ public class Pessoa {
 	@Column(name="tipPes", length=1)
 	private TipoPessoa tipoPessoa;
 	
-	@NotNull(message = "Informe o CPF/CNPJ da pessoa!")
-	@CheckCGC(tipoPessoa = "tipoPessoa", CGC = "CNPJCPF")
 	@Column(name="CGCPes", length=18)
 	private String CNPJCPF;
 	
@@ -58,7 +57,7 @@ public class Pessoa {
 	private Date dataCadastro;
 	
 	@Column(name="sexPes")
-	private String sexo;
+	private PessoaSexo sexo;
 	
 	@Column(name="estCiv")
 	private EstadoCivil estadoCivil;
@@ -166,12 +165,12 @@ public class Pessoa {
 	}
 
 
-	public String getSexo() {
+	public PessoaSexo getSexo() {
 		return sexo;
 	}
 
 
-	public void setSexo(String sexo) {
+	public void setSexo(PessoaSexo sexo) {
 		this.sexo = sexo;
 	}
 

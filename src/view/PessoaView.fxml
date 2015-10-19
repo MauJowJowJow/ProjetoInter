@@ -17,8 +17,10 @@
             <ComboBox fx:id="cbSexo" layoutX="90.0" layoutY="124.0" prefWidth="150.0" />
             <Label layoutX="51.0" layoutY="128.0" text="Sexo" />
             <TextField fx:id="txtNomeCliente" layoutX="98.0" layoutY="88.0" promptText="Nome do Cliente" />
-            <Label layoutX="50.0" layoutY="169.0" text="CGC" />
-            <TextField fx:id="txtCGC" layoutX="91.0" layoutY="165.0" />
+            <Label layoutX="51.0" layoutY="210.0" text="CGC" />
+            <TextField fx:id="txtCGC" layoutX="98.0" layoutY="206.0" />
+            <Label layoutX="45.0" layoutY="168.0" text="Pessoa" />
+            <ComboBox fx:id="cbPessoa" layoutX="90.0" layoutY="164.0" prefWidth="150.0" />
          </children>
       </Pane>
    </center>

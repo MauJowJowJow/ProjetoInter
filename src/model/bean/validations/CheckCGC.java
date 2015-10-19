@@ -8,9 +8,11 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
+import javax.validation.constraints.NotNull;
 
 @Target({ FIELD, METHOD, TYPE, PARAMETER, ANNOTATION_TYPE })
 @Retention(RUNTIME)
+@NotNull(message = "Informe o CPF/CNPJ da pessoa!")
 @Constraint(validatedBy = CheckCGCValidator.class)
 @Documented
 public @interface CheckCGC{

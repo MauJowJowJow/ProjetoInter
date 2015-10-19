@@ -31,28 +31,11 @@ public class CheckCGCValidator implements ConstraintValidator<CheckCGC, Object> 
         try
         {
         	
-    	    Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    	    
-    	    logger.setLevel(Level.INFO);
-    	    FileHandler fileTxt = new FileHandler("C:\\Users\\mauma\\workspace\\ProjetoInter\\src\\Logging.txt");
-
-    	    // create a TXT formatter
-    	    SimpleFormatter formatterTxt = new SimpleFormatter();
-    	    fileTxt.setFormatter(formatterTxt);
-    	    logger.addHandler(fileTxt);
-    	    
-    	    logger.log(Level.INFO, tipoPessoaField);
-    	    logger.log(Level.INFO, CGCField);
-    	    final String cgc = BeanUtils.getProperty(object, CGCField);
-    	    logger.log(Level.INFO, cgc);
+    	    final String cgc = BeanUtils.getProperty(object, CGCField);    	    
     	    
     	    String tipoPessoaString = (BeanUtils.getProperty(object, tipoPessoaField) == null) ? "Fisica" : BeanUtils.getProperty(object, tipoPessoaField);
-    	    
-    	    logger.log(Level.INFO, tipoPessoaString);
-    	    
     	    final TipoPessoa tipoPessoa = TipoPessoa.valueOf(tipoPessoaString);
-    	    logger.log(Level.INFO, tipoPessoa.toString());
-    	    
+
             //cgc.equals("62.413.459/0001-74");
     	    constraintContext.disableDefaultConstraintViolation();
             switch(tipoPessoa){
@@ -74,10 +57,8 @@ public class CheckCGCValidator implements ConstraintValidator<CheckCGC, Object> 
 	                	.addConstraintViolation();
 	            	
 	            	if(new CGCFormatter(tipoPessoa).isFormatted(cgc)){
-	            		logger.log(Level.INFO, "1");
 	            		return CGCFormatter.CNPJFORMATED.matcher(cgc).matches();
 	            	}else{
-	            		logger.log(Level.INFO, "2");
 	            		return CGCFormatter.CNPJUNFORMATED.matcher(cgc).matches();
 	            	}
 	        default:
@@ -87,6 +68,7 @@ public class CheckCGCValidator implements ConstraintValidator<CheckCGC, Object> 
         }
         catch (final Exception ignore)
         {
+        	ignore.printStackTrace();
             return false;
         }
         

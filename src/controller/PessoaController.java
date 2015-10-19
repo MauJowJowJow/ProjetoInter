@@ -29,6 +29,8 @@ public class PessoaController implements Initializable{
 	@FXML
 	private ComboBox<PessoaSexo> cbSexo;
 	@FXML
+	private ComboBox<TipoPessoa> cbPessoa;
+	@FXML
 	private TextField txtCGC;
 	
 	public PessoaController() {
@@ -74,19 +76,30 @@ public class PessoaController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		assert txtNomeCliente != null : "fx:id=\"mntmPessoas\" was not injected: check your FXML file 'PrincipalMenu.fxml'.";
 		assert cbSexo != null : "fx:id=\"mntmPessoas\" was not injected: check your FXML file 'PrincipalMenu.fxml'.";
+		assert cbPessoa != null : "fx:id=\"mntmPessoas\" was not injected: check your FXML file 'PrincipalMenu.fxml'.";
 		assert btnSalvar != null : "fx:id=\"mntmPessoas\" was not injected: check your FXML file 'PrincipalMenu.fxml'.";
 		
-		cbSexo.getItems().addAll(PessoaSexo.Feminino, 
-								 PessoaSexo.Masculino
-								);
+		cbSexo.getItems().addAll(PessoaSexo.values());
 		cbSexo.setValue(PessoaSexo.Masculino);
+		
+		cbPessoa.getItems().addAll(TipoPessoa.values());
+		cbPessoa.setValue(TipoPessoa.Fisica);
 		
 		btnSalvar.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-            	model.setNome(txtNomeCliente.getText());
-            	model.setCNPJCPF(txtCGC.getText());
+            	if(!txtNomeCliente.getText().equals(""))
+            		model.setNome(txtNomeCliente.getText());
+            	
+            	model.setSexo(cbSexo.getValue());
+            	model.setTipoPessoa(cbPessoa.getValue());
+            	
+            	if(!txtCGC.getText().equals(""))
+            		model.setCNPJCPF(txtCGC.getText());
+            	
+            	
+            		
             	System.out.println(model.isValidPerson());            	            
             }
         });
