@@ -27,7 +27,7 @@ public class PrincipalMenu extends Application{
 		
 		root.autosize();
 
-		window.setTitle("Hotel");
+		window.setTitle("HotelDM");
 		
 		Scene scene = new Scene(root);
 		
