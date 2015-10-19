@@ -8,20 +8,21 @@
 <?import javafx.scene.layout.BorderPane?>
 
 <BorderPane prefHeight="559.0" prefWidth="727.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PessoaController">
-   <center>
+   <left>
       <Pane prefHeight="895.0" prefWidth="727.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnSalvar" layoutX="156.0" layoutY="415.0" mnemonicParsing="false" text="Salvar" />
             <Label layoutX="51.0" layoutY="62.0" text="Código" />
-            <Label layoutX="54.0" layoutY="92.0" text="Nome" />
-            <ComboBox fx:id="cbSexo" layoutX="90.0" layoutY="124.0" prefWidth="150.0" />
-            <Label layoutX="51.0" layoutY="128.0" text="Sexo" />
-            <TextField fx:id="txtNomeCliente" layoutX="98.0" layoutY="88.0" promptText="Nome do Cliente" />
-            <Label layoutX="51.0" layoutY="210.0" text="CGC" />
-            <TextField fx:id="txtCGC" layoutX="98.0" layoutY="206.0" />
-            <Label layoutX="45.0" layoutY="168.0" text="Pessoa" />
-            <ComboBox fx:id="cbPessoa" layoutX="90.0" layoutY="164.0" prefWidth="150.0" />
+            <Label layoutX="52.0" layoutY="92.0" text="Nome" />
+            <ComboBox fx:id="cbSexo" layoutX="124.0" layoutY="118.0" prefWidth="150.0" />
+            <Label layoutX="53.0" layoutY="122.0" text="Sexo" />
+            <TextField fx:id="txtNomeCliente" layoutX="125.0" layoutY="88.0" promptText="Nome do Cliente" />
+            <Label layoutX="55.0" layoutY="182.0" text="CPC/CNPJ" />
+            <TextField fx:id="txtCGC" layoutX="125.0" layoutY="178.0" promptText="CPF/CNPJ" />
+            <Label layoutX="53.0" layoutY="152.0" text="Pessoa" />
+            <ComboBox fx:id="cbPessoa" layoutX="124.0" layoutY="148.0" prefWidth="150.0" />
+            <TextField layoutX="125.0" layoutY="58.0" promptText="Código do Cliente" />
          </children>
       </Pane>
-   </center>
+   </left>
 </BorderPane>
