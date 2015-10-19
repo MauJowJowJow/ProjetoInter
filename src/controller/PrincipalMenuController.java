@@ -7,15 +7,22 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.stage.Stage;
 import view.PrincipalMenu;
 
 public class PrincipalMenuController implements Initializable{
 	private PessoaController pessoaController;
 	private PrincipalMenu view;
+	private Scene scene;
 	
 	@FXML
 	private MenuItem mntmPessoas;
+	
+	public void setScene(Scene scene) { 
+		this.scene = scene; 
+	}
 
 	public PrincipalMenuController(){
 		this.view = new PrincipalMenu();
@@ -39,7 +46,7 @@ public class PrincipalMenuController implements Initializable{
             public void handle(ActionEvent event) {
             	pessoaController = new PessoaController();
         		try {
-					pessoaController.iniciaMenu();
+					pessoaController.inicia(scene);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

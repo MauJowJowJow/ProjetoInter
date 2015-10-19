@@ -1,5 +1,6 @@
 package view;
 
+import controller.PrincipalMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,7 +24,12 @@ public class PrincipalMenu extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception{
 		window = primaryStage;
-		Parent root = FXMLLoader.load(getClass().getResource("PrincipalMenu.fxml"));
+		
+		FXMLLoader fxmlLoader = new FXMLLoader();
+		Parent root = fxmlLoader.load(getClass().getResource("PrincipalMenu.fxml"));
+		
+		PrincipalMenuController myController = (PrincipalMenuController) fxmlLoader.getController();
+		myController.setScene(primaryStage.getScene());
 		
 		root.autosize();
 

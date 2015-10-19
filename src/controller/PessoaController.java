@@ -9,10 +9,12 @@ import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import model.Pessoa;
 import model.dao.PessoaDAO;
 import model.enums.TipoPessoa;
@@ -48,8 +50,8 @@ public class PessoaController implements Initializable{
 		this.model = model;
 	}
 	
-	public void iniciaMenu() throws Exception{
-		view.start();
+	public void inicia(Scene parent) throws Exception{
+		view.start(parent);
 	}
 	
 	public void iniciaPessoa(){
