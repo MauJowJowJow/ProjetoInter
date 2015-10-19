@@ -14,6 +14,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import model.Pessoa;
+import model.dao.PessoaDAO;
 import model.enums.TipoPessoa;
 import view.PessoaView;
 import model.enums.PessoaSexo;
@@ -100,7 +101,22 @@ public class PessoaController implements Initializable{
             	
             	
             		
-            	System.out.println(model.isValidPerson());            	            
+            	System.out.println(model.isValidPerson());
+            	
+            	if(model.isValidPerson()){
+            		PessoaDAO dao = new PessoaDAO();
+            		
+            		if(model.getCodigo() == 0){
+            			dao.insert(model);
+            		}else{
+            			dao.update(model);
+            		}
+            		
+            		dao.closeEntity();
+            	}else{
+            		
+            	}
+            		
             }
         });
 	}

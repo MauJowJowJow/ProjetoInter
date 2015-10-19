@@ -4,7 +4,7 @@ import model.Pessoa;
 
 public class PessoaDAO extends GenericDAO<Integer, Pessoa>{
 	
-	PessoaDAO(){}
+	public PessoaDAO(){}
 	
     public static void main(String[] args){
     	Pessoa pessoa = new Pessoa();

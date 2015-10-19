@@ -17,6 +17,11 @@ public class GenericDAO<PK, T> {
 	private EntityTransaction entityTransaction;
 
 	public GenericDAO() {
+		createEntity("");
+	}
+	
+	public GenericDAO(String entity) {
+		createEntity(entity);
 	}
 
 	public void createEntity(String entity) {
