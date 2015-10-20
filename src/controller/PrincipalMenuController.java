@@ -48,9 +48,7 @@ public class PrincipalMenuController implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		assert mntmPessoas != null : "fx:id=\"mntmPessoas\" was not injected: check your FXML file 'PrincipalMenu.fxml'.";
-		
-		
+
 		mntmPessoas.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override

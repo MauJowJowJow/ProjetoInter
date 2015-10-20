@@ -61,6 +61,9 @@ public class Pessoa {
 	
 	@Column(name="estCiv")
 	private EstadoCivil estadoCivil;
+	
+	@Transient
+	private String errors;
 
 	public int getCodigo() {
 		return codigo;
@@ -175,6 +178,10 @@ public class Pessoa {
 	public EstadoCivil getEstadoCivil() {
 		return estadoCivil;
 	}
+	
+	public String getErrors(){
+		return errors;
+	}
 
 
 	public void setEstadoCivil(EstadoCivil estadoCivil) {
@@ -188,9 +195,14 @@ public class Pessoa {
 	 
 	    final Set<ConstraintViolation<Pessoa>> violations = validator.validate(this);
 	 
+	    errors = "";
 	    if (!violations.isEmpty()) {
 	        for (ConstraintViolation violation : violations) {
-	            System.out.println(violation.getMessage());
+	        	if(!errors.isEmpty()){
+	        		errors += System.lineSeparator();
+	        	}
+	        	
+	            errors += "- " + violation.getMessage();
 	        }
 	        return false;
 	    }

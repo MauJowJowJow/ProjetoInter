@@ -1,7 +1,5 @@
 package view;
 
-import java.util.Optional;
-
 import controller.PrincipalMenuController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -9,13 +7,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import util.Alerta;
 
 public class PrincipalMenu extends Application{
 	Stage window;
@@ -44,7 +39,7 @@ public class PrincipalMenu extends Application{
 		Parent root = fxmlLoader.load();
 
 		root.autosize();
-		
+
 		Platform.setImplicitExit(false);
 		
 		window.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -52,16 +47,12 @@ public class PrincipalMenu extends Application{
 		    public void handle(WindowEvent event) {
 		        event.consume();
 		        
-		        Alert alert = new Alert(AlertType.CONFIRMATION);
-            	alert.setTitle("Sair do Sistema");
-            	alert.setContentText("Deseja realmente sair do Sistema?");
-            	alert.initModality(Modality.WINDOW_MODAL);
-            	alert.initOwner(window);
-            	
-            	Optional<ButtonType> result = alert.showAndWait();
-            	if (result.get() == ButtonType.OK){
-            		window.close();
-            	}
+		        	Alerta alerta = new Alerta("Sair do Sistema", "Deseja sair do sistema?");
+		        	
+		        	if(alerta.Confirm(window)){
+		        		window.close();
+		        		System.exit(0);
+		        	}
 		    }
 		});
 
@@ -76,8 +67,6 @@ public class PrincipalMenu extends Application{
 		myController.setScene(primaryStage.getScene());
 		
 		window.show();
-		
-	
 
 	}
 	

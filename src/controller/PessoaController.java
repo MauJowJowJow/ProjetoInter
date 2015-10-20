@@ -1,26 +1,19 @@
 package controller;
 
-import java.awt.EventQueue;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javax.swing.JButton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import model.Pessoa;
 import model.dao.PessoaDAO;
 import model.enums.TipoPessoa;
+import util.Alerta;
 import view.PessoaView;
 import model.enums.PessoaSexo;
 
@@ -78,6 +71,8 @@ public class PessoaController implements Initializable{
             	if(!txtCGC.getText().equals(""))
             		model.setCNPJCPF(txtCGC.getText());
             	
+            	
+            	
             	if(model.isValidPerson()){
             		PessoaDAO dao = new PessoaDAO();
             		
@@ -89,15 +84,9 @@ public class PessoaController implements Initializable{
             		
             		dao.closeEntity();
             	}else{
-            		Alert alert = new Alert(AlertType.INFORMATION);
-            		alert.setTitle("Mensagem");
-            		//alert.setHeaderText("");
-            		alert.setContentText("Erro");
+            		Alerta alerta = new Alerta("Validação ", model.getErrors());
             		
-            		alert.initModality(Modality.WINDOW_MODAL);
-            		alert.initOwner(view.getStage());
-
-            		alert.showAndWait();
+            		alerta.Erro(view.getStage());
             	}
             		
             }
