@@ -1,7 +1,7 @@
 package model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="endereco")
@@ -13,11 +13,11 @@ public class Endereco {
 	@GeneratedValue(generator="EnderecoSequence", strategy = GenerationType.SEQUENCE)
 	private int codigo;
 	
-	@NotNull(message="Informe o CEP (Somente nÃºmeros).")
+	@NotNull(message="Informe o CEP (Somente números).")
 	@Column(name="CEPEnd", length=9)
 	private int CEP;
 	
-	@NotNull(message="Digite o nome da rua!")
+	@NotNull(message="Informe o nome da rua!")
 	@Column(name="logEnd", length=50)
 	private String logradouro;
 	
