@@ -10,10 +10,13 @@ import javax.swing.JButton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Pessoa;
 import model.dao.PessoaDAO;
@@ -53,35 +56,9 @@ public class PessoaController implements Initializable{
 	public void inicia(Scene parent) throws Exception{
 		view.start(parent);
 	}
-	
-	public void iniciaPessoa(){
-		//this.view.setVisible(true);
-		
-		//this.addActionListenerSave();
-	}
-
-	/*
-	private void addActionListenerSave() {
-		actionListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//model.setNome(view.getNome().getText());
-				
-				System.out.println(model.isValidPerson());
-			}
-
-		};
-
-		//view.getBtnSalvar().addActionListener(actionListener);
-	}*/
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		assert txtNomeCliente != null : "fx:id=\"mntmPessoas\" was not injected: check your FXML file 'PrincipalMenu.fxml'.";
-		assert cbSexo != null : "fx:id=\"mntmPessoas\" was not injected: check your FXML file 'PrincipalMenu.fxml'.";
-		assert cbPessoa != null : "fx:id=\"mntmPessoas\" was not injected: check your FXML file 'PrincipalMenu.fxml'.";
-		assert btnSalvar != null : "fx:id=\"mntmPessoas\" was not injected: check your FXML file 'PrincipalMenu.fxml'.";
-		
 		cbSexo.getItems().addAll(PessoaSexo.values());
 		cbSexo.setValue(PessoaSexo.Masculino);
 		
@@ -101,10 +78,6 @@ public class PessoaController implements Initializable{
             	if(!txtCGC.getText().equals(""))
             		model.setCNPJCPF(txtCGC.getText());
             	
-            	
-            		
-            	System.out.println(model.isValidPerson());
-            	
             	if(model.isValidPerson()){
             		PessoaDAO dao = new PessoaDAO();
             		
@@ -116,7 +89,15 @@ public class PessoaController implements Initializable{
             		
             		dao.closeEntity();
             	}else{
+            		Alert alert = new Alert(AlertType.INFORMATION);
+            		alert.setTitle("Mensagem");
+            		//alert.setHeaderText("");
+            		alert.setContentText("Erro");
             		
+            		alert.initModality(Modality.WINDOW_MODAL);
+            		alert.initOwner(view.getStage());
+
+            		alert.showAndWait();
             	}
             		
             }

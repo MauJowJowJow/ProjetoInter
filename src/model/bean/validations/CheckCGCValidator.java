@@ -35,6 +35,12 @@ public class CheckCGCValidator implements ConstraintValidator<CheckCGC, Object> 
     	    
     	    String tipoPessoaString = (BeanUtils.getProperty(object, tipoPessoaField) == null) ? "Fisica" : BeanUtils.getProperty(object, tipoPessoaField);
     	    final TipoPessoa tipoPessoa = TipoPessoa.valueOf(tipoPessoaString);
+    	    
+    	    if(cgc == null){
+    	    	return false;
+    	    }else if(cgc.isEmpty()){
+    	    	return false;
+    	    }
 
             //cgc.equals("62.413.459/0001-74");
     	    constraintContext.disableDefaultConstraintViolation();

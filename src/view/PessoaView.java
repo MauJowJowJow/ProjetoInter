@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 public class PessoaView{
 
-	Stage window;
+	private Stage window;
 	BorderPane layout; 
 	
 	//public Object Main(String[] args){
@@ -32,6 +32,10 @@ public class PessoaView{
 
 		window.setScene(scene);
 		window.show();		
+	}
+	
+	public Stage getStage(){
+		return window;
 	}
 	
 	public PessoaView() {
