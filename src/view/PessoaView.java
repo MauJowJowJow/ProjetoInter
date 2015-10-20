@@ -20,7 +20,6 @@ public class PessoaView{
 	public void start(Scene parent) throws Exception{
 		window = new Stage();
 		
-		window.initModality(Modality.WINDOW_MODAL);
 		window.initOwner(parent.getWindow());
 		
 		

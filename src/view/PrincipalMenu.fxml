@@ -14,16 +14,15 @@
         <menus>
           <Menu mnemonicParsing="false" text="Cadastros">
             <items>
-              <MenuItem fx:id="mntmPessoas" mnemonicParsing="false" text="Pessoas"/>
+              <MenuItem fx:id="mntmPessoas" mnemonicParsing="false" text="Pessoas" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Consultas" />
           <Menu mnemonicParsing="false" text="Relatorios" />
             <Menu mnemonicParsing="false" text="Sair">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-              </items>
-            </Menu>
+               <items>
+                  <MenuItem fx:id="mntmSair" mnemonicParsing="false" text="Sair" />
+               </items></Menu>
         </menus>
       </MenuBar>
    </top>

@@ -1,6 +1,7 @@
 package controller;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -8,9 +9,15 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import view.PrincipalMenu;
+
 
 public class PrincipalMenuController implements Initializable{
 	private PessoaController pessoaController;
@@ -19,6 +26,9 @@ public class PrincipalMenuController implements Initializable{
 	
 	@FXML
 	private MenuItem mntmPessoas;
+	
+	@FXML
+	private MenuItem mntmSair;
 	
 	public void setScene(Scene scene) { 
 		this.scene = scene; 
@@ -40,6 +50,7 @@ public class PrincipalMenuController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		assert mntmPessoas != null : "fx:id=\"mntmPessoas\" was not injected: check your FXML file 'PrincipalMenu.fxml'.";
 		
+		
 		mntmPessoas.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -53,6 +64,20 @@ public class PrincipalMenuController implements Initializable{
 				}
             }
         });
+		
+		mntmSair.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+            	Stage stage = (Stage) scene.getWindow();
+            	stage.fireEvent(new WindowEvent(
+            						stage,
+            						WindowEvent.WINDOW_CLOSE_REQUEST
+            	));
+           	
+            }
+        });
+		
 	}
 
 

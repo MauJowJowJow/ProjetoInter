@@ -61,9 +61,6 @@ public class Pessoa {
 	
 	@Column(name="estCiv")
 	private EstadoCivil estadoCivil;
-	
-	@Column(name="codEnd")
-	private int codigoEndereco;
 
 	public int getCodigo() {
 		return codigo;
@@ -182,24 +179,6 @@ public class Pessoa {
 
 	public void setEstadoCivil(EstadoCivil estadoCivil) {
 		this.estadoCivil = estadoCivil;
-	}
-
-
-	public int getCodigoEndereco() {
-		return codigoEndereco;
-	}
-
-
-	public void setCodigoEndereco(int codigoEndereco) {
-		this.codigoEndereco = codigoEndereco;
-	}
-	
-	public static boolean validaCPF(String vrCPF){
-		return true;
-	}
-	
-	public static boolean validaCNPJ(String CPF){
-		return true;
 	}
 
 	public boolean isValidPerson() {	 
