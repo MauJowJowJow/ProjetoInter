@@ -1,22 +1,15 @@
 package controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import util.Alerta;
@@ -24,13 +17,19 @@ import view.PrincipalMenu;
 
 
 public class PrincipalMenuController implements Initializable{
+	// Controllers filhos
 	private PessoaController pessoaController;
+	private ConsultaPessoaController consultaPessoaController;
+
 	private PrincipalMenu view;
 	private ArrayList<Object> telasAbertas;
 	private Scene scene;
 	
 	@FXML
 	private MenuItem mntmPessoas;
+	
+	@FXML
+	private MenuItem mntmConsultaPessoas;
 	
 	@FXML
 	private MenuItem mntmSair;
@@ -58,18 +57,48 @@ public class PrincipalMenuController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
+		// Cadastros
 		mntmPessoas.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
-            public void handle(ActionEvent event) {            	
-            	pessoaController = new PessoaController();
+            public void handle(ActionEvent event) {
+            	if(pessoaController == null)
+            		pessoaController = new PessoaController();
             	
-            	if(TelaAberta(pessoaController)) return;
+            	if(pessoaController.getStatus() == StatusScene.Aberto){
+					Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
+					alerta.Alertar( (Stage) scene.getWindow());
+					return;
+            	}
             	
         		try {
 					pessoaController.inicia(scene);
 					
 					telasAbertas.add(pessoaController);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+        });
+		
+		// Consultas
+		
+		mntmConsultaPessoas.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+            	if(consultaPessoaController == null)
+            		consultaPessoaController = new ConsultaPessoaController();
+            	
+            	if(consultaPessoaController.getStatus() == StatusScene.Aberto){
+					Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
+					alerta.Alertar( (Stage) scene.getWindow());
+					return;
+            	}
+            	
+        		try {
+        			consultaPessoaController.inicia(scene);					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -91,19 +120,4 @@ public class PrincipalMenuController implements Initializable{
         });
 		
 	}
-	
-	private boolean TelaAberta(Object tela){
-		for(Object telas : telasAbertas){
-			if(tela.getClass() == telas.getClass()){
-				
-				Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
-				alerta.Alertar( (Stage) scene.getWindow());
-				
-				return true;
-			}
-		}
-		return false;
-	}
-
-
 }

@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.WindowEvent;
 import model.Pessoa;
 import model.dao.PessoaDAO;
 import model.enums.TipoPessoa;
@@ -20,6 +21,7 @@ import model.enums.PessoaSexo;
 public class PessoaController implements Initializable{
 	private Pessoa model;
 	private PessoaView view;
+	private StatusScene statusScene;
 
 	@FXML
 	private Button btnSalvar;
@@ -46,8 +48,21 @@ public class PessoaController implements Initializable{
 		this.model = model;
 	}
 	
+	public StatusScene getStatus(){
+		return statusScene;
+	}
+	
 	public void inicia(Scene parent) throws Exception{
+		statusScene = StatusScene.Aberto;
+		
 		view.start(parent);
+		
+		view.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
+		    @Override
+		    public void handle(WindowEvent event) {
+		    	statusScene = StatusScene.Fechado;
+		    }
+		});
 	}
 
 	@Override
