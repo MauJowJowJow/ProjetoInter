@@ -15,7 +15,6 @@ import util.Alerta;
 public class PrincipalMenu extends Application{
 	Stage window;
 	BorderPane layout;
-	
 
 	public PrincipalMenu() {
 	}
