@@ -3,17 +3,21 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import java.net.URL;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 import model.Pessoa;
 import model.dao.PessoaDAO;
 import model.enums.TipoPessoa;
+import oracle.sql.DATE;
 import util.Alerta;
 import view.PessoaView;
 import model.enums.PessoaSexo;
@@ -36,6 +40,10 @@ public class PessoaController implements Initializable{
 	private ComboBox<EstadoCivil> cbEstCivil;
 	@FXML
 	private TextField txtCGC;
+	@FXML
+	private TextField txtIsncEstadualRG;
+	@FXML
+	private DatePicker dateNascimento;
 	
 	public PessoaController() {
 		this.model = new Pessoa();
@@ -89,6 +97,13 @@ public class PessoaController implements Initializable{
             	model.setSexo(cbSexo.getValue());
             	model.setTipoPessoa(cbPessoa.getValue());
             	model.setEstadoCivil(cbEstCivil.getValue());
+            	
+            	model.setInscricaoEstadual(txtIsncEstadualRG.getText());
+            	
+            	model.setDataNascimento(Date.from(
+            			dateNascimento.getValue().atStartOfDay()
+            			.atZone(ZoneId.systemDefault()).toInstant()
+            			));
             	
             	if(!txtCGC.getText().equals(""))
             		model.setCNPJCPF(txtCGC.getText());
