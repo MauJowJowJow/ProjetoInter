@@ -109,14 +109,19 @@ public class PessoaController implements Initializable{
             		model.setCNPJCPF(txtCGC.getText());
             	
             	
-            	
             	if(model.isValidPerson()){
             		PessoaDAO dao = new PessoaDAO();
             		
             		if(model.getCodigo() == 0){
             			dao.insert(model);
+            			
+            			Alerta alerta = new Alerta("Inserção", "Pessoa inserida com o código " + model.getCodigo() + "!");
+                		alerta.Mensagem(view.getStage());
             		}else{
             			dao.update(model);
+            			
+            			Alerta alerta = new Alerta("Atualização", "Pessoa Atualizada!");
+                		alerta.Mensagem(view.getStage());
             		}
             		
             		dao.closeEntity();

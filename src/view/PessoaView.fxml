@@ -41,28 +41,28 @@
                   <Label prefHeight="29.0" prefWidth="85.0" text="Sexo:" GridPane.rowIndex="2" />
                   <Label prefHeight="29.0" prefWidth="105.0" text="Pessoa:" GridPane.rowIndex="3" />
                   <Label prefHeight="17.0" prefWidth="101.0" text="CPF/CNPJ:" GridPane.rowIndex="5" />
-                  <TextField fx:id="txtCGC" promptText="CPF/CNPJ" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <ComboBox fx:id="cbPessoa" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <ComboBox fx:id="cbSexo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <ComboBox fx:id="cbEstCivil" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <TextField fx:id="txtNomeCliente" promptText="Nome do Cliente" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField promptText="Código do Cliente" GridPane.columnIndex="1" />
                   <Label prefHeight="31.0" prefWidth="108.0" text="Insc. Estadual/RG:" GridPane.rowIndex="6" />
                   <Label prefHeight="27.0" prefWidth="105.0" text="Data Nascimento:" GridPane.rowIndex="7" />
                   <Label prefHeight="23.0" prefWidth="109.0" text="Est. Civil:" GridPane.rowIndex="4" />
+                  <Label prefHeight="37.0" prefWidth="125.0" text="Tel. Comercial:" GridPane.columnIndex="3" />
+                  <Label prefHeight="29.0" prefWidth="122.0" text="Tel. Residencial:" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Label prefHeight="29.0" prefWidth="114.0" text="Tel. Celular:" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <Label prefHeight="28.0" prefWidth="122.0" text="Data de cadastro" GridPane.columnIndex="3" GridPane.rowIndex="3" />                  
+                  
+                  <TextField promptText="Código do Cliente" GridPane.columnIndex="1" />
+                  <TextField fx:id="txtNomeCliente" promptText="Nome do Cliente" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="cbSexo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <ComboBox fx:id="cbPessoa" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <ComboBox fx:id="cbEstCivil" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />                  
+                  <TextField fx:id="txtCGC" promptText="CPF/CNPJ" GridPane.columnIndex="1" GridPane.rowIndex="5" />               
                   <TextField fx:id="txtIsncEstadualRG" promptText="Insc. Estadual/RG" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <DatePicker fx:id="dateNascimento" promptText="DD/MM/AAAA" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                   <TextField fx:id="txtTelComercial" promptText="(xx) xxxx-xxxx" GridPane.columnIndex="4" GridPane.rowIndex="0" />
                   <TextField fx:id="txtTelResidencial" promptText="(xx) xxxx-xxxx" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                  <Label prefHeight="37.0" prefWidth="125.0" text="Tel. Comercial:" GridPane.columnIndex="3" />
-                  <Label prefHeight="29.0" prefWidth="122.0" text="Tel. Residencial:" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <Label prefHeight="29.0" prefWidth="114.0" text="Tel. Celular:" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                  <DatePicker fx:id="dateCadastro" promptText="DD/MM/AAAA" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                  <Label prefHeight="28.0" prefWidth="122.0" text="Data de cadastro" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                   <TextField fx:id="txtCelular" promptText="(xx) xxxx-xxxx" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                  <DatePicker fx:id="dateCadastro" promptText="DD/MM/AAAA" GridPane.columnIndex="4" GridPane.rowIndex="3" />
                </children>
             </GridPane>
-            <Button fx:id="btnSalvar" layoutX="340.0" layoutY="453.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="61.0" text="Salvar" />
             <GridPane layoutX="41.0" layoutY="404.0" prefHeight="30.0" prefWidth="491.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.0" minWidth="10.0" prefWidth="112.0" />
@@ -77,6 +77,7 @@
                </children>
             </GridPane>
          </children>
+         <Button fx:id="btnSalvar" layoutX="340.0" layoutY="453.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="61.0" text="Salvar" />
       </Pane>
    </left>
 </BorderPane>
