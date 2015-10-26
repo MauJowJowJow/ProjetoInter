@@ -35,8 +35,8 @@ public class Pessoa {
 	@Column(name="CGCPes", length=18)
 	private String CNPJCPF;
 	
-	@Column(name="iscEst", length=10)
-	private int inscricaoEstadual;
+	@Column(name="iscEst", length=13)
+	private String inscricaoEstadual;
 	
 	@Column(name="emaPes", length=45)
 	private String email;
@@ -98,12 +98,12 @@ public class Pessoa {
 		this.tipoPessoa = tipoPessoa;
 	}
 
-	public int getInscricaoEstadual() {
+	public String getInscricaoEstadual() {
 		return inscricaoEstadual;
 	}
 
 
-	public void setInscricaoEstadual(int inscricaoEstadual) {
+	public void setInscricaoEstadual(String inscricaoEstadual) {
 		this.inscricaoEstadual = inscricaoEstadual;
 	}
 
