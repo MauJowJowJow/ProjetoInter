@@ -127,16 +127,21 @@ public class Pessoa {
 		this.dataNascimento = dataNascimento;
 	}
 
-
-	public String getTelefone() {
-		return telefone;
+	public String getTelefoneCom() {
+		return telefoneCom;
 	}
 
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+	public void setTelefoneCom(String telefoneCom) {
+		this.telefoneCom = telefoneCom;
 	}
 
+	public String getTelRes() {
+		return telRes;
+	}
+
+	public void setTelRes(String telRes) {
+		this.telRes = telRes;
+	}
 
 	public String getCelular() {
 		return celular;

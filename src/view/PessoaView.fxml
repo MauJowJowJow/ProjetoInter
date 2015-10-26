@@ -52,8 +52,8 @@
                   <Label prefHeight="23.0" prefWidth="109.0" text="Est. Civil:" GridPane.rowIndex="4" />
                   <TextField fx:id="txtIsncEstadualRG" promptText="Insc. Estadual/RG" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <DatePicker fx:id="dateNascimento" promptText="DD/MM/AAAA" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <TextField fx:id="txtTelComercial" promptText="(xx) xxxx-xxxx" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
-                  <TextField  fx:id="txtTelResidencial" promptText="(xx) xxxx-xxxx" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <TextField fx:id="txtTelComercial" promptText="(xx) xxxx-xxxx" GridPane.columnIndex="4" GridPane.rowIndex="0" />
+                  <TextField fx:id="txtTelResidencial" promptText="(xx) xxxx-xxxx" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                   <Label prefHeight="37.0" prefWidth="125.0" text="Tel. Comercial:" GridPane.columnIndex="3" />
                   <Label prefHeight="29.0" prefWidth="122.0" text="Tel. Residencial:" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                   <Label prefHeight="29.0" prefWidth="114.0" text="Tel. Celular:" GridPane.columnIndex="3" GridPane.rowIndex="2" />
@@ -64,7 +64,7 @@
             </GridPane>
             <Button fx:id="btnSalvar" layoutX="340.0" layoutY="453.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="61.0" text="Salvar" />
             <Label layoutX="41.0" layoutY="410.0" prefHeight="27.0" prefWidth="107.0" text="E-mail:" />
-            <TextField fx:id="txtEMail" promptText="e-mail" layoutX="148.0" layoutY="411.0" prefHeight="25.0" prefWidth="343.0" />
+            <TextField fx:id="txtEMail" layoutX="148.0" layoutY="411.0" prefHeight="25.0" prefWidth="343.0" promptText="e-mail" />
          </children>
       </Pane>
    </left>
