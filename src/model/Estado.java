@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 @Table(name="estado")
 
 public class Estado {
-	
+
 	@Id
 	@Column(name="codEst", length=7)
 	@SequenceGenerator(name="EstadoSequence", sequenceName="hotel.estado_sequence", allocationSize=1)
