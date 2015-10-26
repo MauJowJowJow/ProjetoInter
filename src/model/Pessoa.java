@@ -147,11 +147,9 @@ public class Pessoa {
 		return celular;
 	}
 
-
 	public void setCelular(String celular) {
 		this.celular = celular;
 	}
-
 
 	public String getClasse() {
 		return classe;

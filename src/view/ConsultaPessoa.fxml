@@ -9,6 +9,10 @@
    <center>
       <Pane prefHeight="546.0" prefWidth="732.0" BorderPane.alignment="CENTER">
          <children>
+            <Label layoutX="29.0" layoutY="50.0" text="Nome" />
+            <TextField fx:id="filtroNome" layoutX="74.0" layoutY="46.0" prefHeight="25.0" prefWidth="222.0" promptText="Filtre por nome" />
+            <Label layoutX="334.0" layoutY="50.0" text="CPF/CNPJ" />
+            <TextField fx:id="filtroCPFCNPJ" layoutX="400.0" layoutY="46.0" promptText="Filtre o CPF/CNPJ" />
             <TableView fx:id="tablePessoas" layoutX="29.0" layoutY="127.0" prefHeight="363.0" prefWidth="675.0">
               <columns>
                 <TableColumn fx:id="colCodigo" editable="false" minWidth="0.0" prefWidth="120.0" text="Codigo" />
@@ -16,10 +20,7 @@
                 <TableColumn fx:id="colCPFCNPJ" editable="false" prefWidth="154.0" text="CPF/CNPJ" />
               </columns>
             </TableView>
-            <Label layoutX="29.0" layoutY="50.0" text="Nome" />
-            <TextField fx:id="filtroNome" layoutX="74.0" layoutY="46.0" prefHeight="25.0" prefWidth="222.0" />
-            <Label layoutX="334.0" layoutY="50.0" text="CPF/CNPJ" />
-            <TextField fx:id="filtroCPFCNPJ" layoutX="400.0" layoutY="46.0" />
+            
          </children>
       </Pane>
    </center>
