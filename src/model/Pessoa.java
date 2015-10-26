@@ -44,11 +44,14 @@ public class Pessoa {
 	@Column(name="datNas")
 	private Date dataNascimento;
 	
-	@Column(name="telPes", length=13)
-	private String telefone;
+	@Column(name="telPes", length=15)
+	private String telefoneCom;
 	
-	@Column(name="telPes2", length=13)
+	@Column(name="telPes2", length=15)
 	private String celular;
+	
+	@Column(name="telPes3", length=15)
+	private String telRes;
 	
 	@Column(name="claPes", length=20)// Verificar Enum
 	private String classe;

@@ -17,6 +17,7 @@ import model.enums.TipoPessoa;
 import util.Alerta;
 import view.PessoaView;
 import model.enums.PessoaSexo;
+import model.enums.EstadoCivil;
 
 public class PessoaController implements Initializable{
 	private Pessoa model;
@@ -31,6 +32,8 @@ public class PessoaController implements Initializable{
 	private ComboBox<PessoaSexo> cbSexo;
 	@FXML
 	private ComboBox<TipoPessoa> cbPessoa;
+	@FXML
+	private ComboBox<EstadoCivil> cbEstCivil;
 	@FXML
 	private TextField txtCGC;
 	
@@ -73,6 +76,9 @@ public class PessoaController implements Initializable{
 		cbPessoa.getItems().addAll(TipoPessoa.values());
 		cbPessoa.setValue(TipoPessoa.Fisica);
 		
+		cbEstCivil.getItems().addAll(EstadoCivil.values());
+		cbEstCivil.setValue(EstadoCivil.Solteiro);
+		
 		btnSalvar.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -82,6 +88,7 @@ public class PessoaController implements Initializable{
             	
             	model.setSexo(cbSexo.getValue());
             	model.setTipoPessoa(cbPessoa.getValue());
+            	model.setEstadoCivil(cbEstCivil.getValue());
             	
             	if(!txtCGC.getText().equals(""))
             		model.setCNPJCPF(txtCGC.getText());
@@ -122,5 +129,8 @@ public class PessoaController implements Initializable{
 	
 	public Button getBtnSalvar(){
 		return btnSalvar;
+	}
+	public ComboBox getcbEstCivil(){
+		return cbEstCivil;
 	}
 }
