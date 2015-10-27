@@ -30,6 +30,9 @@ public class PessoaController implements Initializable{
 
 	@FXML
 	private Button btnSalvar;
+	
+	@FXML
+	private TextField txtCodigo;
 	@FXML
 	private TextField txtNomeCliente;
 	@FXML
@@ -100,10 +103,11 @@ public class PessoaController implements Initializable{
             	
             	model.setInscricaoEstadual(txtIsncEstadualRG.getText());
             	
-            	model.setDataNascimento(Date.from(
-            			dateNascimento.getValue().atStartOfDay()
-            			.atZone(ZoneId.systemDefault()).toInstant()
-            			));
+            	if(dateNascimento.getValue() != null)
+	            	model.setDataNascimento(Date.from(
+	            			dateNascimento.getValue().atStartOfDay()
+	            			.atZone(ZoneId.systemDefault()).toInstant()
+	            			));
             	
             	if(!txtCGC.getText().equals(""))
             		model.setCNPJCPF(txtCGC.getText());
@@ -117,6 +121,8 @@ public class PessoaController implements Initializable{
             			
             			Alerta alerta = new Alerta("Inserção", "Pessoa inserida com o código " + model.getCodigo() + "!");
                 		alerta.Mensagem(view.getStage());
+                		
+                		txtCodigo.setText(Integer.toString(model.getCodigo()));
             		}else{
             			dao.update(model);
             			
@@ -134,23 +140,4 @@ public class PessoaController implements Initializable{
             }
         });
 	}
-	
-	public TextField getTxtNomeCliente(){
-		return txtNomeCliente;
 	}
-	
-	public ComboBox getCbSexo(){
-		return cbSexo;
-	}
-	
-	public TextField getTxtCGC(){
-		return txtCGC;
-	}
-	
-	public Button getBtnSalvar(){
-		return btnSalvar;
-	}
-	public ComboBox getcbEstCivil(){
-		return cbEstCivil;
-	}
-}
