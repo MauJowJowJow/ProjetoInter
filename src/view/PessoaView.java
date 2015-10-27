@@ -16,7 +16,7 @@ public class PessoaView{
 		
 		window.initOwner(parent.getWindow());
 		
-		Parent root = FXMLLoader.load(getClass().getResource("PessoaView.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("fxml/PessoaView.fxml"));
 		
 		root.autosize();
 		

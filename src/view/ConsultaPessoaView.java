@@ -18,7 +18,7 @@ public class ConsultaPessoaView {
 		
 		window.initOwner(parent.getWindow());
 		
-		Parent root = FXMLLoader.load(getClass().getResource("ConsultaPessoa.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("fxml/ConsultaPessoa.fxml"));
 		
 		root.autosize();
 		
