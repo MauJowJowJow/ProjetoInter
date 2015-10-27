@@ -3,14 +3,13 @@ package view;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-public class ConsultaPessoaView {
+public class ProdutoView {
+
 	private Stage window;
-	BorderPane layout; 
 	
-	public ConsultaPessoaView() {
+	public ProdutoView() {
 	}
 
 	public void start(Scene parent) throws Exception{
@@ -18,12 +17,12 @@ public class ConsultaPessoaView {
 		
 		window.initOwner(parent.getWindow());
 		
-		Parent root = FXMLLoader.load(getClass().getResource("fxml/ConsultaPessoaView.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("fxml/ProdutoView.fxml"));
 		
 		root.autosize();
 		
 		window.setResizable(false);
-		window.setTitle("Consulta de Pessoas");
+		window.setTitle("Cadastro de Produtos");
 		
 		Scene scene = new Scene(root);
 

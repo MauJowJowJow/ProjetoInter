@@ -19,6 +19,7 @@ import view.PrincipalMenu;
 public class PrincipalMenuController implements Initializable{
 	// Controllers filhos
 	private PessoaController pessoaController;
+	private ProdutoController produtoController;
 	private ConsultaPessoaController consultaPessoaController;
 
 	private PrincipalMenu view;
@@ -27,6 +28,9 @@ public class PrincipalMenuController implements Initializable{
 	
 	@FXML
 	private MenuItem mntmPessoas;
+	
+	@FXML
+	private MenuItem mntmProdutos;
 	
 	@FXML
 	private MenuItem mntmConsultaPessoas;
@@ -81,6 +85,31 @@ public class PrincipalMenuController implements Initializable{
 				}
             }
         });
+		
+		mntmProdutos.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+            	if(produtoController == null)
+            		produtoController = new ProdutoController();
+            	
+            	if(produtoController.getStatus() == StatusScene.Aberto){
+					Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
+					alerta.Alertar( (Stage) scene.getWindow());
+					return;
+            	}
+            	
+        		try {
+					produtoController.inicia(scene);
+					
+					telasAbertas.add(produtoController);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+        });
+
 		
 		// Consultas
 		

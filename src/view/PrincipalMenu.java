@@ -34,7 +34,7 @@ public class PrincipalMenu extends Application{
 		
 		window = primaryStage;
 		
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/PrincipalMenu.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/PrincipalMenuView.fxml"));
 		Parent root = fxmlLoader.load();
 
 		root.autosize();

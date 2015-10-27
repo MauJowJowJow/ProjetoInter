@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProdutoController">
+   <center>
+      <Pane prefHeight="481.0" prefWidth="418.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnSalvar" layoutX="183.0" layoutY="424.0" mnemonicParsing="false" text="Salvar" />
+            <TextField fx:id="txtCodigo" layoutX="58.0" layoutY="43.0" promptText="Código" />
+         </children>
+      </Pane>
+   </center>
+</BorderPane>
