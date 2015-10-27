@@ -16,8 +16,8 @@
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="10.0" prefWidth="112.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.0" minWidth="10.0" prefWidth="160.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.0" minWidth="10.0" prefWidth="82.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.0" minWidth="10.0" prefWidth="125.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.0" minWidth="10.0" prefWidth="169.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.0" minWidth="10.0" prefWidth="112.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.0" minWidth="10.0" prefWidth="160.0" />
                   <ColumnConstraints />
                   <ColumnConstraints />
                   <ColumnConstraints />
@@ -48,33 +48,35 @@
                   <Label prefHeight="37.0" prefWidth="125.0" text="Tel. Comercial:" GridPane.columnIndex="3" />
                   <Label prefHeight="29.0" prefWidth="122.0" text="Tel. Residencial:" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                   <Label prefHeight="29.0" prefWidth="114.0" text="Tel. Celular:" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                  <Label prefHeight="28.0" prefWidth="122.0" text="Data de cadastro" GridPane.columnIndex="3" GridPane.rowIndex="3" />                  
+                  <Label prefHeight="28.0" prefWidth="122.0" text="Data de cadastro:" GridPane.columnIndex="3" GridPane.rowIndex="3" />                  
                   
                   <TextField fx:id="txtCodigo" editable="false" focusTraversable="false" promptText="Código do Cliente" GridPane.columnIndex="1" />
                   <TextField fx:id="txtNomeCliente" promptText="Nome do Cliente" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <ComboBox fx:id="cbSexo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <ComboBox fx:id="cbPessoa" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <ComboBox fx:id="cbEstCivil" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />                  
+                  <ComboBox fx:id="cbSexo" prefHeight="25.0" prefWidth="161.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <ComboBox fx:id="cbPessoa" prefHeight="25.0" prefWidth="161.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <ComboBox fx:id="cbEstCivil" prefHeight="25.0" prefWidth="159.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />                  
                   <TextField fx:id="txtCGC" promptText="CPF/CNPJ" GridPane.columnIndex="1" GridPane.rowIndex="5" />               
                   <TextField fx:id="txtIsncEstadualRG" promptText="Insc. Estadual/RG" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <DatePicker fx:id="dateNascimento" promptText="DD/MM/AAAA" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                   <TextField fx:id="txtTelComercial" promptText="(xx) xxxx-xxxx" GridPane.columnIndex="4" GridPane.rowIndex="0" />
                   <TextField fx:id="txtTelResidencial" promptText="(xx) xxxx-xxxx" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                  <TextField fx:id="txtCelular" promptText="(xx) xxxx-xxxx" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                  <DatePicker fx:id="dateCadastro" promptText="DD/MM/AAAA" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                  <TextField fx:id="txtCelular" prefHeight="25.0" prefWidth="135.0" promptText="(xx) xxxx-xxxx" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                  <DatePicker fx:id="dateCadastro" prefHeight="25.0" prefWidth="167.0" promptText="DD/MM/AAAA" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                  <Label prefHeight="32.0" prefWidth="127.0" text="Situação:" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                  <ComboBox fx:id="cbSituacao" prefHeight="25.0" prefWidth="166.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                </children>
             </GridPane>
             
             <GridPane layoutX="41.0" layoutY="404.0" prefHeight="30.0" prefWidth="491.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.0" minWidth="10.0" prefWidth="112.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.0" minWidth="10.0" prefWidth="120.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="388.0" minWidth="10.0" prefWidth="380.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label prefHeight="28.0" prefWidth="106.0" text="E-mail:" />
+                  <Label prefHeight="28.0" prefWidth="115.0" text="E-mail:" />
                   <TextField fx:id="txtEMail" prefHeight="25.0" prefWidth="254.0" promptText="e-mail" GridPane.columnIndex="1" />
                </children>
             </GridPane>

@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import model.bean.validations.CheckCGC;
 import model.enums.EstadoCivil;
 import model.enums.PessoaSexo;
+import model.enums.SitCadPessoa;
 import model.enums.TipoPessoa;;
 
 @Entity
@@ -64,6 +65,9 @@ public class Pessoa {
 	
 	@Column(name="estCiv")
 	private EstadoCivil estadoCivil;
+	
+	@Column(name="sitPes")
+	private SitCadPessoa statusPessoa;
 	
 	@Transient
 	private String errors;
@@ -187,6 +191,14 @@ public class Pessoa {
 	
 	public String getErrors(){
 		return errors;
+	}
+	
+	public SitCadPessoa getstatusPessoa(){
+		return statusPessoa;
+	}
+	
+	public void setstatusPessoa(SitCadPessoa statusPessoa){
+		this.statusPessoa = statusPessoa;
 	}
 
 
