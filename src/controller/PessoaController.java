@@ -24,8 +24,9 @@ import util.Alerta;
 import view.PessoaView;
 import model.enums.PessoaSexo;
 import model.enums.EstadoCivil;
+import model.enums.SitCadPessoa;
 
-public class PessoaController implements Initializable {
+public class PessoaController implements Initializable{
 	private Pessoa model;
 	private PessoaView view;
 	private StatusScene statusScene;
@@ -53,12 +54,16 @@ public class PessoaController implements Initializable {
 	private TextField txtIsncEstadualRG;
 	@FXML
 	private DatePicker dateNascimento;
-
+	@FXML
+	private ComboBox<SitCadPessoa> cbSituacao;
+	@FXML
+	private TextField txtTelComercial;
+	
 	public PessoaController() {
 		this.model = new Pessoa();
 		this.view = new PessoaView();
 	}
-
+	
 	public PessoaController(Pessoa model, PessoaView view) {
 		this.model = model;
 		this.view = view;
@@ -100,53 +105,59 @@ public class PessoaController implements Initializable {
 		cbEstCivil.getItems().addAll(EstadoCivil.values());
 		cbEstCivil.setValue(EstadoCivil.Solteiro);
 
+		cbSituacao.getItems().addAll(SitCadPessoa.values());
+		cbSituacao.setValue(SitCadPessoa.Ativo);
+		
 		btnSalvar.setOnAction(new EventHandler<ActionEvent>() {
 
-			@Override
-			public void handle(ActionEvent event) {
-				if (!txtNomeCliente.getText().equals(""))
-					model.setNome(txtNomeCliente.getText());
-
-				model.setSexo(cbSexo.getValue());
-				model.setTipoPessoa(cbPessoa.getValue());
-				model.setEstadoCivil(cbEstCivil.getValue());
-
-				model.setInscricaoEstadual(txtIsncEstadualRG.getText());
-
-				if (dateNascimento.getValue() != null)
-					model.setDataNascimento(Date
-							.from(dateNascimento.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
-
-				if (!txtCGC.getText().equals(""))
-					model.setCNPJCPF(txtCGC.getText());
-
-				if (model.isValidPerson()) {
-					PessoaDAO dao = new PessoaDAO();
-
-					if (model.getCodigo() == 0) {
-						dao.insert(model);
-
-						Alerta alerta = new Alerta("Inserção",
-								"Pessoa inserida com o código " + model.getCodigo() + "!");
-						alerta.Mensagem(view.getStage());
-
-						txtCodigo.setText(Integer.toString(model.getCodigo()));
-					} else {
-						dao.update(model);
-
-						Alerta alerta = new Alerta("Atualização", "Pessoa Atualizada!");
-						alerta.Mensagem(view.getStage());
-					}
-
-					dao.closeEntity();
-				} else {
-					Alerta alerta = new Alerta("Validação ", model.getErrors());
-
-					alerta.Erro(view.getStage());
-				}
-
-			}
-		});
+            @Override
+            public void handle(ActionEvent event) {
+            	if(!txtNomeCliente.getText().equals(""))
+            		model.setNome(txtNomeCliente.getText());
+            	
+            	model.setSexo(cbSexo.getValue());
+            	model.setTipoPessoa(cbPessoa.getValue());
+            	model.setEstadoCivil(cbEstCivil.getValue());
+            	model.setstatusPessoa(cbSituacao.getValue());
+            	
+            	model.setInscricaoEstadual(txtIsncEstadualRG.getText());
+            	
+            	if(dateNascimento.getValue() != null)
+	            	model.setDataNascimento(Date.from(
+	            			dateNascimento.getValue().atStartOfDay()
+	            			.atZone(ZoneId.systemDefault()).toInstant()
+	            			));
+            	
+            	if(!txtCGC.getText().equals(""))
+            		model.setCNPJCPF(txtCGC.getText());
+            	
+            	
+            	if(model.isValidPerson()){
+            		PessoaDAO dao = new PessoaDAO();
+            		
+            		if(model.getCodigo() == 0){
+            			dao.insert(model);
+            			
+            			Alerta alerta = new Alerta("Inserção", "Pessoa inserida com o código " + model.getCodigo() + "!");
+                		alerta.Mensagem(view.getStage());
+                		
+                		txtCodigo.setText(Integer.toString(model.getCodigo()));
+            		}else{
+            			dao.update(model);
+            			
+            			Alerta alerta = new Alerta("Atualização", "Pessoa Atualizada!");
+                		alerta.Mensagem(view.getStage());
+            		}
+            		
+            		dao.closeEntity();
+            	}else{
+            		Alerta alerta = new Alerta("Validação ", model.getErrors());
+            		
+            		alerta.Erro(view.getStage());
+            	}
+            		
+            }
+        });
 
 		btnEnderecos.setOnAction(new EventHandler<ActionEvent>() {
 
