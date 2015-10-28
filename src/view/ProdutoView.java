@@ -1,45 +1,36 @@
 package view;
 
-import controller.PessoaController;
-import controller.PrincipalMenuController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-public class PessoaView{
+public class ProdutoView {
 
 	private Stage window;
-	BorderPane layout; 
+	
+	public ProdutoView() {
+	}
 
 	public void start(Scene parent) throws Exception{
 		window = new Stage();
 		
 		window.initOwner(parent.getWindow());
 		
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/PessoaView.fxml"));
-		Parent root = fxmlLoader.load();
+		Parent root = FXMLLoader.load(getClass().getResource("fxml/ProdutoView.fxml"));
 		
 		root.autosize();
 		
 		window.setResizable(false);
-		window.setTitle("Cadastro de Pessoas");
+		window.setTitle("Cadastro de Produtos");
 		
 		Scene scene = new Scene(root);
 
 		window.setScene(scene);
-		
-		PessoaController myController = fxmlLoader.getController();
-		myController.setScene(window.getScene());
-		
 		window.show();		
 	}
 	
 	public Stage getStage(){
 		return window;
-	}
-	
-	public PessoaView() {
 	}
 }

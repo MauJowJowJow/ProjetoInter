@@ -14,6 +14,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
+import model.Endereco;
 import model.Pessoa;
 import model.dao.PessoaDAO;
 import model.enums.TipoPessoa;
@@ -28,10 +29,14 @@ public class PessoaController implements Initializable{
 	private Pessoa model;
 	private PessoaView view;
 	private StatusScene statusScene;
-
+	private Scene scene;
+	
 	@FXML
 	private Button btnSalvar;
-	
+
+	@FXML
+	private Button btnEnderecos;
+
 	@FXML
 	private TextField txtCodigo;
 	@FXML
@@ -67,20 +72,24 @@ public class PessoaController implements Initializable{
 		this.model = model;
 	}
 	
-	public StatusScene getStatus(){
+	public void setScene(Scene scene){
+		this.scene = scene;
+	}
+
+	public StatusScene getStatus() {
 		return statusScene;
 	}
-	
-	public void inicia(Scene parent) throws Exception{
+
+	public void inicia(Scene parent) throws Exception {
 		statusScene = StatusScene.Aberto;
-		
+
 		view.start(parent);
-		
+
 		view.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
-		    @Override
-		    public void handle(WindowEvent event) {
-		    	statusScene = StatusScene.Fechado;
-		    }
+			@Override
+			public void handle(WindowEvent event) {
+				statusScene = StatusScene.Fechado;
+			}
 		});
 	}
 
@@ -88,13 +97,13 @@ public class PessoaController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		cbSexo.getItems().addAll(PessoaSexo.values());
 		cbSexo.setValue(PessoaSexo.Masculino);
-		
+
 		cbPessoa.getItems().addAll(TipoPessoa.values());
 		cbPessoa.setValue(TipoPessoa.Fisica);
-		
+
 		cbEstCivil.getItems().addAll(EstadoCivil.values());
 		cbEstCivil.setValue(EstadoCivil.Solteiro);
-		
+
 		cbSituacao.getItems().addAll(SitCadPessoa.values());
 		cbSituacao.setValue(SitCadPessoa.Ativo);
 		
@@ -148,5 +157,29 @@ public class PessoaController implements Initializable{
             		
             }
         });
+
+		btnEnderecos.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+					if(model.getCodigo() != 0){
+						Endereco endereco = new Endereco();
+						endereco.setCodigoPessoa(model.getCodigo());
+						endereco.setCodigo(3);
+						
+						EnderecoController enderecoController = new EnderecoController(endereco, new view.EnderecoView());
+						
+						try {
+							enderecoController.inicia(scene);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						
+						
+					}
+			}
+		});
 	}
-	}
+}

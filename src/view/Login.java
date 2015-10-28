@@ -24,9 +24,10 @@ public class Login {
 		dialog.setHeaderText("Realize o login no sistema");
 	
 		// Set the icon (must be included in the project).
-		//dialog.setGraphic(new ImageView(this.getClass().getResource("login.png").toString()));
-	
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		dialog.setGraphic(new ImageView(classLoader.getResource("login.png").toString()));
 		// Set the button types.
+		
 		ButtonType loginButtonType = new ButtonType("Login", ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
 	
