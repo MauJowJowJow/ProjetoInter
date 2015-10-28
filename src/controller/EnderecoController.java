@@ -17,8 +17,8 @@ import util.Alerta;
 import view.EnderecoView;
 
 public class EnderecoController implements Initializable{
-	private Endereco model;
-	private EnderecoView view;
+	final private Endereco model;
+	final private EnderecoView view;
 	private StatusScene statusScene;
 	
 	@FXML
@@ -37,8 +37,8 @@ public class EnderecoController implements Initializable{
 		this.view = view;
 	}
 
-	public void setModel(Endereco model) {
-		this.model = model;
+	public Endereco getModel() {
+		return model;
 	}
 
 	public StatusScene getStatus() {
@@ -67,16 +67,17 @@ public class EnderecoController implements Initializable{
 				//if (model.isValidAdress()) {
 				if(true){
 					EnderecoDAO dao = new EnderecoDAO();
+					Endereco model = EnderecoController.this.getModel();
 
 					//if (model.getCodigo() == 0) {
 					if(true){
 						dao.insert(model);
 
 						Alerta alerta = new Alerta("Inserção",
-								"Produto inserido com o código " + model.getCodigo() + "!");
+								"Produto inserido com o código " + model.getPk().getCodigo() + "!");
 						alerta.Mensagem(view.getStage());
 
-						txtCodigo.setText(Integer.toString(model.getCodigo()));
+						txtCodigo.setText(Integer.toString(model.getPk().getCodigo()));
 					} else {
 						dao.update(model);
 

@@ -9,13 +9,8 @@ import model.pk.EnderecoPK;
 @Table(name="endereco")
 public class Endereco {
 	
-	@Id
-	@Column(name="codPes", length=7)
-	private int codigoPessoa;
-	
-	@Id
-	@Column(name="codEnd", length=7)
-	private int codigo;
+	@EmbeddedId
+	private EnderecoPK pk;
 	
 	@NotNull(message="Informe o CEP (Somente números).")
 	@Column(name="CEPEnd", length=9)
@@ -38,6 +33,7 @@ public class Endereco {
 	@Column(name="codCid")
 	private int codigoCidade;
 	
+	/*
 	public int getCodigoPessoa() {
 		return codigoPessoa;
 	}
@@ -53,6 +49,14 @@ public class Endereco {
 
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
+	}*/
+	
+	public EnderecoPK getPk(){
+		return pk;
+	}
+	
+	public void setPk(EnderecoPK pk){
+		this.pk = pk;
 	}
 
 	public int getCEP() {

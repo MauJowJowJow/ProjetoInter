@@ -18,6 +18,7 @@ import model.Endereco;
 import model.Pessoa;
 import model.dao.PessoaDAO;
 import model.enums.TipoPessoa;
+import model.pk.EnderecoPK;
 import oracle.sql.DATE;
 import util.Alerta;
 import view.PessoaView;
@@ -153,8 +154,9 @@ public class PessoaController implements Initializable {
 			public void handle(ActionEvent event) {
 					if(model.getCodigo() != 0){
 						Endereco endereco = new Endereco();
-						endereco.setCodigoPessoa(model.getCodigo());
-						endereco.setCodigo(3);
+						EnderecoPK enderecoPK = new EnderecoPK(model.getCodigo(), 3);
+						
+						endereco.setPk(enderecoPK);
 						
 						EnderecoController enderecoController = new EnderecoController(endereco, new view.EnderecoView());
 						
