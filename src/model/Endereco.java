@@ -3,14 +3,18 @@ package model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import model.pk.EnderecoPK;
+
 @Entity
 @Table(name="endereco")
-
 public class Endereco {
+	
+	@Id
+	@Column(name="codPes", length=7)
+	private int codigoPessoa;
+	
 	@Id
 	@Column(name="codEnd", length=7)
-	@SequenceGenerator(name="EnderecoSequence", sequenceName="hotel.endereco_sequence", allocationSize=1)
-	@GeneratedValue(generator="EnderecoSequence", strategy = GenerationType.SEQUENCE)
 	private int codigo;
 	
 	@NotNull(message="Informe o CEP (Somente números).")
@@ -33,6 +37,15 @@ public class Endereco {
 	
 	@Column(name="codCid")
 	private int codigoCidade;
+	
+	public int getCodigoPessoa() {
+		return codigoPessoa;
+	}
+
+	public void setCodigoPessoa(int codigoPessoa) {
+		this.codigoPessoa = codigoPessoa;
+	}
+
 
 	public int getCodigo() {
 		return codigo;
@@ -88,5 +101,5 @@ public class Endereco {
 
 	public void setCodigoCidade(int codigoCidade) {
 		this.codigoCidade = codigoCidade;
-	}	
+	}
 }

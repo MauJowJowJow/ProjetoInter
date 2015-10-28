@@ -65,6 +65,9 @@ public class Pessoa {
 	@Column(name="estCiv")
 	private EstadoCivil estadoCivil;
 	
+	@Column(name="sitPes")
+	private int situacaoPessoa;
+	
 	@Transient
 	private String errors;
 

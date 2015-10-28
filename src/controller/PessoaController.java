@@ -14,6 +14,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
+import model.Endereco;
 import model.Pessoa;
 import model.dao.PessoaDAO;
 import model.enums.TipoPessoa;
@@ -27,9 +28,13 @@ public class PessoaController implements Initializable {
 	private Pessoa model;
 	private PessoaView view;
 	private StatusScene statusScene;
-
+	private Scene scene;
+	
 	@FXML
 	private Button btnSalvar;
+
+	@FXML
+	private Button btnEnderecos;
 
 	@FXML
 	private TextField txtCodigo;
@@ -60,6 +65,10 @@ public class PessoaController implements Initializable {
 
 	public void setModel(Pessoa model) {
 		this.model = model;
+	}
+	
+	public void setScene(Scene scene){
+		this.scene = scene;
 	}
 
 	public StatusScene getStatus() {
@@ -135,6 +144,30 @@ public class PessoaController implements Initializable {
 					alerta.Erro(view.getStage());
 				}
 
+			}
+		});
+
+		btnEnderecos.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+					if(model.getCodigo() != 0){
+						Endereco endereco = new Endereco();
+						endereco.setCodigoPessoa(model.getCodigo());
+						endereco.setCodigo(3);
+						
+						EnderecoController enderecoController = new EnderecoController(endereco, new view.EnderecoView());
+						
+						try {
+							enderecoController.inicia(scene);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						
+						
+					}
 			}
 		});
 	}

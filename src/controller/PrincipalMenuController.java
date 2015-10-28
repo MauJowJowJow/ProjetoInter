@@ -53,10 +53,6 @@ public class PrincipalMenuController implements Initializable{
 		
 		telasAbertas = new ArrayList<Object>();
 	}
-	
-	public void iniciaMenu(String[] args){
-		view.Main(args);
-	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

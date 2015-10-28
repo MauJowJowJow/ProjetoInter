@@ -1,5 +1,7 @@
 package view;
 
+import controller.PessoaController;
+import controller.PrincipalMenuController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,7 +18,8 @@ public class PessoaView{
 		
 		window.initOwner(parent.getWindow());
 		
-		Parent root = FXMLLoader.load(getClass().getResource("fxml/PessoaView.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/PessoaView.fxml"));
+		Parent root = fxmlLoader.load();
 		
 		root.autosize();
 		
@@ -26,6 +29,10 @@ public class PessoaView{
 		Scene scene = new Scene(root);
 
 		window.setScene(scene);
+		
+		PessoaController myController = fxmlLoader.getController();
+		myController.setScene(window.getScene());
+		
 		window.show();		
 	}
 	

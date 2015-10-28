@@ -1,9 +1,10 @@
 package model.dao;
 
 import model.Endereco;
+import model.pk.EnderecoPK;
 
-public class EnderecoDAO extends GenericDAO<Integer, Endereco> {
+public class EnderecoDAO extends GenericDAO<EnderecoPK, Endereco> {
 	
-	EnderecoDAO(){}
+	public EnderecoDAO(){}
 
 }

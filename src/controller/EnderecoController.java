@@ -6,16 +6,19 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
+import model.Endereco;
+import model.dao.EnderecoDAO;
 import util.Alerta;
-import view.ProdutoView;
+import view.EnderecoView;
 
-public class EnderecoController {
-	private Produto model;
-	private ProdutoView view;
+public class EnderecoController implements Initializable{
+	private Endereco model;
+	private EnderecoView view;
 	private StatusScene statusScene;
 	
 	@FXML
@@ -24,17 +27,17 @@ public class EnderecoController {
 	@FXML
 	private Button btnSalvar;
 	
-	public ProdutoController() {
-		this.model = new Produto();
-		this.view = new ProdutoView();
+	public EnderecoController() {
+		this.model = new Endereco();
+		this.view = new EnderecoView();
 	}
 
-	public ProdutoController(Produto model, ProdutoView view) {
+	public EnderecoController(Endereco model, EnderecoView view) {
 		this.model = model;
 		this.view = view;
 	}
 
-	public void setModel(Produto model) {
+	public void setModel(Endereco model) {
 		this.model = model;
 	}
 
@@ -61,10 +64,12 @@ public class EnderecoController {
 
 			@Override
 			public void handle(ActionEvent event) {
-				if (model.isValidProduct()) {
-					ProdutoDAO dao = new ProdutoDAO();
+				//if (model.isValidAdress()) {
+				if(true){
+					EnderecoDAO dao = new EnderecoDAO();
 
-					if (model.getCodigo() == 0) {
+					//if (model.getCodigo() == 0) {
+					if(true){
 						dao.insert(model);
 
 						Alerta alerta = new Alerta("Inserção",
@@ -81,9 +86,9 @@ public class EnderecoController {
 
 					dao.closeEntity();
 				} else {
-					Alerta alerta = new Alerta("Validação ", model.getErrors());
+					//Alerta alerta = new Alerta("Validação ", model.getErrors());
 
-					alerta.Erro(view.getStage());
+					//alerta.Erro(view.getStage());
 				}
 
 			}

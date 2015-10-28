@@ -19,11 +19,6 @@ public class PrincipalMenu extends Application{
 	public PrincipalMenu() {
 	}
 	
-	public Object Main(String[] args){
-		launch(args);
-		return this;
-	}
-	
 	public static void main(String[] args) {
 		launch(args);
 	}
