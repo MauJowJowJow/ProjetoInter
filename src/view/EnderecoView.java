@@ -6,18 +6,24 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class EnderecoView {
-private Stage window;
+	private Stage window;
+	private FXMLLoader fxmlLoader;
 	
 	public EnderecoView() {
 	}
-
+	
+	public FXMLLoader getFxmlLoader(){
+		return fxmlLoader;
+	}
+	
 	public void start(Scene parent) throws Exception{
 		window = new Stage();
 		
 		window.initOwner(parent.getWindow());
 		
-		Parent root = FXMLLoader.load(getClass().getResource("fxml/EnderecoView.fxml"));
-		
+		fxmlLoader = new FXMLLoader(getClass().getResource("fxml/EnderecoView.fxml"));
+		Parent root = fxmlLoader.load();
+
 		root.autosize();
 		
 		window.setResizable(false);
