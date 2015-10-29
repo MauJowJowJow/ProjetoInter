@@ -15,6 +15,7 @@ import util.Alerta;
 public class PrincipalMenu extends Application{
 	Stage window;
 	BorderPane layout;
+	private FXMLLoader fxmlLoader;
 
 	public PrincipalMenu() {
 	}
@@ -23,13 +24,17 @@ public class PrincipalMenu extends Application{
 		launch(args);
 	}
 	
+	public FXMLLoader getFxmlLoader(){
+		return fxmlLoader;
+	}
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception{
 		loginUsuario();
 		
 		window = primaryStage;
 		
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/PrincipalMenuView.fxml"));
+		fxmlLoader = new FXMLLoader(getClass().getResource("fxml/PrincipalMenuView.fxml"));
 		Parent root = fxmlLoader.load();
 
 		root.autosize();
@@ -57,7 +62,7 @@ public class PrincipalMenu extends Application{
 		window.setScene(scene);
 		window.setMaximized(true);
 		
-		PrincipalMenuController myController = fxmlLoader.getController();
+		PrincipalMenuController myController = fxmlLoader.<PrincipalMenuController>getController();
 		myController.setScene(primaryStage.getScene());
 		
 		window.show();

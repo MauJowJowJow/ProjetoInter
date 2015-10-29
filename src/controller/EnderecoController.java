@@ -36,9 +36,21 @@ public class EnderecoController implements Initializable{
 		this.model = model;
 		this.view = view;
 	}
+	
+	public void setModel(Endereco model) {
+		this.model = model;
+	}
 
 	public Endereco getModel() {
-		return model;
+		return this.model;
+	}
+	
+	public void setView(EnderecoView view) {
+		this.view = view;
+	}
+
+	public EnderecoView getView() {
+		return this.view;
 	}
 
 	public StatusScene getStatus() {
@@ -60,8 +72,7 @@ public class EnderecoController implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-			final Endereco model = this.getModel();
-			
+		
 			btnSalvar.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override

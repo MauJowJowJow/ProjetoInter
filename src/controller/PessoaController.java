@@ -20,6 +20,7 @@ import model.dao.PessoaDAO;
 import model.enums.TipoPessoa;
 import model.pk.EnderecoPK;
 import util.Alerta;
+import view.EnderecoView;
 import view.PessoaView;
 import model.enums.PessoaSexo;
 import model.enums.EstadoCivil;
@@ -163,21 +164,19 @@ public class PessoaController implements Initializable{
 			@Override
 			public void handle(ActionEvent event) {
 					if(model.getCodigo() != 0){
-						Endereco endereco = new Endereco();
+						EnderecoView enderecoView = new EnderecoView();
 						EnderecoPK enderecoPK = new EnderecoPK(model.getCodigo(), 3);
-						
-						endereco.setPk(enderecoPK);
-						
-						EnderecoController enderecoController = new EnderecoController(endereco, new view.EnderecoView());
+						Endereco endereco = new Endereco(enderecoPK);						
 						
 						try {
-							enderecoController.inicia(scene);
-						} catch (Exception e) {
+							enderecoView.start(scene);
+						} catch (Exception e1) {
 							// TODO Auto-generated catch block
-							e.printStackTrace();
+							e1.printStackTrace();
 						}
-						
-						
+						EnderecoController enderecoController = enderecoView.getFxmlLoader().<EnderecoController>getController();
+						enderecoController.setModel(endereco);
+						enderecoController.setView(enderecoView);
 						
 					}
 			}

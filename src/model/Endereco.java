@@ -106,4 +106,12 @@ public class Endereco {
 	public void setCodigoCidade(int codigoCidade) {
 		this.codigoCidade = codigoCidade;
 	}
+	
+	public Endereco(){
+		
+	}
+	
+	public Endereco(EnderecoPK pk){
+		this.pk = pk;
+	}
 }
