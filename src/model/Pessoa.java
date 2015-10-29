@@ -69,9 +69,6 @@ public class Pessoa {
 	@Column(name="sitPes")
 	private SitCadPessoa statusPessoa;
 	
-	@Column(name="sitPes")
-	private int situacaoPessoa;
-	
 	@Transient
 	private String errors;
 

@@ -19,7 +19,6 @@ import model.Pessoa;
 import model.dao.PessoaDAO;
 import model.enums.TipoPessoa;
 import model.pk.EnderecoPK;
-import oracle.sql.DATE;
 import util.Alerta;
 import view.PessoaView;
 import model.enums.PessoaSexo;
@@ -158,7 +157,7 @@ public class PessoaController implements Initializable{
             		
             }
         });
-
+		
 		btnEnderecos.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override

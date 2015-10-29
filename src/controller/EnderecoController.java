@@ -17,8 +17,8 @@ import util.Alerta;
 import view.EnderecoView;
 
 public class EnderecoController implements Initializable{
-	final private Endereco model;
-	final private EnderecoView view;
+	private Endereco model;
+	private EnderecoView view;
 	private StatusScene statusScene;
 	
 	@FXML
@@ -60,6 +60,8 @@ public class EnderecoController implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+			final Endereco model = this.getModel();
+			
 			btnSalvar.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -67,7 +69,6 @@ public class EnderecoController implements Initializable{
 				//if (model.isValidAdress()) {
 				if(true){
 					EnderecoDAO dao = new EnderecoDAO();
-					Endereco model = EnderecoController.this.getModel();
 
 					//if (model.getCodigo() == 0) {
 					if(true){

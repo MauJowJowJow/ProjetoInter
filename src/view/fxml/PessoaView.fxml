@@ -81,6 +81,7 @@
                </children>
             </GridPane>
             <Button fx:id="btnSalvar" layoutX="340.0" layoutY="453.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="61.0" text="Salvar" />
+            <Button fx:id="btnEnderecos" layoutX="419.0" layoutY="456.0" mnemonicParsing="false" text="Endereço" />
          </children>
       </Pane>
    </left>
