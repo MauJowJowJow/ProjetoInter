@@ -27,7 +27,7 @@
                   <Label prefHeight="44.0" prefWidth="153.0" text="Nome do Estado:" GridPane.rowIndex="1" />
                   <Label prefHeight="41.0" prefWidth="99.0" text="UF: " GridPane.rowIndex="2" />
                   <Label prefHeight="40.0" prefWidth="167.0" text="País:" GridPane.rowIndex="3" />
-                  <TextField fx:id="txtCodigo" promptText="Código" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="70.0" GridPane.columnIndex="1" />
+                  <TextField fx:id="txtCodigoEst" promptText="Código" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="70.0" GridPane.columnIndex="1" />
                   <TextField fx:id="txtNomeEstado" promptText="Digite o nome do Estado" prefHeight="25.0" prefWidth="211.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <TextField fx:id="txtUF" promptText="UF" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="39.0" snapToPixel="false" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="2" GridPane.vgrow="NEVER" />
                   <TextField fx:id="txtPais" promptText="Digite o nome do País" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="202.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
