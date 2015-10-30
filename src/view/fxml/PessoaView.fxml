@@ -50,7 +50,7 @@
                   <Label prefHeight="29.0" prefWidth="114.0" text="Tel. Celular:" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                   <Label prefHeight="28.0" prefWidth="122.0" text="Data de cadastro:" GridPane.columnIndex="3" GridPane.rowIndex="3" />                  
                   
-                  <TextField fx:id="txtCodigo" editable="false" focusTraversable="false" promptText="Código do Cliente" GridPane.columnIndex="1" />
+                  <TextField fx:id="txtCodigo" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="70.0" promptText="Código" GridPane.columnIndex="1" />
                   <TextField fx:id="txtNomeCliente" promptText="Nome do Cliente" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <ComboBox fx:id="cbSexo" prefHeight="25.0" prefWidth="161.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <ComboBox fx:id="cbPessoa" prefHeight="25.0" prefWidth="161.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
