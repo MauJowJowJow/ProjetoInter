@@ -152,16 +152,6 @@ public class Pessoa {
 		this.celular = celular;
 	}
 
-	public String getClasse() {
-		return classe;
-	}
-
-
-	public void setClasse(String classe) {
-		this.classe = classe;
-	}
-
-
 	public Date getDataCadastro() {
 		return dataCadastro;
 	}
