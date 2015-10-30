@@ -58,6 +58,14 @@ public class PessoaController implements Initializable{
 	private ComboBox<SitCadPessoa> cbSituacao;
 	@FXML
 	private TextField txtTelComercial;
+	@FXML
+	private TextField txtTelResidencial;
+	@FXML
+	private TextField txtCelular;
+	@FXML 
+	private DatePicker dateCadastro;
+	@FXML
+	private TextField txtEMail;
 	
 	public PessoaController() {
 		this.model = new Pessoa();
@@ -121,10 +129,20 @@ public class PessoaController implements Initializable{
             	model.setstatusPessoa(cbSituacao.getValue());
             	
             	model.setInscricaoEstadual(txtIsncEstadualRG.getText());
+            	model.setTelefoneCom(txtTelComercial.getText());
+            	model.setTelRes(txtTelResidencial.getText());
+            	model.setCelular(txtCelular.getText());
+            	model.setEmail(txtEMail.getText());
             	
             	if(dateNascimento.getValue() != null)
 	            	model.setDataNascimento(Date.from(
 	            			dateNascimento.getValue().atStartOfDay()
+	            			.atZone(ZoneId.systemDefault()).toInstant()
+	            			));
+            	
+            	if(dateCadastro.getValue() != null)
+	            	model.setDataCadastro(Date.from(
+	            			dateCadastro.getValue().atStartOfDay()
 	            			.atZone(ZoneId.systemDefault()).toInstant()
 	            			));
             	

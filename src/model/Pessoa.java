@@ -54,9 +54,6 @@ public class Pessoa {
 	@Column(name="telPes3", length=15)
 	private String telRes;
 	
-	@Column(name="claPes", length=20)// Verificar Enum
-	private String classe;
-	
 	@Column(name="datCad") // Verificar Calendar
 	private Date dataCadastro;
 	
