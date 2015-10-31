@@ -23,8 +23,8 @@ public class Estado {
 	private String siglaEstado;
 	
 	@NotNull(message="Informe o código do país")
-	@Column(name="nomPai", length=50)
-	private int nomePais;
+	@Column(name="nomPai", length=40)
+	private String nomePais;
 
 	public int getCodigoEstado() {
 		return codigoEstado;
@@ -50,11 +50,11 @@ public class Estado {
 		this.siglaEstado = siglaEstado;
 	}
 
-	public int getCodigoPais() {
+	public String getNomePais() {
 		return nomePais;
 	}
 
-	public void setCodigoPais(int codigoPais) {
-		this.nomePais = codigoPais;
+	public void setNomePais(String nomePais) {
+		this.nomePais = nomePais;
 	}
 }

@@ -21,6 +21,7 @@ public class PrincipalMenuController implements Initializable{
 	private PessoaController pessoaController;
 	private ProdutoController produtoController;
 	private ConsultaPessoaController consultaPessoaController;
+	private EstadoController estadoController;
 
 	private PrincipalMenu view;
 	private ArrayList<Object> telasAbertas;
@@ -105,7 +106,6 @@ public class PrincipalMenuController implements Initializable{
 				}
             }
         });
-
 		
 		// Consultas
 		
