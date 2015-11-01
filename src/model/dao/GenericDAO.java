@@ -23,6 +23,10 @@ public class GenericDAO<PK, T> {
 	public GenericDAO(String entity) {
 		createEntity(entity);
 	}
+	
+	public EntityManager getEntityManager(){
+		return entityManager;
+	}
 
 	public void createEntity(String entity) {
 		if (emf != null)

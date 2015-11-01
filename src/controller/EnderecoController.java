@@ -7,19 +7,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.WindowEvent;
 import model.Endereco;
 import model.dao.EnderecoDAO;
 import util.Alerta;
 import view.EnderecoView;
 
-public class EnderecoController extends ControllerDefault implements Initializable{
-	private Endereco model;
-	private EnderecoView view;
-	
+public class EnderecoController extends ControllerDefault implements Initializable{	
 	@FXML
 	private TextField txtCodigo;
 	
@@ -29,18 +24,20 @@ public class EnderecoController extends ControllerDefault implements Initializab
 	public EnderecoController() {}
 	
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+	public void initialize(URL arg0, ResourceBundle arg1) {			
 			btnSalvar.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
+				Endereco model = (Endereco) getModel();
+				EnderecoView view = (EnderecoView) getView();
+				
 				//if (model.isValidAdress()) {
 				if(true){
 					EnderecoDAO dao = new EnderecoDAO();
 
-					//if (model.getCodigo() == 0) {
-					if(true){
+					if (model.getPk().getCodigo() == 0) {
+						model.geraCodigo();
 						dao.insert(model);
 
 						Alerta alerta = new Alerta("Inserção",

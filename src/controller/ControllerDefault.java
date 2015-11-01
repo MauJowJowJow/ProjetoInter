@@ -17,8 +17,6 @@ public class ControllerDefault implements Initializable {
 		private StatusScene statusScene;
 				
 		public ControllerDefault() {
-			this.model = new ModelDefault();
-			this.view = new ViewDefault();
 		}
 
 		public Scene getScene() {

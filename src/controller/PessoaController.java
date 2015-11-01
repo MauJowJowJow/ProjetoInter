@@ -101,10 +101,12 @@ public class PessoaController extends ControllerDefault implements Initializable
 				try {
 					consultaPessoaView.iniciaTela(getScene(), Modality.WINDOW_MODAL);
 					
-					ConsultaPessoaController controller = consultaPessoaView.getFxmlLoader().<ConsultaPessoaController>getController(); 
-					setModel(controller.getModel());
-					
-					carregaModel();
+					ConsultaPessoaController controller = consultaPessoaView.getFxmlLoader().<ConsultaPessoaController>getController();
+					if(controller.getModel() != null){
+						setModel(controller.getModel());
+
+						carregaModel();
+					}
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}

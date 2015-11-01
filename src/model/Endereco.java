@@ -1,61 +1,65 @@
 package model;
 
+import java.io.Serializable;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Types;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.id.IdentifierGenerator;
+
+import model.dao.GenericDAO;
 import model.pk.EnderecoPK;
 
 @Entity
-@Table(name="endereco")
-public class Endereco extends ModelDefault{
-	
+@Table(name = "endereco")
+public class Endereco extends ModelDefault {
+
 	@EmbeddedId
 	private EnderecoPK pk;
-	
-	@NotNull(message="Informe o CEP (Somente números).")
-	@Column(name="CEPEnd", length=9)
+
+	@NotNull(message = "Informe o CEP (Somente números).")
+	@Column(name = "CEPEnd", length = 9)
 	private int CEP;
-	
-	@NotNull(message="Informe o nome da rua!")
-	@Column(name="logEnd", length=50)
+
+	@NotNull(message = "Informe o nome da rua!")
+	@Column(name = "logEnd", length = 50)
 	private String logradouro;
-	
-	@Column(name="numEnd", length=9)
+
+	@Column(name = "numEnd", length = 9)
 	private int numeroEnd;
-	
-	@Column(name="comEnd", length=60)
+
+	@Column(name = "comEnd", length = 60)
 	private String complemento;
-	
-	@NotNull(message="Informe o bairro!")
-	@Column(name="baiEnd", length=40)
+
+	@NotNull(message = "Informe o bairro!")
+	@Column(name = "baiEnd", length = 40)
 	private String bairro;
-	
-	@Column(name="codCid")
+
+	@Column(name = "codCid")
 	private int codigoCidade;
-	
+
 	/*
-	public int getCodigoPessoa() {
-		return codigoPessoa;
-	}
+	 * public int getCodigoPessoa() { return codigoPessoa; }
+	 * 
+	 * public void setCodigoPessoa(int codigoPessoa) { this.codigoPessoa =
+	 * codigoPessoa; }
+	 * 
+	 * 
+	 * public int getCodigo() { return codigo; }
+	 * 
+	 * public void setCodigo(int codigo) { this.codigo = codigo; }
+	 */
 
-	public void setCodigoPessoa(int codigoPessoa) {
-		this.codigoPessoa = codigoPessoa;
-	}
-
-
-	public int getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
-	}*/
-	
-	public EnderecoPK getPk(){
+	public EnderecoPK getPk() {
 		return pk;
 	}
-	
-	public void setPk(EnderecoPK pk){
+
+	public void setPk(EnderecoPK pk) {
 		this.pk = pk;
 	}
 
@@ -106,12 +110,29 @@ public class Endereco extends ModelDefault{
 	public void setCodigoCidade(int codigoCidade) {
 		this.codigoCidade = codigoCidade;
 	}
-	
-	public Endereco(){
-		
+
+	public Endereco() {
+
 	}
-	
-	public Endereco(EnderecoPK pk){
+
+	public Endereco(EnderecoPK pk) {
 		this.pk = pk;
+	}
+
+	public void geraCodigo(){
+		GenericDAO<EnderecoPK, Endereco> dao = new GenericDAO<EnderecoPK, Endereco>();
+		EntityManager em = dao.getEntityManager();
+		
+		try {	
+			Query query = em.createNativeQuery("select serializaEndereco(?) from dual");
+			query.setParameter(1, getPk().getCodigoPessoa());
+			
+			java.util.List list = query.getResultList();
+			
+			getPk().setCodigo(((java.math.BigDecimal)list.get(0)).intValue());
+			
+	    } catch (Exception e) {       
+	        e.printStackTrace();
+	    }
 	}
 }
