@@ -54,7 +54,7 @@ public class Pessoa extends ModelDefault{
 	@Column(name="telPes3", length=15)
 	private String telRes;
 	
-	@Column(name="datCad") // Verificar Calendar
+	@Column(name="datCad") 
 	private Date dataCadastro;
 	
 	@Column(name="sexPes")
