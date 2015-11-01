@@ -1,45 +1,18 @@
 package view;
 
-import controller.PessoaController;
-import controller.PrincipalMenuController;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
+import javafx.stage.Modality;
 
-public class PessoaView{
-
-	private Stage window;
-	BorderPane layout; 
-
-	public void start(Scene parent) throws Exception{
-		window = new Stage();
-		
-		window.initOwner(parent.getWindow());
-		
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/PessoaView.fxml"));
-		Parent root = fxmlLoader.load();
-		
-		root.autosize();
-		
-		window.setResizable(false);
-		window.setTitle("Cadastro de Pessoas");
-		
-		Scene scene = new Scene(root);
-
-		window.setScene(scene);
-		
-		PessoaController myController = fxmlLoader.getController();
-		myController.setScene(window.getScene());
-		
-		window.show();		
-	}
-	
-	public Stage getStage(){
-		return window;
-	}
+public class PessoaView extends ViewDefault{
 	
 	public PessoaView() {
-	}
+	}	
+	
+	public void iniciaTela(Scene parent){
+		try {
+			start(parent, "fxml/PessoaView.fxml", "Cadastro de Pessoas", Modality.NONE);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}	
 }

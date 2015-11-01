@@ -49,18 +49,28 @@ public class ProdutoController implements Initializable{
 	public StatusScene getStatus() {
 		return statusScene;
 	}
+	
+	public void setStatus(StatusScene statusScene) {
+		this.statusScene = statusScene;
+	}
+	
+	public void setAberto() {
+		
+	}
 
-	public void inicia(Scene parent) throws Exception {
+	public void setView(ProdutoView view) {
+		this.view = view;
+		
+		if(view == null) return;
+		
 		statusScene = StatusScene.Aberto;
-
-		view.start(parent);
-
-		view.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
+		
+		this.view.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent event) {
 				statusScene = StatusScene.Fechado;
 			}
-		});
+		});		
 	}
 
 	@Override

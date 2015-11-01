@@ -1,42 +1,17 @@
 package view;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.stage.Modality;
 
-public class EnderecoView {
-	private Stage window;
-	private FXMLLoader fxmlLoader;
-	
+public class EnderecoView extends ViewDefault {	
 	public EnderecoView() {
 	}
 	
-	public FXMLLoader getFxmlLoader(){
-		return fxmlLoader;
-	}
-	
-	public void start(Scene parent) throws Exception{
-		window = new Stage();
-		
-		window.initOwner(parent.getWindow());
-		
-		fxmlLoader = new FXMLLoader(getClass().getResource("fxml/EnderecoView.fxml"));
-		Parent root = fxmlLoader.load();
-
-		root.autosize();
-		
-		window.setResizable(false);
-		window.setTitle("Cadastro de Endereços");
-		
-		Scene scene = new Scene(root);
-
-		window.setScene(scene);
-		window.show();		
-	}
-	
-	public Stage getStage(){
-		return window;
-	}
-
+	public void iniciaTela(Scene parent){
+		try {
+			start(parent, "fxml/EnderecoView.fxml", "Cadastro de Endereços", Modality.WINDOW_MODAL);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}	
 }

@@ -22,19 +22,18 @@ import model.pk.EnderecoPK;
 import util.Alerta;
 import view.EnderecoView;
 import view.PessoaView;
+import view.ProdutoView;
 import model.enums.PessoaSexo;
 import model.enums.EstadoCivil;
 import model.enums.SitCadPessoa;
 
-public class PessoaController implements Initializable{
+public class PessoaController extends ControllerDefault implements Initializable{
 	private Pessoa model;
 	private PessoaView view;
-	private StatusScene statusScene;
 	private Scene scene;
 	
 	@FXML
 	private Button btnSalvar;
-
 	@FXML
 	private Button btnEnderecos;
 
@@ -43,29 +42,31 @@ public class PessoaController implements Initializable{
 	@FXML
 	private TextField txtNomeCliente;
 	@FXML
-	private ComboBox<PessoaSexo> cbSexo;
-	@FXML
-	private ComboBox<TipoPessoa> cbPessoa;
-	@FXML
-	private ComboBox<EstadoCivil> cbEstCivil;
-	@FXML
 	private TextField txtCGC;
 	@FXML
 	private TextField txtIsncEstadualRG;
-	@FXML
-	private DatePicker dateNascimento;
-	@FXML
-	private ComboBox<SitCadPessoa> cbSituacao;
 	@FXML
 	private TextField txtTelComercial;
 	@FXML
 	private TextField txtTelResidencial;
 	@FXML
 	private TextField txtCelular;
-	@FXML 
-	private DatePicker dateCadastro;
 	@FXML
-	private TextField txtEMail;
+	private TextField txtEMail; 
+	
+	@FXML
+	private ComboBox<PessoaSexo> cbSexo;
+	@FXML
+	private ComboBox<TipoPessoa> cbPessoa;
+	@FXML
+	private ComboBox<EstadoCivil> cbEstCivil;
+	@FXML
+	private ComboBox<SitCadPessoa> cbSituacao;
+	
+	@FXML
+	private DatePicker dateNascimento;	
+	@FXML
+	private DatePicker dateCadastro;
 	
 	public PessoaController() {
 		this.model = new Pessoa();
@@ -75,31 +76,6 @@ public class PessoaController implements Initializable{
 	public PessoaController(Pessoa model, PessoaView view) {
 		this.model = model;
 		this.view = view;
-	}
-
-	public void setModel(Pessoa model) {
-		this.model = model;
-	}
-	
-	public void setScene(Scene scene){
-		this.scene = scene;
-	}
-
-	public StatusScene getStatus() {
-		return statusScene;
-	}
-
-	public void inicia(Scene parent) throws Exception {
-		statusScene = StatusScene.Aberto;
-
-		view.start(parent);
-
-		view.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
-			@Override
-			public void handle(WindowEvent event) {
-				statusScene = StatusScene.Fechado;
-			}
-		});
 	}
 
 	@Override
@@ -183,13 +159,15 @@ public class PessoaController implements Initializable{
 			public void handle(ActionEvent event) {
 					if(model.getCodigo() != 0){
 						EnderecoView enderecoView = new EnderecoView();
-						EnderecoPK enderecoPK = new EnderecoPK(model.getCodigo(), 3);
+						
+						EnderecoPK enderecoPK = new EnderecoPK();
+						enderecoPK.setCodigoPessoa(model.getCodigo());
+						
 						Endereco endereco = new Endereco(enderecoPK);						
 						
 						try {
-							enderecoView.start(scene);
+							enderecoView.iniciaTela(scene);
 						} catch (Exception e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 						EnderecoController enderecoController = enderecoView.getFxmlLoader().<EnderecoController>getController();

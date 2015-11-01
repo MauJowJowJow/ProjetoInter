@@ -13,7 +13,11 @@ import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import util.Alerta;
+import view.ConsultaPessoaView;
+import view.EnderecoView;
+import view.PessoaView;
 import view.PrincipalMenu;
+import view.ProdutoView;
 
 
 public class PrincipalMenuController implements Initializable{
@@ -22,9 +26,7 @@ public class PrincipalMenuController implements Initializable{
 	private ProdutoController produtoController;
 	private ConsultaPessoaController consultaPessoaController;
 	private EstadoController estadoController;
-
-	private PrincipalMenu view;
-	private ArrayList<Object> telasAbertas;
+	
 	private Scene scene;
 	
 	@FXML
@@ -44,15 +46,6 @@ public class PrincipalMenuController implements Initializable{
 	}
 
 	public PrincipalMenuController(){
-		this.view = new PrincipalMenu();
-		
-		telasAbertas = new ArrayList<Object>();
-	}
-	
-	public PrincipalMenuController(PrincipalMenu view){
-		this.view = view;
-		
-		telasAbertas = new ArrayList<Object>();
 	}
 
 	@Override
@@ -63,19 +56,21 @@ public class PrincipalMenuController implements Initializable{
 
             @Override
             public void handle(ActionEvent event) {
-            	if(pessoaController == null)
-            		pessoaController = new PessoaController();
-            	
-            	if(pessoaController.getStatus() == StatusScene.Aberto){
-					Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
-					alerta.Alertar( (Stage) scene.getWindow());
-					return;
+            	if(pessoaController != null){
+	            	if(pessoaController.getStatus() == StatusScene.Aberto){
+						Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
+						alerta.Alertar( (Stage) scene.getWindow());
+						return;
+	            	}
             	}
             	
         		try {
-					pessoaController.inicia(scene);
+					PessoaView view = new PessoaView();
+					view.iniciaTela(scene);
 					
-					telasAbertas.add(pessoaController);
+					PessoaController pessoaController = view.getFxmlLoader().<PessoaController>getController();
+					pessoaController.setView(view);					
+					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -85,21 +80,23 @@ public class PrincipalMenuController implements Initializable{
 		
 		mntmProdutos.setOnAction(new EventHandler<ActionEvent>() {
 
-            @Override
+			@Override
             public void handle(ActionEvent event) {
-            	if(produtoController == null)
-            		produtoController = new ProdutoController();
-            	
-            	if(produtoController.getStatus() == StatusScene.Aberto){
-					Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
-					alerta.Alertar( (Stage) scene.getWindow());
-					return;
+            	if(produtoController != null){
+	            	if(produtoController.getStatus() == StatusScene.Aberto){
+						Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
+						alerta.Alertar( (Stage) scene.getWindow());
+						return;
+	            	}
             	}
             	
         		try {
-					produtoController.inicia(scene);
+					ProdutoView view = new ProdutoView();
+					view.iniciaTela(scene);
 					
-					telasAbertas.add(produtoController);
+					ProdutoController produtoController = view.getFxmlLoader().<ProdutoController>getController();
+					produtoController.setView(view);
+					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -111,19 +108,23 @@ public class PrincipalMenuController implements Initializable{
 		
 		mntmConsultaPessoas.setOnAction(new EventHandler<ActionEvent>() {
 
-            @Override
+			@Override
             public void handle(ActionEvent event) {
-            	if(consultaPessoaController == null)
-            		consultaPessoaController = new ConsultaPessoaController();
-            	
-            	if(consultaPessoaController.getStatus() == StatusScene.Aberto){
-					Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
-					alerta.Alertar( (Stage) scene.getWindow());
-					return;
+            	if(consultaPessoaController != null){
+	            	if(consultaPessoaController.getStatus() == StatusScene.Aberto){
+						Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
+						alerta.Alertar( (Stage) scene.getWindow());
+						return;
+	            	}
             	}
             	
         		try {
-        			consultaPessoaController.inicia(scene);					
+					ConsultaPessoaView view = new ConsultaPessoaView();
+					view.iniciaTela(scene);
+					
+					ConsultaPessoaController produtoController = view.getFxmlLoader().<ConsultaPessoaController>getController();
+					consultaPessoaController.setView(view);
+					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

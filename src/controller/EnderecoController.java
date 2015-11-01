@@ -16,10 +16,9 @@ import model.dao.EnderecoDAO;
 import util.Alerta;
 import view.EnderecoView;
 
-public class EnderecoController implements Initializable{
+public class EnderecoController extends ControllerDefault implements Initializable{
 	private Endereco model;
 	private EnderecoView view;
-	private StatusScene statusScene;
 	
 	@FXML
 	private TextField txtCodigo;
@@ -37,39 +36,6 @@ public class EnderecoController implements Initializable{
 		this.view = view;
 	}
 	
-	public void setModel(Endereco model) {
-		this.model = model;
-	}
-
-	public Endereco getModel() {
-		return this.model;
-	}
-	
-	public void setView(EnderecoView view) {
-		this.view = view;
-	}
-
-	public EnderecoView getView() {
-		return this.view;
-	}
-
-	public StatusScene getStatus() {
-		return statusScene;
-	}
-
-	public void inicia(Scene parent) throws Exception {
-		statusScene = StatusScene.Aberto;
-
-		view.start(parent);
-
-		view.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
-			@Override
-			public void handle(WindowEvent event) {
-				statusScene = StatusScene.Fechado;
-			}
-		});
-	}
-
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		

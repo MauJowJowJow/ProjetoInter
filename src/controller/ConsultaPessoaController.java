@@ -20,10 +20,11 @@ import javafx.stage.WindowEvent;
 import model.Pessoa;
 import model.dao.PessoaDAO;
 import view.ConsultaPessoaView;
+import view.PessoaView;
 import model.bean.formatters.*;
 
-public class ConsultaPessoaController implements Initializable{
-	
+public class ConsultaPessoaController extends ControllerDefault {
+
 	private Pessoa model;
 	private ConsultaPessoaView view;
 	private StatusScene statusScene;
@@ -56,29 +57,6 @@ public class ConsultaPessoaController implements Initializable{
 	public ConsultaPessoaController(Pessoa model, ConsultaPessoaView view) {
 		this.model = model;
 		this.view = view;
-	}
-
-	public void setModel(Pessoa model) {
-		this.model = model;
-	}
-	
-	public StatusScene getStatus(){
-		return statusScene;
-	}
-	
-	public void inicia(Scene parent) throws Exception{
-		
-		statusScene = StatusScene.Aberto;
-		
-		view.start(parent);
-		
-		view.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
-		    @Override
-		    public void handle(WindowEvent event) {
-		    	statusScene = StatusScene.Fechado;
-		    }
-		});
-		
 	}
 
 	@Override

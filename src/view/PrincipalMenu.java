@@ -30,8 +30,8 @@ public class PrincipalMenu extends Application{
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception{
-		loginUsuario();
-		
+		if(!loginUsuario()) System.exit(0);
+
 		window = primaryStage;
 		
 		fxmlLoader = new FXMLLoader(getClass().getResource("fxml/PrincipalMenuView.fxml"));
@@ -63,15 +63,15 @@ public class PrincipalMenu extends Application{
 		window.setMaximized(true);
 		
 		PrincipalMenuController myController = fxmlLoader.<PrincipalMenuController>getController();
-		myController.setScene(primaryStage.getScene());
+		myController.setScene(window.getScene());
 		
 		window.show();
 
 	}
 	
-	private void loginUsuario(){
+	private boolean loginUsuario(){
 		Login login = new Login();
 		
-		login.login();
+		return login.login();
 	}
 }
