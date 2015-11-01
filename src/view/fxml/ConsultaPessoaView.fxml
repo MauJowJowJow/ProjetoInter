@@ -20,6 +20,7 @@
                 <TableColumn fx:id="colCPFCNPJ" editable="false" prefWidth="154.0" text="CPF/CNPJ" />
               </columns>
             </TableView>
+            <Button fx:id="btnSelecionar" layoutX="360.0" layoutY="507.0" mnemonicParsing="false" text="Selecionar" />
             
          </children>
       </Pane>

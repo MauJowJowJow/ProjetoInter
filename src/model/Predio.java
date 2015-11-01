@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="predio")
 
-public class Predio {
+public class Predio extends ModelDefault{
 	
 	@Id
 	@Column(name="codPre", length=7)

@@ -8,9 +8,9 @@ public class ConsultaPessoaView extends ViewDefault {
 	public ConsultaPessoaView() {
 	}
 
-	public void iniciaTela(Scene parent){
+	public void iniciaTela(Scene parent, Modality modality){
 		try {
-			start(parent, "fxml/ConsultaPessoaView.fxml", "Consulta de Pessoas", Modality.NONE);
+			start(parent, "fxml/ConsultaPessoaView.fxml", "Consulta de Pessoas", modality);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

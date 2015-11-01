@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name="quarto")
 
-public class Quarto {
+public class Quarto extends ModelDefault{
 
 	@Id
 	@Column(name="codQua", length=7)

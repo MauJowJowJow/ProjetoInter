@@ -13,6 +13,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 import model.Endereco;
 import model.Pessoa;
@@ -20,6 +23,7 @@ import model.dao.PessoaDAO;
 import model.enums.TipoPessoa;
 import model.pk.EnderecoPK;
 import util.Alerta;
+import view.ConsultaPessoaView;
 import view.EnderecoView;
 import view.PessoaView;
 import view.ProdutoView;
@@ -28,15 +32,13 @@ import model.enums.EstadoCivil;
 import model.enums.SitCadPessoa;
 
 public class PessoaController extends ControllerDefault implements Initializable{
-	private Pessoa model;
-	private PessoaView view;
-	private Scene scene;
-	
 	@FXML
 	private Button btnSalvar;
 	@FXML
 	private Button btnEnderecos;
-
+	@FXML
+	private Button btnPesquisaPessoa;
+	
 	@FXML
 	private TextField txtCodigo;
 	@FXML
@@ -69,17 +71,12 @@ public class PessoaController extends ControllerDefault implements Initializable
 	private DatePicker dateCadastro;
 	
 	public PessoaController() {
-		this.model = new Pessoa();
-		this.view = new PessoaView();
-	}
-	
-	public PessoaController(Pessoa model, PessoaView view) {
-		this.model = model;
-		this.view = view;
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setTxtCodigo(txtCodigo);
+		
 		cbSexo.getItems().addAll(PessoaSexo.values());
 		cbSexo.setValue(PessoaSexo.Masculino);
 
@@ -92,10 +89,36 @@ public class PessoaController extends ControllerDefault implements Initializable
 		cbSituacao.getItems().addAll(SitCadPessoa.values());
 		cbSituacao.setValue(SitCadPessoa.Ativo);
 		
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();	
+        btnPesquisaPessoa.setGraphic(new ImageView(classLoader.getResource("Search.png").toString()));
+        
+        btnPesquisaPessoa.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+				ConsultaPessoaView consultaPessoaView = new ConsultaPessoaView();
+				
+				try {
+					consultaPessoaView.iniciaTela(getScene(), Modality.WINDOW_MODAL);
+					
+					ConsultaPessoaController controller = consultaPessoaView.getFxmlLoader().<ConsultaPessoaController>getController(); 
+					setModel(controller.getModel());
+					
+					carregaModel();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+            }
+        });
+        		
+		
 		btnSalvar.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
+            	Pessoa model = (Pessoa) getModel();
+            	PessoaView view = (PessoaView) getView();
+            	
             	if(!txtNomeCliente.getText().equals(""))
             		model.setNome(txtNomeCliente.getText());
             	
@@ -157,25 +180,44 @@ public class PessoaController extends ControllerDefault implements Initializable
 
 			@Override
 			public void handle(ActionEvent event) {
+					Pessoa model = (Pessoa) getModel();
+					
 					if(model.getCodigo() != 0){
 						EnderecoView enderecoView = new EnderecoView();
 						
 						EnderecoPK enderecoPK = new EnderecoPK();
 						enderecoPK.setCodigoPessoa(model.getCodigo());
 						
-						Endereco endereco = new Endereco(enderecoPK);						
+						Endereco endereco = new Endereco(enderecoPK);
 						
 						try {
-							enderecoView.iniciaTela(scene);
+							enderecoView.iniciaTela(getScene(), endereco);
 						} catch (Exception e1) {
 							e1.printStackTrace();
 						}
-						EnderecoController enderecoController = enderecoView.getFxmlLoader().<EnderecoController>getController();
-						enderecoController.setModel(endereco);
-						enderecoController.setView(enderecoView);
-						
+					} else{
+						Alerta alerta = new Alerta("Cadastro de Pessoas", "Uma pessoa já cadastrada deve ser selecionada para alteração de seus endereços!");
+	            		
+	            		alerta.Erro(getView().getStage());
 					}
 			}
 		});
+	}
+	
+	public void setTxtCodigo(TextField txtCodigo){
+		this.txtCodigo = txtCodigo;
+	}
+	
+	public TextField getTxtCodigo(){
+		return this.txtCodigo;
+	}
+	
+	private void carregaModel(){
+		Pessoa model = (Pessoa) getModel();
+		
+		String codigo = Integer.toString(model.getCodigo());
+		
+		//getTxtCodigo().setText(codigo);
+		txtCodigo.setText(codigo);
 	}
 }

@@ -1,7 +1,6 @@
 package controller;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -10,13 +9,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import util.Alerta;
 import view.ConsultaPessoaView;
-import view.EnderecoView;
 import view.PessoaView;
-import view.PrincipalMenu;
 import view.ProdutoView;
 
 
@@ -57,7 +55,7 @@ public class PrincipalMenuController implements Initializable{
             @Override
             public void handle(ActionEvent event) {
             	if(pessoaController != null){
-	            	if(pessoaController.getStatus() == StatusScene.Aberto){
+	            	if(pessoaController.getStatusScene() == StatusScene.Aberto){
 						Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
 						alerta.Alertar( (Stage) scene.getWindow());
 						return;
@@ -66,11 +64,7 @@ public class PrincipalMenuController implements Initializable{
             	
         		try {
 					PessoaView view = new PessoaView();
-					view.iniciaTela(scene);
-					
-					PessoaController pessoaController = view.getFxmlLoader().<PessoaController>getController();
-					pessoaController.setView(view);					
-					
+					view.iniciaTela(scene);					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -93,10 +87,6 @@ public class PrincipalMenuController implements Initializable{
         		try {
 					ProdutoView view = new ProdutoView();
 					view.iniciaTela(scene);
-					
-					ProdutoController produtoController = view.getFxmlLoader().<ProdutoController>getController();
-					produtoController.setView(view);
-					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -111,7 +101,7 @@ public class PrincipalMenuController implements Initializable{
 			@Override
             public void handle(ActionEvent event) {
             	if(consultaPessoaController != null){
-	            	if(consultaPessoaController.getStatus() == StatusScene.Aberto){
+	            	if(consultaPessoaController.getStatusScene() == StatusScene.Aberto){
 						Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
 						alerta.Alertar( (Stage) scene.getWindow());
 						return;
@@ -120,11 +110,7 @@ public class PrincipalMenuController implements Initializable{
             	
         		try {
 					ConsultaPessoaView view = new ConsultaPessoaView();
-					view.iniciaTela(scene);
-					
-					ConsultaPessoaController produtoController = view.getFxmlLoader().<ConsultaPessoaController>getController();
-					consultaPessoaController.setView(view);
-					
+					view.iniciaTela(scene, Modality.NONE);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

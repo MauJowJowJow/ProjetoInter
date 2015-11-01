@@ -7,7 +7,7 @@ import model.pk.EnderecoPK;
 
 @Entity
 @Table(name="endereco")
-public class Endereco {
+public class Endereco extends ModelDefault{
 	
 	@EmbeddedId
 	private EnderecoPK pk;

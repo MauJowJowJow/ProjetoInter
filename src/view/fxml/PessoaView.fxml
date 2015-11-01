@@ -5,6 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.BorderPane?>
 
 <BorderPane prefHeight="559.0" prefWidth="727.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PessoaController">
@@ -82,6 +83,9 @@
             </GridPane>
             <Button fx:id="btnSalvar" layoutX="340.0" layoutY="453.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="61.0" text="Salvar" />
             <Button fx:id="btnEnderecos" layoutX="419.0" layoutY="456.0" mnemonicParsing="false" text="Endereço" />
+            
+            <Button fx:id="btnPesquisaPessoa" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="234.0" layoutY="75.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" textAlignment="CENTER">
+            </Button>
          </children>
       </Pane>
    </left>

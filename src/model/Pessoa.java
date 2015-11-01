@@ -18,7 +18,7 @@ import model.enums.TipoPessoa;;
 @Entity
 @Table(name="pessoa")
 @CheckCGC(tipoPessoa="tipoPessoa", CGC="CNPJCPF")
-public class Pessoa {
+public class Pessoa extends ModelDefault{
 	
 	@Id
 	@Column(name="codPes", length=7)

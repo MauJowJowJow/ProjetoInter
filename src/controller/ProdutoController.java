@@ -32,15 +32,7 @@ public class ProdutoController implements Initializable{
 	@FXML
 	private Button btnSalvar;
 	
-	public ProdutoController() {
-		this.model = new Produto();
-		this.view = new ProdutoView();
-	}
-
-	public ProdutoController(Produto model, ProdutoView view) {
-		this.model = model;
-		this.view = view;
-	}
+	public ProdutoController() {}
 
 	public void setModel(Produto model) {
 		this.model = model;

@@ -26,15 +26,7 @@ public class EnderecoController extends ControllerDefault implements Initializab
 	@FXML
 	private Button btnSalvar;
 	
-	public EnderecoController() {
-		this.model = new Endereco();
-		this.view = new EnderecoView();
-	}
-
-	public EnderecoController(Endereco model, EnderecoView view) {
-		this.model = model;
-		this.view = view;
-	}
+	public EnderecoController() {}
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

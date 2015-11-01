@@ -8,10 +8,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -19,15 +21,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.WindowEvent;
 import model.Pessoa;
 import model.dao.PessoaDAO;
+import util.Alerta;
 import view.ConsultaPessoaView;
 import view.PessoaView;
 import model.bean.formatters.*;
 
-public class ConsultaPessoaController extends ControllerDefault {
-
-	private Pessoa model;
-	private ConsultaPessoaView view;
-	private StatusScene statusScene;
+public class ConsultaPessoaController extends ControllerDefault {	
+	@FXML
+	private Button btnSelecionar;
 	
 	@FXML
 	private TextField filtroNome;
@@ -49,56 +50,30 @@ public class ConsultaPessoaController extends ControllerDefault {
 	
 	private ObservableList<Pessoa> data;
 	
-	public ConsultaPessoaController() {
-		this.model = new Pessoa();
-		this.view = new ConsultaPessoaView();
-	}
-	
-	public ConsultaPessoaController(Pessoa model, ConsultaPessoaView view) {
-		this.model = model;
-		this.view = view;
-	}
+	public ConsultaPessoaController() {	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		iniciaGrid();
 		
-		/*
-		
-		btnSalvar.setOnAction(new EventHandler<ActionEvent>() {
+		btnSelecionar.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-            	if(!txtNomeCliente.getText().equals(""))
-            		model.setNome(txtNomeCliente.getText());
-            	
-            	model.setSexo(cbSexo.getValue());
-            	model.setTipoPessoa(cbPessoa.getValue());
-            	
-            	if(!txtCGC.getText().equals(""))
-            		model.setCNPJCPF(txtCGC.getText());
-            	
-            	
-            	
-            	if(model.isValidPerson()){
-            		PessoaDAO dao = new PessoaDAO();
+            	if(tablePessoas.getSelectionModel().getSelectedItems().size() > 1){
+            		Alerta alerta = new Alerta("Consulta de Pessoas", "Apenas uma pessoa pode ser selecionada!");
             		
-            		if(model.getCodigo() == 0){
-            			dao.insert(model);
-            		}else{
-            			dao.update(model);
-            		}
-            		
-            		dao.closeEntity();
-            	}else{
-            		Alerta alerta = new Alerta("Validação ", model.getErrors());
-            		
-            		alerta.Erro(view.getStage());
+            		alerta.Erro(getView().getStage());
+            		return;
             	}
-            		
+            	
+            	if(tablePessoas.getSelectionModel().getSelectedItems().size() == 1)
+            		setModel((Pessoa) tablePessoas.getSelectionModel().getSelectedItem());
+            		getView().getStage().close();
+            		return;
             }
-        });*/
+        });
 	}
 
 	private void iniciaGrid(){

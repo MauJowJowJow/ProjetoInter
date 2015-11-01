@@ -7,7 +7,7 @@ import oracle.sql.DATE;
 @Entity
 @Table(name="item_reserva")
 
-public class Item_reserva {
+public class Item_reserva extends ModelDefault{
 
 	@Id
 	@Column(name="codRes", length=7)
