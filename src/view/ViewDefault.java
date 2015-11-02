@@ -53,8 +53,10 @@ public class ViewDefault {
 		
 		Scene scene = new Scene(root);
 		
-		controller.setView(this);
-		controller.setScene(scene);
+		if(controller != null){
+			controller.setView(this);
+			controller.setScene(scene);
+		}
 		
 		window.setScene(scene);
 	}

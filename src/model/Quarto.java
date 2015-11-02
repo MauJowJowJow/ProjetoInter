@@ -12,7 +12,7 @@ public class Quarto extends ModelDefault{
 	@Column(name="codQua", length=7)
 	@SequenceGenerator(name="QuartoSequence", sequenceName="hotel.quarto_sequence", allocationSize=1)
 	@GeneratedValue(generator="QuartoSequence", strategy=GenerationType.SEQUENCE)
-	private int codigoQuarto;
+	private int codigo;
 	
 	@NotNull(message="Informe o nome do quarto!")
 	@Column(name="desQua", length=35)
@@ -27,7 +27,7 @@ public class Quarto extends ModelDefault{
 	private int dormitorios;
 	
 	@NotNull(message="Informe o valor da diária!")
-	@Column(name="valQua", length=7)
+	@Column(name="vlrQua", length=7)
 	private int valorQuarto;
 	
 	@NotNull(message="Informe o status do quarto!")
@@ -38,12 +38,12 @@ public class Quarto extends ModelDefault{
 	@Column(name="codPre", length=7)
 	private int codigoPredio;
 
-	public int getCodigoQuarto() {
-		return codigoQuarto;
+	public int getCodigo() {
+		return codigo;
 	}
 
-	public void setCodigoQuarto(int codigoQuarto) {
-		this.codigoQuarto = codigoQuarto;
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
 
 	public String getDescricao() {

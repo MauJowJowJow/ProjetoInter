@@ -16,12 +16,15 @@ import util.Alerta;
 import view.ConsultaPessoaView;
 import view.PessoaView;
 import view.ProdutoView;
+import view.ReservaView;
 
 
 public class PrincipalMenuController implements Initializable{
 	// Controllers filhos
 	private PessoaController pessoaController;
 	private ProdutoController produtoController;
+	private ReservaController reservaController;
+	
 	private ConsultaPessoaController consultaPessoaController;
 	private EstadoController estadoController;
 	
@@ -32,6 +35,9 @@ public class PrincipalMenuController implements Initializable{
 	
 	@FXML
 	private MenuItem mntmProdutos;
+	
+	@FXML
+	private MenuItem mntmReservas;
 	
 	@FXML
 	private MenuItem mntmConsultaPessoas;
@@ -77,7 +83,7 @@ public class PrincipalMenuController implements Initializable{
 			@Override
             public void handle(ActionEvent event) {
             	if(produtoController != null){
-	            	if(produtoController.getStatus() == StatusScene.Aberto){
+	            	if(produtoController.getStatusScene() == StatusScene.Aberto){
 						Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
 						alerta.Alertar( (Stage) scene.getWindow());
 						return;
@@ -93,6 +99,28 @@ public class PrincipalMenuController implements Initializable{
 				}
             }
         });
+		
+		mntmReservas.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+            public void handle(ActionEvent event) {
+            	if(reservaController != null){
+	            	if(reservaController.getStatusScene() == StatusScene.Aberto){
+						Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
+						alerta.Alertar( (Stage) scene.getWindow());
+						return;
+	            	}
+            	}
+            	
+        		try {
+					ReservaView view = new ReservaView();
+					view.iniciaTela(scene);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+        });		
 		
 		// Consultas
 		

@@ -74,9 +74,7 @@ public class PessoaController extends ControllerDefault implements Initializable
 	}
 
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		setTxtCodigo(txtCodigo);
-		
+	public void initialize(URL arg0, ResourceBundle arg1) {		
 		cbSexo.getItems().addAll(PessoaSexo.values());
 		cbSexo.setValue(PessoaSexo.Masculino);
 
@@ -206,20 +204,11 @@ public class PessoaController extends ControllerDefault implements Initializable
 		});
 	}
 	
-	public void setTxtCodigo(TextField txtCodigo){
-		this.txtCodigo = txtCodigo;
-	}
-	
-	public TextField getTxtCodigo(){
-		return this.txtCodigo;
-	}
-	
 	private void carregaModel(){
 		Pessoa model = (Pessoa) getModel();
 		
 		String codigo = Integer.toString(model.getCodigo());
 		
-		//getTxtCodigo().setText(codigo);
 		txtCodigo.setText(codigo);
 	}
 }

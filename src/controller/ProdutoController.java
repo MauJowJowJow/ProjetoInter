@@ -21,11 +21,7 @@ import model.enums.TipoPessoa;
 import util.Alerta;
 import view.ProdutoView;
 
-public class ProdutoController implements Initializable{
-	private Produto model;
-	private ProdutoView view;
-	private StatusScene statusScene;
-	
+public class ProdutoController extends ControllerDefault implements Initializable{	
 	@FXML
 	private TextField txtCodigo;
 	
@@ -34,44 +30,16 @@ public class ProdutoController implements Initializable{
 	
 	public ProdutoController() {}
 
-	public void setModel(Produto model) {
-		this.model = model;
-	}
-
-	public StatusScene getStatus() {
-		return statusScene;
-	}
-	
-	public void setStatus(StatusScene statusScene) {
-		this.statusScene = statusScene;
-	}
-	
-	public void setAberto() {
-		
-	}
-
-	public void setView(ProdutoView view) {
-		this.view = view;
-		
-		if(view == null) return;
-		
-		statusScene = StatusScene.Aberto;
-		
-		this.view.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
-			@Override
-			public void handle(WindowEvent event) {
-				statusScene = StatusScene.Fechado;
-			}
-		});		
-	}
-
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 			btnSalvar.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				if (model.isValidProduct()) {
+				Produto model = (Produto) getModel();
+				ProdutoView view = (ProdutoView) getView();
+				
+				if (model.isValid()) {
 					ProdutoDAO dao = new ProdutoDAO();
 
 					if (model.getCodigo() == 0) {

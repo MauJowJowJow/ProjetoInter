@@ -2,44 +2,46 @@ package model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import model.pk.Item_reservaPK;
 import oracle.sql.DATE;
 
 @Entity
 @Table(name="item_reserva")
-
+@IdClass(Item_reservaPK.class)
 public class Item_reserva extends ModelDefault{
 
 	@Id
 	@Column(name="codRes", length=7)
-	@SequenceGenerator(name="ItemReservaSequence", sequenceName="hotel.item_sequence", allocationSize=1)
-	@GeneratedValue(generator="ItemReservaSequence", strategy=GenerationType.SEQUENCE)
-	private int codigoItemReserva;
-	
+	private int codigo;
+
+	@Id
 	@NotNull(message="Informe o codigo do quarto!")
 	@Column(name="codQua", length=7)
 	private int codigoQuarto;
+	
+	@Transient
+	private String descricaoQuarto;
 	
 	@NotNull(message="Informe a data de Check-In")
 	@Column(name="datCIn")
 	private DATE checkIn;
 	
-	@NotNull(message="Informe a data de Check-Out")
 	@Column(name="datOut")
 	private DATE checkOut;
 	
-	@NotNull(message="Informe a quantidade de dias!")
 	@Column(name="diaPer", length=4)
 	private int diasReserva;
 	
 	@Column(name="vlrRes", length=7)
-	private int valorReserva;
+	private double valorReserva;
 
-	public int getCodigoItemReserva() {
-		return codigoItemReserva;
+	public int getCodigo() {
+		return codigo;
 	}
 
-	public void setCodigoItemReserva(int codigoItemReserva) {
-		this.codigoItemReserva = codigoItemReserva;
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
 
 	public int getCodigoQuarto() {
@@ -48,6 +50,14 @@ public class Item_reserva extends ModelDefault{
 
 	public void setCodigoQuarto(int codigoQuarto) {
 		this.codigoQuarto = codigoQuarto;
+	}
+
+	public String getDescricaoQuarto() {
+		return descricaoQuarto;
+	}
+
+	public void setDescricaoQuarto(String descricaoQuarto) {
+		this.descricaoQuarto = descricaoQuarto;
 	}
 
 	public DATE getCheckIn() {
@@ -74,11 +84,11 @@ public class Item_reserva extends ModelDefault{
 		this.diasReserva = diasReserva;
 	}
 
-	public int getValorReserva() {
+	public double getValorReserva() {
 		return valorReserva;
 	}
 
-	public void setValorReserva(int valorReserva) {
+	public void setValorReserva(double valorReserva) {
 		this.valorReserva = valorReserva;
 	}
 }

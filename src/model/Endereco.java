@@ -43,18 +43,6 @@ public class Endereco extends ModelDefault {
 	@Column(name = "codCid")
 	private int codigoCidade;
 
-	/*
-	 * public int getCodigoPessoa() { return codigoPessoa; }
-	 * 
-	 * public void setCodigoPessoa(int codigoPessoa) { this.codigoPessoa =
-	 * codigoPessoa; }
-	 * 
-	 * 
-	 * public int getCodigo() { return codigo; }
-	 * 
-	 * public void setCodigo(int codigo) { this.codigo = codigo; }
-	 */
-
 	public EnderecoPK getPk() {
 		return pk;
 	}

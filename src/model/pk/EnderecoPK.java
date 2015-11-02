@@ -48,7 +48,5 @@ public class EnderecoPK implements Serializable{
 	@Override
 	public int hashCode(){
 		return 31 * (codigoPessoa + codigoPessoa);
-	}
-	
-		
+	}		
 }

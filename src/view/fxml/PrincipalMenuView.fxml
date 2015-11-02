@@ -16,6 +16,7 @@
             <items>
               <MenuItem fx:id="mntmPessoas" mnemonicParsing="false" text="Pessoas" />
               <MenuItem fx:id="mntmProdutos" mnemonicParsing="false" text="Produtos" />
+              <MenuItem fx:id="mntmReservas" mnemonicParsing="false" text="Reservas" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Consultas">

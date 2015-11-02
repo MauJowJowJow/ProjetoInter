@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="390.0" prefWidth="712.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReservaController">
+   <top>
+      <Pane prefHeight="423.0" prefWidth="650.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label contentDisplay="RIGHT" layoutX="40.0" layoutY="37.0" text="Código" />
+            <Label contentDisplay="RIGHT" layoutX="40.0" layoutY="71.0" text="Pessoa" />
+            
+            <TextField fx:id="txtCodigo" editable="false" layoutX="88.0" layoutY="33.0" prefHeight="25.0" prefWidth="78.0" promptText="Código" />
+            <TextField fx:id="txtCodigoPessoa" layoutX="88.0" layoutY="67.0" prefHeight="25.0" prefWidth="78.0" promptText="Cód Pessoa" />
+            <Button fx:id="btnPesquisaPessoa" layoutX="171.0" layoutY="67.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
+            <TextField fx:id="txtNomePessoa" editable="false" focusTraversable="false" layoutX="201.0" layoutY="67.0" prefHeight="25.0" prefWidth="309.0" promptText="Nome Pessoa" />
+            
+            
+            <TextField fx:id="txtCodigoQuarto" layoutX="37.0" layoutY="113.0" prefWidth="78.0" promptText="Cód Quarto" />
+            <Button fx:id="btnPesquisaQuarto" layoutX="121.0" layoutY="113.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
+            <TextField fx:id="txtDescricaoQuarto" editable="false" focusTraversable="false" layoutX="154.0" layoutY="113.0" prefHeight="25.0" prefWidth="223.0" promptText="Descrição Quarto" />
+            <TextField fx:id="txtCheckIn" layoutX="382.0" layoutY="113.0" prefWidth="70.0" promptText="Check In" />
+            <TextField fx:id="txtCheckOut" layoutX="457.0" layoutY="113.0" prefWidth="70.0" promptText="Check Out" />
+            <TextField fx:id="txtDiasEstadia" layoutX="531.0" layoutY="113.0" prefWidth="70.0" promptText="Dias Estadia" />
+            <TextField fx:id="txtValor" layoutX="605.0" layoutY="113.0" prefWidth="70.0" promptText="Valor" />
+            
+            <Button fx:id="btnAddLinha" layoutX="679.0" layoutY="113.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
+            <Button fx:id="btnDelLinha" layoutX="679.0" layoutY="146.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
+            
+            <TableView fx:id="tbvItemReserva" editable="true" layoutX="37.0" layoutY="146.0" prefHeight="229.0" prefWidth="637.0">
+              <columns>
+                <TableColumn fx:id="colCodigoQuarto" prefWidth="75.0" text="Quarto" />
+                <TableColumn fx:id="colDescricaoQuarto" prefWidth="265.0" text="Descrição" />
+                <TableColumn fx:id="colCheckIn" prefWidth="76.0" text="Check In" />
+                <TableColumn fx:id="colCheckOut" prefWidth="75.0" text="Check Out" />
+                <TableColumn fx:id="colDiasEstadia" prefWidth="76.0" text="Dias Estadia" />
+                <TableColumn fx:id="colValor" prefWidth="69.0" text="Valor" />
+              </columns>
+            </TableView>
+            
+            <Button fx:id="BtnSalvar" layoutX="330.0" layoutY="386.0" mnemonicParsing="false" text="Salvar" />
+         </children>
+      </Pane>
+   </top>
+</BorderPane>
