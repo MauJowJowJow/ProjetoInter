@@ -1,10 +1,11 @@
 package model;
 
+import java.util.Date;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import model.pk.Item_reservaPK;
-import oracle.sql.DATE;
 
 @Entity
 @Table(name="item_reserva")
@@ -25,10 +26,10 @@ public class Item_reserva extends ModelDefault{
 	
 	@NotNull(message="Informe a data de Check-In")
 	@Column(name="datCIn")
-	private DATE checkIn;
+	private Date checkIn;
 	
 	@Column(name="datOut")
-	private DATE checkOut;
+	private Date checkOut;
 	
 	@Column(name="diaPer", length=4)
 	private int diasReserva;
@@ -60,19 +61,19 @@ public class Item_reserva extends ModelDefault{
 		this.descricaoQuarto = descricaoQuarto;
 	}
 
-	public DATE getCheckIn() {
+	public Date getCheckIn() {
 		return checkIn;
 	}
 
-	public void setCheckIn(DATE checkIn) {
+	public void setCheckIn(Date checkIn) {
 		this.checkIn = checkIn;
 	}
 
-	public DATE getCheckOut() {
+	public Date getCheckOut() {
 		return checkOut;
 	}
 
-	public void setCheckOut(DATE checkOut) {
+	public void setCheckOut(Date checkOut) {
 		this.checkOut = checkOut;
 	}
 

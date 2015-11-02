@@ -2,6 +2,7 @@ package controller;
 
 import java.net.URL;
 import java.sql.Date;
+import java.time.ZoneId;
 import java.util.ResourceBundle;
 
 import javax.persistence.Column;
@@ -17,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
@@ -58,10 +60,10 @@ public class ReservaController extends ControllerDefault{
 	private TextField txtDescricaoQuarto;
 	
 	@FXML
-	private TextField txtCheckIn;
+	private DatePicker txtCheckIn;
 	
 	@FXML
-	private TextField txtCheckOut;
+	private DatePicker txtCheckOut;
 	
 	@FXML
 	private TextField txtDiasEstadia;
@@ -79,26 +81,23 @@ public class ReservaController extends ControllerDefault{
 	private Button btnDelLinha;
 	
 	@FXML
-	private TableView<Item_reserva> tbvItemReserva;
+	private Button btnSalvar;
 	
+	@FXML
+	private TableView<Item_reserva> tbvItemReserva;
 	@FXML
 	private TableColumn<Item_reserva, Integer> colCodigoQuarto;
-	
 	@FXML
 	private TableColumn<Item_reserva, String> colDescricaoQuarto;
-	
 	@FXML
 	private TableColumn<Item_reserva, Date> colCheckIn;
-	
 	@FXML
 	private TableColumn<Item_reserva, Date> colCheckOut;
-	
 	@FXML
-	private TableColumn<Item_reserva, Integer> colDiasEstadia;
-	
+	private TableColumn<Item_reserva, Integer> colDiasEstadia;	
 	@FXML
 	private TableColumn<Item_reserva, Double> colValor;
-	
+
 	public void setPessoa(Pessoa pessoa){
 		this.pessoa = pessoa;
 	}
@@ -106,39 +105,40 @@ public class ReservaController extends ControllerDefault{
 	public Pessoa getPessoa(){
 		return pessoa;
 	}
-	
+
 	public void setQuarto(Quarto quarto){
 		this.quarto = quarto;
 	}
-	
+
 	public Quarto getQuarto(){
 		return quarto;
 	}
-	
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();	
-	    
-	    
+			
 
-	    txtCodigoPessoa.textProperty().addListener((observable, oldValue, newValue) -> {
-	    			if(newValue.isEmpty())
-	    				newValue = "0";
-	    			
-			    	int codigo = Integer.parseInt(newValue);
-			    	
-			    	if(codigo != 0){
-			    		PessoaDAO dao = new PessoaDAO();
-			    		setPessoa(dao.getById(codigo));
-			    		txtNomePessoa.setText(getPessoa().getNome());
-			    	}else{
-			    		txtNomePessoa.setText("");
-			    	}
-		});
-	    
-	    btnPesquisaPessoa.setGraphic(new ImageView(classLoader.getResource("Search.png").toString()));
-	    btnPesquisaPessoa.setOnAction(new EventHandler<ActionEvent>() {
+		imagensBotoes();
+		eventosPesquisa();
+		eventosBotoes();
+		eventosCampos();
+	    iniciaTableView();
+	}
 	
+	private void imagensBotoes(){
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		
+	    btnPesquisaPessoa.setGraphic(new ImageView(classLoader.getResource("Search.png").toString()));
+	    btnPesquisaQuarto.setGraphic(new ImageView(classLoader.getResource("Search.png").toString()));
+	    
+	    btnAddLinha.setGraphic(new ImageView(classLoader.getResource("Plus.png").toString()));
+		btnDelLinha.setGraphic(new ImageView(classLoader.getResource("minus.png").toString()));
+		
+	}
+	
+	public void eventosPesquisa(){
+	    btnPesquisaPessoa.setOnAction(new EventHandler<ActionEvent>() {
+	    	
 	        @Override
 	        public void handle(ActionEvent event) {
 				ConsultaPessoaView consultaPessoaView = new ConsultaPessoaView();
@@ -158,24 +158,7 @@ public class ReservaController extends ControllerDefault{
 				}
 	        }
 	    });
-	    
-	    txtCodigoQuarto.textProperty().addListener((observable, oldValue, newValue) -> {
-		    		if(newValue.isEmpty())
-		    			newValue = "0";
-		    		
-			    	int codigo = Integer.parseInt(newValue);
-			    	
-			    	if(codigo != 0){
-			    		QuartoDAO dao = new QuartoDAO();
-			    		setQuarto(dao.getById(codigo));
-			    		txtDescricaoQuarto.setText(getQuarto().getDescricao());
-			    	}else{
-			    		txtDescricaoQuarto.setText("");
-			    	}
-		});
-	    
-	    btnPesquisaQuarto.setGraphic(new ImageView(classLoader.getResource("Search.png").toString()));
-	    
+
 	    btnPesquisaQuarto.setOnAction(evt -> {/*
 	    	ConsultaQuartoView consultaQuartoView = new ConsultaQuartoView();
 			
@@ -193,34 +176,103 @@ public class ReservaController extends ControllerDefault{
 				e1.printStackTrace();
 			}*/
 	    });
-	    
-	    btnAddLinha.setGraphic(new ImageView(classLoader.getResource("Plus.png").toString()));
-	    
+	}
+	
+	public void eventosBotoes(){
+		
 	    btnAddLinha.setOnAction(evt -> {
-	    		Item_reserva item_reserva = new Item_reserva();
-	    		item_reserva.setCodigoQuarto(Integer.parseInt(txtCodigoQuarto.getText()));
-	    		
-	        	tbvItemReserva.getItems().add(item_reserva);
+    		Item_reserva item_reserva = new Item_reserva();
+    		
+    		if(txtCodigoQuarto.getText().isEmpty())
+    			txtCodigoQuarto.setText("0");
+    		
+    		item_reserva.setCodigoQuarto(Integer.parseInt(txtCodigoQuarto.getText()));
+    		item_reserva.setDescricaoQuarto(txtDescricaoQuarto.getText());
+    		
+    		if(txtCheckIn.getValue() != null)
+	    		item_reserva.setCheckIn(Date.from(
+            			txtCheckIn.getValue().atStartOfDay()
+            			.atZone(ZoneId.systemDefault()).toInstant()
+            			));
+    		
+    		if(txtCheckOut.getValue() != null)
+	    		item_reserva.setCheckOut(Date.from(
+            			txtCheckOut.getValue().atStartOfDay()
+            			.atZone(ZoneId.systemDefault()).toInstant()
+            			));
+    		
+    		if(txtDiasEstadia.getText().isEmpty())
+    			txtDiasEstadia.setText("0");
+    		
+    		item_reserva.setDiasReserva(Integer.parseInt(txtDiasEstadia.getText()));
+    		
+    		if(txtValor.getText().isEmpty())
+    			txtValor.setText("0");
+    		
+    		item_reserva.setValorReserva(Double.parseDouble(txtValor.getText()));
+    		
+    		if(!quartoJaExiste(item_reserva))
+    			tbvItemReserva.getItems().add(item_reserva);
 	    });
-	    
-	    btnDelLinha.setGraphic(new ImageView(classLoader.getResource("minus.png").toString()));
-	    
+	
 	    btnDelLinha.setOnAction(evt -> {
 	    		ObservableList<Item_reserva> list = tbvItemReserva.getSelectionModel().getSelectedItems();
-	    		
+	
 	    		if(list.size() > 0){
 	    			Alerta alerta = new Alerta("Cadastro de Reserva", "Deseja mesmo excluir este(s) quarto(s) da reserva?");
-	    			
+	
 	    			if(alerta.Confirm((Stage) getScene().getWindow()))
 	    				tbvItemReserva.getItems().removeAll(list);
 	    		}
 	        }
 	    );
 	    
+	    btnSalvar.setOnAction(evt -> {
+	    	
+	    });
+		
+	}
+	
+	public void eventosCampos(){
+	    txtCodigoPessoa.setOnAction(evt -> {
+			if(txtCodigoPessoa.getText().isEmpty())
+				txtCodigoPessoa.setText("0");
+
+	    	int codigo = Integer.parseInt(txtCodigoPessoa.getText());
+
+	    	if(codigo != 0){
+	    		PessoaDAO dao = new PessoaDAO();
+	    		setPessoa(dao.getById(codigo));
+	    		if(getPessoa() != null)
+	    			txtNomePessoa.setText(getPessoa().getNome());
+	    		
+	    	}else{
+	    		txtNomePessoa.setText("");
+	    	}
+	    });
+
+	    txtCodigoQuarto.setOnAction(evt-> {
+	    			if(txtCodigoQuarto.getText().isEmpty())
+	    				txtCodigoQuarto.setText("0");
+		    		
+			    	int codigo = Integer.parseInt(txtCodigoQuarto.getText());
+			    	
+			    	if(codigo != 0){
+			    		QuartoDAO dao = new QuartoDAO();
+			    		setQuarto(dao.getById(codigo));
+			    		if(getQuarto() != null)
+			    			txtDescricaoQuarto.setText(getQuarto().getDescricao());
+			    	}else{
+			    		txtDescricaoQuarto.setText("");
+			    	}
+		});
+	}
+	
+	private void iniciaTableView(){
 		colCodigoQuarto.setCellValueFactory(
 			    new PropertyValueFactory<Item_reserva, Integer>("codigoQuarto")
 		);
-		
+
 		colCodigoQuarto.setOnEditCommit(evt -> {
 				QuartoDAO dao = new QuartoDAO();
 				
@@ -231,14 +283,14 @@ public class ReservaController extends ControllerDefault{
 					Quarto quarto = dao.getById(codigo);
 					
 					evt.getRowValue().setDescricaoQuarto(quarto.getDescricao());
-				}				
+				}
 			});
-		
+
 		colDescricaoQuarto.setCellValueFactory(
 				//new ReadOnlyStringWrapper(data.getValue().getDescricao())
 			    new PropertyValueFactory<Item_reserva, String>("descricaoQuarto")
 			);
-		
+
 		colCheckIn.setCellValueFactory(
 			    new PropertyValueFactory<Item_reserva, Date>("checkIn")
 			);
@@ -246,7 +298,6 @@ public class ReservaController extends ControllerDefault{
 		colCheckOut.setCellValueFactory(
 			    new PropertyValueFactory<Item_reserva, Date>("checkOut")
 			);
-		
 		
 		colDiasEstadia.setCellValueFactory(new Callback<CellDataFeatures<Item_reserva, Integer>, ObservableValue<Integer>>() {
 			    @Override
@@ -259,9 +310,17 @@ public class ReservaController extends ControllerDefault{
 				TextFieldTableCell.<Item_reserva, Integer>forTableColumn(new IntegerStringConverter())
 			    //new PropertyValueFactory<Item_reserva, Integer>("diasReserva")
 			);
-		
+
 		colValor.setCellValueFactory(
 			    new PropertyValueFactory<Item_reserva, Double>("valorReserva")
 			);
+	}
+
+	private boolean quartoJaExiste(Item_reserva item_reserva){
+		for(Item_reserva item_reserva2 : tbvItemReserva.getItems()){
+			if(item_reserva2.getCodigoQuarto() == item_reserva.getCodigoQuarto())
+				return true;
+		}
+		return false;
 	}
 }
