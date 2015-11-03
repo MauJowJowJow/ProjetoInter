@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="239.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+   <center>
+      <Pane prefHeight="249.0" prefWidth="360.0" BorderPane.alignment="CENTER">
+         <children>
+         	<Text fill="#fffefe" layoutX="23.0" layoutY="42.0" stroke="#0d0000" strokeLineJoin="BEVEL" strokeType="OUTSIDE" strokeWidth="4.0" text="Hotel DM" wrappingWidth="130.275390625">
+               <font>
+                  <Font size="26.0" />
+               </font></Text>
+            <Label layoutX="23.0" layoutY="66.0" text="Realize o Login no Sistema" />
+            <ImageView fx:id="imgLogin" fitHeight="84.0" fitWidth="84.0" layoutX="260.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" />
+            <Separator layoutY="120.0" prefHeight="1.0" prefWidth="360.0" />
+            <Label layoutX="23.0" layoutY="136.0" text="Usuário" />
+            <Label layoutX="23.0" layoutY="171.0" text="Senha" />
+            <TextField fx:id="txtLogin" layoutX="79.0" layoutY="132.0" promptText="Login" />
+            <PasswordField fx:id="txtSenha" layoutX="79.0" layoutY="167.0" promptText="Senha" />
+            <Button fx:id="btnLogin" defaultButton="true" layoutX="171.0" layoutY="205.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Login" />
+            <Button fx:id="btnCancel" layoutX="257.0" layoutY="205.0" mnemonicParsing="false" prefWidth="80.0" text="Cancelar" />
+         </children>
+      </Pane>
+   </center>
+</BorderPane>

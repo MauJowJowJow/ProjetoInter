@@ -1,5 +1,7 @@
 package view;
 
+import controller.EnderecoController;
+import controller.LoginController;
 import controller.PrincipalMenuController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -8,8 +10,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import model.Endereco;
 import util.Alerta;
 
 public class PrincipalMenu extends Application{
@@ -70,8 +74,12 @@ public class PrincipalMenu extends Application{
 	}
 	
 	private boolean loginUsuario(){
-		Login login = new Login();
+		LoginView loginView = new LoginView();
 		
-		return login.login();
+		loginView.iniciaTela(null);
+	
+		LoginController Controller = loginView.getFxmlLoader().<LoginController>getController();
+		return Controller.getLogou();
 	}
+		
 }
