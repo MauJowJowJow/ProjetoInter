@@ -5,7 +5,6 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="estado")
-
 public class Estado extends ModelDefault{
 
 	@Id

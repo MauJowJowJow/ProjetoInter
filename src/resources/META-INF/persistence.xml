@@ -6,6 +6,15 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		
 		<class>model.Pessoa</class>
+		<class>model.Estado</class>
+		<class>model.Predio</class>
+		<class>model.Cidade</class>
+		<class>model.Endereco</class>
+		<class>model.Item_reserva</class>
+		<class>model.Quarto</class>
+		<class>model.Reserva</class> 
+		<class>model.Usuario</class>
+		<class>model.Produto</class>
         <properties>	  
             <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
             <property name="hibernate.connection.driver_class" value="oracle.jdbc.OracleDriver" />
