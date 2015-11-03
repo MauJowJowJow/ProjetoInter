@@ -31,10 +31,7 @@ public class EstadoController extends ControllerDefault implements Initializable
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1){
 		
-		btnSalvar.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			public void handle(ActionEvent event){
+		btnSalvar.setOnAction(evt -> {
 				Estado model = (Estado) getModel();
 				if(model == null)
 					model = new Estado();
@@ -62,7 +59,6 @@ public class EstadoController extends ControllerDefault implements Initializable
 	    			Alerta alerta = new Alerta("Atualização", "Estado Atualizado!");
 	        		alerta.Mensagem(view.getStage());
 	    		}
-			}
 		});	
 	}
 }
