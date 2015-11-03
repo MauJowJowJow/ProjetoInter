@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import model.Usuario;
 
 public class LoginController extends ControllerDefault{
 	private boolean logou;
@@ -39,7 +40,14 @@ public class LoginController extends ControllerDefault{
 	    imgLogin.setImage(new Image(classLoader.getResource("Login.png").toString()));
 	    
 	    btnLogin.setOnAction(evt -> {
+	    	Usuario usuario = new Usuario();
+	    	
 	    	this.logou = true;
+	    	
+	    	usuario.setLogin(txtLogin.getText());
+	    	usuario.setSenha(txtSenha.getText());
+	    	
+	    	usuario.geraHash(usuario);
 	    	
 	    	Stage stage = (Stage) getScene().getWindow();
 	    	stage.close();
@@ -50,6 +58,11 @@ public class LoginController extends ControllerDefault{
 	    	
 	    	Stage stage = (Stage) getScene().getWindow();
 	    	stage.close();
+	    });
+	    
+	    btnLogin.setDisable(true);
+	    txtLogin.textProperty().addListener((observable, oldValue, newValue) -> {
+	    	btnLogin.setDisable(txtLogin.getText().isEmpty());
 	    });
 	}
 }

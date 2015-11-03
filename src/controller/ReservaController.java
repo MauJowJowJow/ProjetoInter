@@ -90,9 +90,9 @@ public class ReservaController extends ControllerDefault{
 	@FXML
 	private TableColumn<Item_reserva, String> colDescricaoQuarto;
 	@FXML
-	private TableColumn<Item_reserva, Date> colCheckIn;
+	private TableColumn<Item_reserva, DatePicker> colCheckIn;
 	@FXML
-	private TableColumn<Item_reserva, Date> colCheckOut;
+	private TableColumn<Item_reserva, DatePicker> colCheckOut;
 	@FXML
 	private TableColumn<Item_reserva, Integer> colDiasEstadia;	
 	@FXML
@@ -116,8 +116,6 @@ public class ReservaController extends ControllerDefault{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-			
-
 		imagensBotoes();
 		eventosPesquisa();
 		eventosBotoes();
@@ -292,11 +290,11 @@ public class ReservaController extends ControllerDefault{
 			);
 
 		colCheckIn.setCellValueFactory(
-			    new PropertyValueFactory<Item_reserva, Date>("checkIn")
+			    new PropertyValueFactory<Item_reserva, DatePicker>("checkIn")
 			);
 		
 		colCheckOut.setCellValueFactory(
-			    new PropertyValueFactory<Item_reserva, Date>("checkOut")
+			    new PropertyValueFactory<Item_reserva, DatePicker>("checkOut")
 			);
 		
 		colDiasEstadia.setCellValueFactory(new Callback<CellDataFeatures<Item_reserva, Integer>, ObservableValue<Integer>>() {

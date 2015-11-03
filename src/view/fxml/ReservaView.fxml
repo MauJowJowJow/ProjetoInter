@@ -21,7 +21,8 @@
             <TextField fx:id="txtCodigoQuarto" layoutX="37.0" layoutY="113.0" prefWidth="78.0" promptText="Cód Quarto" />
             <Button fx:id="btnPesquisaQuarto" layoutX="121.0" layoutY="113.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
             <TextField fx:id="txtDescricaoQuarto" editable="false" focusTraversable="false" layoutX="154.0" layoutY="113.0" prefHeight="25.0" prefWidth="223.0" promptText="Descrição Quarto" />
-            <TextField fx:id="txtCheckOut" layoutX="550.0" layoutY="55.0" prefWidth="70.0" promptText="Check Out" />
+            <DatePicker fx:id="txtCheckIn" layoutX="381.0" layoutY="113.0" prefHeight="25.0" prefWidth="118.0" promptText="Check In" />
+            <DatePicker fx:id="txtCheckOut" layoutX="503.0" layoutY="113.0" prefHeight="25.0" prefWidth="118.0" promptText="Check Out" />
             <TextField fx:id="txtDiasEstadia" layoutX="624.0" layoutY="113.0" prefWidth="70.0" promptText="Dias Estadia" />
             <TextField fx:id="txtValor" layoutX="697.0" layoutY="113.0" prefWidth="70.0" promptText="Valor" />
             
@@ -39,9 +40,7 @@
               </columns>
             </TableView>
             
-            <Button fx:id="BtnSalvar" layoutX="330.0" layoutY="386.0" mnemonicParsing="false" text="Salvar" />
-            <DatePicker fx:id="txtCheckIn" layoutX="381.0" layoutY="113.0" prefHeight="25.0" prefWidth="118.0" promptText="Check In" />
-            <DatePicker fx:id="txtCheckOut" layoutX="503.0" layoutY="113.0" prefHeight="25.0" prefWidth="118.0" promptText="Check Out" />
+            <Button fx:id="btnSalvar" layoutX="330.0" layoutY="386.0" mnemonicParsing="false" text="Salvar" />
          </children>
       </Pane>
    </top>
