@@ -2,7 +2,6 @@ package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import util.Alerta;
 import view.ConsultaPessoaView;
+import view.EstadoView;
 import view.PessoaView;
 import view.ProdutoView;
 import view.ReservaView;
@@ -44,6 +44,9 @@ public class PrincipalMenuController implements Initializable{
 	
 	@FXML
 	private MenuItem mntmSair;
+	
+	@FXML
+	private MenuItem mntmEstados;
 	
 	public void setScene(Scene scene) { 
 		this.scene = scene; 
@@ -120,7 +123,30 @@ public class PrincipalMenuController implements Initializable{
 					e.printStackTrace();
 				}
             }
-        });		
+        });
+		
+		mntmEstados.setOnAction(new EventHandler<ActionEvent>(){
+			
+			@Override
+            public void handle(ActionEvent event) {
+            	if(estadoController != null){
+	            	if(estadoController.getStatusScene() == StatusScene.Aberto){
+						Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
+						alerta.Alertar( (Stage) scene.getWindow());
+						return;
+	            	}
+            	}
+            	
+        		try {
+					EstadoView view = new EstadoView();
+					view.start(scene);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+			
+		});
 		
 		// Consultas
 		

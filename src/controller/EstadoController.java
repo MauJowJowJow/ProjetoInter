@@ -7,20 +7,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import model.Estado;
-import view.EstadoView;
 import model.dao.EstadoDAO;
-import model.dao.PessoaDAO;
+import util.Alerta;
+import view.EstadoView;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.WindowEvent;
-import javafx.scene.Scene;
 
-public class EstadoController implements Initializable {
-	
-	private Estado model;
-	private EstadoView view;
-	private StatusScene statusScene;
-	private Scene scene;
+public class EstadoController extends ControllerDefault implements Initializable {
 	
 	@FXML
 	private Button btnSalvar;
@@ -33,57 +26,43 @@ public class EstadoController implements Initializable {
 	@FXML
 	private TextField txtPais;
 	
-	public void setScene(Scene scene){
-		this.scene = scene;
-	}
+	public EstadoController(){}
 	
-	public EstadoController() {
-		this.model = new Estado();
-		this.view = new EstadoView();
-	}
-	
-	public EstadoController(Estado model, EstadoView view) {
-		this.model = model;
-		this.view = view;
-	}
-
-	public void setModel(Estado model) {
-		this.model = model;
-	}
-
-	public StatusScene getStatus() {
-		return statusScene;
-	}
-	public void inicia(Scene parent) throws Exception {
-		statusScene = StatusScene.Aberto;
-
-		view.start(parent);
-
-		view.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
-			@Override
-			public void handle(WindowEvent event) {
-				statusScene = StatusScene.Fechado;
-			}
-		});
-	}
-
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		btnSalvar.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-            	if(!txtNomeEstado.getText().equals(""))
-            		model.setNomeEstado(txtNomeEstado.getText());
-            	
-            	model.setSiglaEstado(txtUF.getText());
-            	model.setNomePais(txtPais.getText());
-            	
-            	if(model.getCodigoEstado() == 0){
-        			dao.(model);
-			}
-		});
+	public void initialize(URL arg0, ResourceBundle arg1){
 		
+		btnSalvar.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event){
+				Estado model = (Estado) getModel();
+				if(model == null)
+					model = new Estado();
+				EstadoView view = (EstadoView) getView();
+				
+				if(!txtNomeEstado.getText().isEmpty())
+					model.setNomeEstado(txtNomeEstado.getText());
+				
+				
+				model.setSiglaEstado(txtUF.getText());
+				model.setNomePais(txtPais.getText());
+				
+				EstadoDAO dao = new EstadoDAO();
+				
+				if(model.getCodigoEstado() == 0){
+	    			dao.insert(model);
+	    			
+	    			Alerta alerta = new Alerta("Inserção", "Estado inserido com o código " + model.getCodigoEstado() + "!");
+	        		alerta.Mensagem(view.getStage());
+	        		
+	        		txtCodigoEst.setText(Integer.toString(model.getCodigoEstado()));
+	    		}else{
+	    			dao.update(model);
+	    			
+	    			Alerta alerta = new Alerta("Atualização", "Estado Atualizado!");
+	        		alerta.Mensagem(view.getStage());
+	    		}
+			}
+		});	
 	}
-
 }

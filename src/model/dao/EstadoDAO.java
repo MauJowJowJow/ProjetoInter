@@ -4,7 +4,7 @@ import model.Estado;
 
 public class EstadoDAO extends GenericDAO<Integer, Estado> {
 
-	EstadoDAO(){}
+	public EstadoDAO(){}
 	
 	 public static void main(String[] args){
 	    	Estado estado = new Estado();
