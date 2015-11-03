@@ -16,10 +16,27 @@ import view.EnderecoView;
 
 public class EnderecoController extends ControllerDefault implements Initializable{	
 	@FXML
-	private TextField txtCodigo;
-	
-	@FXML
 	private Button btnSalvar;
+	@FXML
+	private TextField txtCodPessoa;
+	@FXML
+	private TextField txtCodEndereco;
+	@FXML
+	private Button btnProcurarEndereco;
+	@FXML
+	private TextField txtCodCidade;
+	@FXML
+	private Button btnProcurarCidade;
+	@FXML
+	private TextField txtCEP;
+	@FXML
+	private TextField txtRua;
+	@FXML
+	private TextField txtNumero;
+	@FXML
+	private TextField txtBairro;
+	@FXML
+	private TextField txtComplemento;
 	
 	public EnderecoController() {}
 	
@@ -44,7 +61,7 @@ public class EnderecoController extends ControllerDefault implements Initializab
 								"Produto inserido com o código " + model.getPk().getCodigo() + "!");
 						alerta.Mensagem(view.getStage());
 
-						txtCodigo.setText(Integer.toString(model.getPk().getCodigo()));
+						txtCodEndereco.setText(Integer.toString(model.getPk().getCodigo()));
 					} else {
 						dao.update(model);
 
