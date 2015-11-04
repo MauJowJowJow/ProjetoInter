@@ -1,17 +1,7 @@
 package model;
 
-import java.io.Serializable;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.Types;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.HibernateException;
-import org.hibernate.engine.spi.SessionImplementor;
-import org.hibernate.id.IdentifierGenerator;
-
 import model.dao.GenericDAO;
 import model.pk.EnderecoPK;
 
@@ -24,7 +14,7 @@ public class Endereco extends ModelDefault {
 
 	@NotNull(message = "Informe o CEP (Somente números).")
 	@Column(name = "CEPEnd", length = 9)
-	private int CEP;
+	private String CEP;
 
 	@NotNull(message = "Informe o nome da rua!")
 	@Column(name = "logEnd", length = 50)
@@ -51,11 +41,11 @@ public class Endereco extends ModelDefault {
 		this.pk = pk;
 	}
 
-	public int getCEP() {
+	public String getCEP() {
 		return CEP;
 	}
 
-	public void setCEP(int cEP) {
+	public void setCEP(String cEP) {
 		CEP = cEP;
 	}
 

@@ -50,6 +50,13 @@ public class EnderecoController extends ControllerDefault implements Initializab
 				EnderecoView view = (EnderecoView) getView();
 				
 				//if (model.isValidAdress()) {
+				
+				model.setCEP(txtCEP.getText());
+				model.setLogradouro(txtRua.getText());
+				model.setNumeroEnd(Integer.parseInt(txtNumero.getText()));
+				model.setBairro(txtBairro.getText());
+				model.setComplemento(txtComplemento.getText());
+				
 				if(true){
 					EnderecoDAO dao = new EnderecoDAO();
 
