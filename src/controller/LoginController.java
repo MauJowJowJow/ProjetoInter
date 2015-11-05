@@ -47,7 +47,7 @@ public class LoginController extends ControllerDefault{
 	    	usuario.setLogin(txtLogin.getText());
 	    	usuario.setSenha(txtSenha.getText());
 	    	
-	    	usuario.geraHash(usuario);
+	    	//usuario.geraHash(usuario);
 	    	
 	    	Stage stage = (Stage) getScene().getWindow();
 	    	stage.close();

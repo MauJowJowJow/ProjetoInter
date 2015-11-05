@@ -2,6 +2,8 @@ package controller;
 
 import java.net.URL;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.ResourceBundle;
 
@@ -11,6 +13,7 @@ import javax.validation.constraints.NotNull;
 
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -90,9 +93,9 @@ public class ReservaController extends ControllerDefault{
 	@FXML
 	private TableColumn<Item_reserva, String> colDescricaoQuarto;
 	@FXML
-	private TableColumn<Item_reserva, DatePicker> colCheckIn;
+	private TableColumn<Item_reserva, String> colCheckIn;
 	@FXML
-	private TableColumn<Item_reserva, DatePicker> colCheckOut;
+	private TableColumn<Item_reserva, String> colCheckOut;
 	@FXML
 	private TableColumn<Item_reserva, Integer> colDiasEstadia;	
 	@FXML
@@ -219,7 +222,7 @@ public class ReservaController extends ControllerDefault{
 	    		if(list.size() > 0){
 	    			Alerta alerta = new Alerta("Cadastro de Reserva", "Deseja mesmo excluir este(s) quarto(s) da reserva?");
 	
-	    			if(alerta.Confirm((Stage) getScene().getWindow()))
+	    			if(alerta.Confirm(getStage()))
 	    				tbvItemReserva.getItems().removeAll(list);
 	    		}
 	        }
@@ -264,6 +267,19 @@ public class ReservaController extends ControllerDefault{
 			    		txtDescricaoQuarto.setText("");
 			    	}
 		});
+	    
+	    txtCheckOut.setOnAction(evt ->{
+	    	if(txtCheckIn.getValue() == null) return;
+	    	
+	    	if(txtCheckIn.getValue().isAfter(txtCheckOut.getValue())){
+	    		Alerta alerta = new Alerta("Reservas", "Data do Check-Out não pode ser menor que data do Check-In!");
+	    		
+	    		alerta.Erro(getStage());
+	    		return;
+	    	}
+	    		
+	    	
+	    });
 	}
 	
 	private void iniciaTableView(){
@@ -289,12 +305,20 @@ public class ReservaController extends ControllerDefault{
 			    new PropertyValueFactory<Item_reserva, String>("descricaoQuarto")
 			);
 
-		colCheckIn.setCellValueFactory(
-			    new PropertyValueFactory<Item_reserva, DatePicker>("checkIn")
+		colCheckIn.setCellValueFactory( item_reserva ->{
+				SimpleStringProperty property = new SimpleStringProperty();
+			      DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+			      property.setValue(dateFormat.format(item_reserva.getValue().getCheckIn()));
+			      return property;
+			   }
 			);
 		
-		colCheckOut.setCellValueFactory(
-			    new PropertyValueFactory<Item_reserva, DatePicker>("checkOut")
+		colCheckOut.setCellValueFactory( item_reserva -> {
+				SimpleStringProperty property = new SimpleStringProperty();
+			      DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+			      property.setValue(dateFormat.format(item_reserva.getValue().getCheckOut()));
+			      return property;
+			   }
 			);
 		
 		colDiasEstadia.setCellValueFactory(new Callback<CellDataFeatures<Item_reserva, Integer>, ObservableValue<Integer>>() {

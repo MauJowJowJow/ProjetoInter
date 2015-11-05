@@ -16,9 +16,6 @@
 		<class>model.Usuario</class>
 		<class>model.Produto</class>
 		
-		<class>model.Hash</class>
-		<named-query>model.Hash.geraHash</named-query>
-		
         <properties>	  
             <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
             <property name="hibernate.connection.driver_class" value="oracle.jdbc.OracleDriver" />

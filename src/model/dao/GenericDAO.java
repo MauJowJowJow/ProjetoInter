@@ -24,6 +24,10 @@ public class GenericDAO<PK, T> {
 		createEntity(entity);
 	}
 	
+	public EntityManagerFactory getEntityManagerFactory(){
+		return emf;
+	}
+	
 	public EntityManager getEntityManager(){
 		return entityManager;
 	}

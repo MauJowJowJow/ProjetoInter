@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.ModelDefault;
 import view.ViewDefault;
@@ -25,6 +26,10 @@ public class ControllerDefault implements Initializable {
 
 		public void setScene(Scene scene) {
 			this.scene = scene;
+		}
+		
+		public Stage getStage() {
+			return (Stage) scene.getWindow();
 		}
 
 		public StatusScene getStatusScene() {
