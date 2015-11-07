@@ -18,6 +18,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -45,6 +46,8 @@ import view.ConsultaPessoaView;
 public class ReservaController extends ControllerDefault{
 	private Pessoa pessoa;
 	private Quarto quarto;
+	
+	private boolean item_reservaValido;
 	
 	@FXML
 	private TextField txtCodigo;
@@ -117,6 +120,14 @@ public class ReservaController extends ControllerDefault{
 		return quarto;
 	}
 
+	public boolean isItem_reservaValido() {
+		return item_reservaValido;
+	}
+
+	public void setItem_reservaValido(boolean item_reservaValido) {
+		this.item_reservaValido = item_reservaValido;
+	}
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		imagensBotoes();
@@ -138,10 +149,7 @@ public class ReservaController extends ControllerDefault{
 	}
 	
 	public void eventosPesquisa(){
-	    btnPesquisaPessoa.setOnAction(new EventHandler<ActionEvent>() {
-	    	
-	        @Override
-	        public void handle(ActionEvent event) {
+	    btnPesquisaPessoa.setOnAction(evt -> {
 				ConsultaPessoaView consultaPessoaView = new ConsultaPessoaView();
 				
 				try {
@@ -151,13 +159,13 @@ public class ReservaController extends ControllerDefault{
 					if(controller.getModel() != null){
 						setPessoa((Pessoa) controller.getModel());
 						
+						
 						txtCodigoPessoa.setText(Integer.toString(getPessoa().getCodigo()));
 						txtNomePessoa.setText(getPessoa().getNome());
 					}
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
-	        }
 	    });
 
 	    btnPesquisaQuarto.setOnAction(evt -> {/*
@@ -183,6 +191,9 @@ public class ReservaController extends ControllerDefault{
 		
 	    btnAddLinha.setOnAction(evt -> {
     		Item_reserva item_reserva = new Item_reserva();
+    		
+    		if(!validaItemReserva())
+    			return;
     		
     		if(txtCodigoQuarto.getText().isEmpty())
     			txtCodigoQuarto.setText("0");
@@ -269,16 +280,34 @@ public class ReservaController extends ControllerDefault{
 		});
 	    
 	    txtCheckOut.setOnAction(evt ->{
+	    	txtDiasEstadia.setDisable(false);
+
 	    	if(txtCheckIn.getValue() == null) return;
+	    	if(txtCheckOut.getValue() == null) return;
 	    	
 	    	if(txtCheckIn.getValue().isAfter(txtCheckOut.getValue())){
 	    		Alerta alerta = new Alerta("Reservas", "Data do Check-Out não pode ser menor que data do Check-In!");
+	    		setItem_reservaValido(false);
 	    		
 	    		alerta.Erro(getStage());
 	    		return;
 	    	}
-	    		
+
+	    	long diasDiferenca = Math.abs(txtCheckOut.getValue().toEpochDay() - txtCheckIn.getValue().toEpochDay()); 
+	    	txtDiasEstadia.setText(Long.toString(diasDiferenca));
 	    	
+	    	if(diasDiferenca > 0){
+	    		txtDiasEstadia.setDisable(true);
+	    		
+	    		long valor;
+	    		
+	    		valor = diasDiferenca * getQuarto().getValorQuarto();
+	    		txtValor.setText(Long.toString(valor));
+	    	}
+	    	
+	    	
+	    	
+	    	setItem_reservaValido(true);
 	    });
 	}
 	
@@ -344,5 +373,23 @@ public class ReservaController extends ControllerDefault{
 				return true;
 		}
 		return false;
+	}
+	
+	private boolean validaItemReserva(){
+		int count = 5; // 5 validações
+		int countAux = 1;
+		
+		setItem_reservaValido(true);
+		while(isItem_reservaValido() && countAux < count){
+			switch(countAux){
+			
+				case 1:
+					Event.fireEvent(txtCheckOut, new ActionEvent());
+					break;
+			}
+			countAux++;
+		}
+		
+		return isItem_reservaValido();
 	}
 }
