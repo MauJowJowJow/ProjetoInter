@@ -37,6 +37,10 @@ public class EnderecoController extends ControllerDefault implements Initializab
 	private TextField txtBairro;
 	@FXML
 	private TextField txtComplemento;
+	@FXML
+	private TextField txtNomePessoa;
+	@FXML
+	private TextField txtNomeCidade;
 	
 	public EnderecoController() {}
 	
