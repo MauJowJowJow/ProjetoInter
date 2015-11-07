@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<classpath>
 	<classpathentry excluding="resources/" kind="src" path="src"/>
+	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="jar/ojdbc6.jar"/>
 	<classpathentry kind="lib" path="jar/hibernate-release-5.0.1.Final/lib/required/antlr-2.7.7.jar"/>
