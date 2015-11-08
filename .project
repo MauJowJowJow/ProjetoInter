@@ -18,7 +18,8 @@
 		<link>
 			<name>resources</name>
 			<type>2</type>
-			<location>C:/Users/mauma/GitHub/ProjetoInter/src/resources</location>
+			<location>../ProjetoInter/src/resources</location>
 		</link>
 	</linkedResources>
+	</natures>
 </projectDescription>
