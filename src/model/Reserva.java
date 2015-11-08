@@ -1,12 +1,13 @@
 package model;
 
+import java.sql.Date;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import oracle.sql.DATE;
+
+import model.enums.StatusReserva;
 
 @Entity
 @Table(name="reserva")
-
 public class Reserva extends ModelDefault{
 	
 	@Id
@@ -15,12 +16,14 @@ public class Reserva extends ModelDefault{
 	@GeneratedValue(generator="ReservaSequence", strategy=GenerationType.SEQUENCE)
 	private int codigoReserva;
 	
-	@NotNull(message="Informe o codigo da pessoa!")
 	@Column(name="codPes", length=7)
-	private String codigoPessoa;
+	private int codigoPessoa;
 	
 	@Column(name="emiRes")
-	private DATE emissaoReserva;
+	private Date emissaoReserva;
+	
+	@Column(name="staRes")
+	private StatusReserva statusReserva;
 
 	public int getCodigoReserva() {
 		return codigoReserva;
@@ -30,21 +33,32 @@ public class Reserva extends ModelDefault{
 		this.codigoReserva = codigoReserva;
 	}
 
-	public String getCodigoPessoa() {
+	public int getCodigoPessoa() {
 		return codigoPessoa;
 	}
 
-	public void setCodigoPessoa(String codigoPessoa) {
+	public void setCodigoPessoa(int codigoPessoa) {
 		this.codigoPessoa = codigoPessoa;
 	}
 
-	public DATE getEmissaoReserva() {
+	public Date getEmissaoReserva() {
 		return emissaoReserva;
 	}
 
-	public void setEmissaoReserva(DATE emissaoReserva) {
+	public void setEmissaoReserva(Date emissaoReserva) {
 		this.emissaoReserva = emissaoReserva;
 	}
 	
-	
+	public StatusReserva getStatusReserva() {
+		return statusReserva;
+	}
+
+	public void setStatusReserva(StatusReserva statusReserva) {
+		this.statusReserva = statusReserva;
+	}
+
+	public boolean cancelaReserva(){
+		//TODO Cancelamento reserva
+		return true;
+	}	
 }

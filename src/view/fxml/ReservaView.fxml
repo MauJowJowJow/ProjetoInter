@@ -40,7 +40,9 @@
               </columns>
             </TableView>
             
-            <Button fx:id="btnSalvar" layoutX="330.0" layoutY="386.0" mnemonicParsing="false" text="Salvar" />
+            <Button fx:id="btnSalvar" layoutX="298.0" layoutY="386.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Salvar" />
+            <Button fx:id="btnNovo" layoutX="367.5" layoutY="386.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Novo" />
+            <Button fx:id="btnCancelar" layoutX="436.0" layoutY="386.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Cancelar" />
          </children>
       </Pane>
    </top>

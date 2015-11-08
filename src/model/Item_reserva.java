@@ -9,18 +9,11 @@ import model.pk.Item_reservaPK;
 
 @Entity
 @Table(name="item_reserva")
-@IdClass(Item_reservaPK.class)
+
 public class Item_reserva extends ModelDefault{
-
-	@Id
-	@Column(name="codRes", length=7)
-	private int codigo;
-
-	@Id
-	@NotNull(message="Informe o codigo do quarto!")
-	@Column(name="codQua", length=7)
-	private int codigoQuarto;
-	
+	@EmbeddedId
+	private Item_reservaPK pk = new Item_reservaPK();
+		
 	@Transient
 	private String descricaoQuarto;
 	
@@ -38,19 +31,19 @@ public class Item_reserva extends ModelDefault{
 	private double valorReserva;
 
 	public int getCodigo() {
-		return codigo;
+		return pk.getCodigo();
 	}
 
 	public void setCodigo(int codigo) {
-		this.codigo = codigo;
+		this.pk.setCodigo(codigo);
 	}
 
 	public int getCodigoQuarto() {
-		return codigoQuarto;
+		return pk.getCodigoQuarto();
 	}
 
 	public void setCodigoQuarto(int codigoQuarto) {
-		this.codigoQuarto = codigoQuarto;
+		this.pk.setCodigoQuarto(codigoQuarto);
 	}
 
 	public String getDescricaoQuarto() {

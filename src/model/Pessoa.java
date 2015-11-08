@@ -65,9 +65,6 @@ public class Pessoa extends ModelDefault{
 	
 	@Column(name="sitPes")
 	private SitCadPessoa statusPessoa;
-	
-	@Transient
-	private String errors;
 
 	public int getCodigo() {
 		return codigo;
@@ -176,10 +173,6 @@ public class Pessoa extends ModelDefault{
 		return estadoCivil;
 	}
 	
-	public String getErrors(){
-		return errors;
-	}
-	
 	public SitCadPessoa getstatusPessoa(){
 		return statusPessoa;
 	}
@@ -191,27 +184,6 @@ public class Pessoa extends ModelDefault{
 
 	public void setEstadoCivil(EstadoCivil estadoCivil) {
 		this.estadoCivil = estadoCivil;
-	}
-
-	public boolean isValidPerson() {	 
-	    // valores sao setados no objeto
-	 
-	    final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-	 
-	    final Set<ConstraintViolation<Pessoa>> violations = validator.validate(this);
-	 
-	    errors = "";
-	    if (!violations.isEmpty()) {
-	        for (ConstraintViolation violation : violations) {
-	        	if(!errors.isEmpty()){
-	        		errors += System.lineSeparator();
-	        	}
-	        	
-	            errors += "- " + violation.getMessage();
-	        }
-	        return false;
-	    }
-	    return true;
 	}
 }
 

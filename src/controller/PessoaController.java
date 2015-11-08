@@ -8,15 +8,12 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
-import javafx.stage.WindowEvent;
 import model.Endereco;
 import model.Pessoa;
 import model.dao.PessoaDAO;
@@ -26,7 +23,6 @@ import util.Alerta;
 import view.ConsultaPessoaView;
 import view.EnderecoView;
 import view.PessoaView;
-import view.ProdutoView;
 import model.enums.PessoaSexo;
 import model.enums.EstadoCivil;
 import model.enums.SitCadPessoa;
@@ -112,81 +108,77 @@ public class PessoaController extends ControllerDefault implements Initializable
         });
         		
 		
-		btnSalvar.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-            	Pessoa model = (Pessoa) getModel();
+		btnSalvar.setOnAction(evt -> {
+            	if(getModel() == null)
+            		setModel(new Pessoa());
+            	
+            	Pessoa pessoa = (Pessoa) getModel();
             	PessoaView view = (PessoaView) getView();
             	
-            	if(!txtNomeCliente.getText().equals(""))
-            		model.setNome(txtNomeCliente.getText());
+            	if(!txtNomeCliente.getText().isEmpty())
+            		pessoa.setNome(txtNomeCliente.getText());
             	
-            	model.setSexo(cbSexo.getValue());
-            	model.setTipoPessoa(cbPessoa.getValue());
-            	model.setEstadoCivil(cbEstCivil.getValue());
-            	model.setstatusPessoa(cbSituacao.getValue());
+            	pessoa.setSexo(cbSexo.getValue());
+            	pessoa.setTipoPessoa(cbPessoa.getValue());
+            	pessoa.setEstadoCivil(cbEstCivil.getValue());
+            	pessoa.setstatusPessoa(cbSituacao.getValue());
             	
-            	model.setInscricaoEstadual(txtIsncEstadualRG.getText());
-            	model.setTelefoneCom(txtTelComercial.getText());
-            	model.setTelRes(txtTelResidencial.getText());
-            	model.setCelular(txtCelular.getText());
-            	model.setEmail(txtEMail.getText());
+            	pessoa.setInscricaoEstadual(txtIsncEstadualRG.getText());
+            	pessoa.setTelefoneCom(txtTelComercial.getText());
+            	pessoa.setTelRes(txtTelResidencial.getText());
+            	pessoa.setCelular(txtCelular.getText());
+            	pessoa.setEmail(txtEMail.getText());
             	
             	if(dateNascimento.getValue() != null)
-	            	model.setDataNascimento(Date.from(
+	            	pessoa.setDataNascimento(Date.from(
 	            			dateNascimento.getValue().atStartOfDay()
 	            			.atZone(ZoneId.systemDefault()).toInstant()
 	            			));
             	
             	if(dateCadastro.getValue() != null)
-	            	model.setDataCadastro(Date.from(
+	            	pessoa.setDataCadastro(Date.from(
 	            			dateCadastro.getValue().atStartOfDay()
 	            			.atZone(ZoneId.systemDefault()).toInstant()
 	            			));
             	
             	if(!txtCGC.getText().equals(""))
-            		model.setCNPJCPF(txtCGC.getText());
+            		pessoa.setCNPJCPF(txtCGC.getText());
             	
             	
-            	if(model.isValidPerson()){
+            	if(pessoa.isValid()){
             		PessoaDAO dao = new PessoaDAO();
             		
-            		if(model.getCodigo() == 0){
-            			dao.insert(model);
+            		if(pessoa.getCodigo() == 0){
+            			dao.insert(pessoa);
             			
-            			Alerta alerta = new Alerta("Inserção", "Pessoa inserida com o código " + model.getCodigo() + "!");
+            			Alerta alerta = new Alerta("Inserção", "Pessoa inserida com o código " + pessoa.getCodigo() + "!");
                 		alerta.Mensagem(view.getStage());
                 		
-                		txtCodigo.setText(Integer.toString(model.getCodigo()));
+                		txtCodigo.setText(Integer.toString(pessoa.getCodigo()));
             		}else{
-            			dao.update(model);
+            			dao.update(pessoa);
             			
             			Alerta alerta = new Alerta("Atualização", "Pessoa Atualizada!");
                 		alerta.Mensagem(view.getStage());
             		}
+            		setModel(pessoa);
             		
             		dao.closeEntity();
             	}else{
-            		Alerta alerta = new Alerta("Validação ", model.getErrors());
+            		Alerta alerta = new Alerta("Validação ", pessoa.getErrors());
             		
             		alerta.Erro(view.getStage());
             	}
-            		
-            }
         });
 		
-		btnEnderecos.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-					Pessoa model = (Pessoa) getModel();
+		btnEnderecos.setOnAction(evt -> {
+					Pessoa pessoa = (Pessoa) getModel();
 					
-					if(model.getCodigo() != 0){
+					if(pessoa.getCodigo() != 0){
 						EnderecoView enderecoView = new EnderecoView();
 						
 						EnderecoPK enderecoPK = new EnderecoPK();
-						enderecoPK.setCodigoPessoa(model.getCodigo());
+						enderecoPK.setCodigoPessoa(pessoa.getCodigo());
 						
 						Endereco endereco = new Endereco(enderecoPK);
 						
@@ -200,14 +192,13 @@ public class PessoaController extends ControllerDefault implements Initializable
 	            		
 	            		alerta.Erro(getView().getStage());
 					}
-			}
 		});
 	}
 	
 	private void carregaModel(){
-		Pessoa model = (Pessoa) getModel();
+		Pessoa pessoa = (Pessoa) getModel();
 		
-		String codigo = Integer.toString(model.getCodigo());
+		String codigo = Integer.toString(pessoa.getCodigo());
 		
 		txtCodigo.setText(codigo);
 	}

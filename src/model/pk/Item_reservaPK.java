@@ -2,11 +2,17 @@ package model.pk;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Item_reservaPK implements Serializable{
 	
+	@Column(name="codRes", length=7)
 	private int codigo;
+	
+	@Column(name="codQua", length=7)
 	private int codigoQuarto;
-
 
 	public int getCodigo() {
 		return codigo;
