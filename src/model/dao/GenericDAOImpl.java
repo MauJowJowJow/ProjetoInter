@@ -10,7 +10,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 @SuppressWarnings("unchecked")
-public class GenericDAOImpl<PK, T> implements GenericDAO {
+public class GenericDAOImpl<PK, T> implements GenericDAO<PK, T> {
 
 	private EntityManagerFactory emf;
 	private EntityManager entityManager;
@@ -54,12 +54,14 @@ public class GenericDAOImpl<PK, T> implements GenericDAO {
 				entityManager.close();
 	}
 
+	@Override
 	public T getById(PK pk) {
 		createEntity("");
 
 		return (T) entityManager.find(getTypeClass(), pk);
 	}
 
+	@Override
 	public T insert(T entity) {
 		createEntity("");
 		entityTransaction = entityManager.getTransaction();
@@ -76,6 +78,7 @@ public class GenericDAOImpl<PK, T> implements GenericDAO {
 		return entity;
 	}
 
+	@Override
 	public void update(T entity) {
 		createEntity("");
 		entityTransaction = entityManager.getTransaction();
@@ -90,6 +93,7 @@ public class GenericDAOImpl<PK, T> implements GenericDAO {
 		}
 	}
 
+	@Override
 	public void delete(T entity) {
 		createEntity("");
 		entityTransaction = entityManager.getTransaction();
@@ -104,6 +108,7 @@ public class GenericDAOImpl<PK, T> implements GenericDAO {
 		}
 	}
 
+	@Override
 	public List<T> query(String SQL, List<String> parametros) {
 		createEntity("");
 
