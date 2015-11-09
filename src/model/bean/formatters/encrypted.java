@@ -1,13 +1,9 @@
 package model.bean.formatters;
 
 import javax.persistence.Column;
+
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
-
-import org.eclipse.persistence.annotations.Struct;
-import org.eclipse.persistence.platform.database.oracle.annotations.NamedPLSQLStoredFunctionQuery;
-import org.eclipse.persistence.platform.database.oracle.annotations.PLSQLParameter;
-
 
 public class encrypted {
 	@Column(name = "v_hash")

@@ -11,15 +11,10 @@
 	<classpathentry kind="lib" path="jar/hibernate-release-5.0.1.Final/lib/required/commons-collections-3.2.jar"/>
 	<classpathentry kind="lib" path="jar/hibernate-release-5.0.1.Final/lib/required/commons-logging-1.2.jar"/>
 	<classpathentry kind="lib" path="jar/hibernate-release-5.0.1.Final/lib/required/dom4j-1.6.1.jar"/>
-
 	<classpathentry kind="lib" path="jar/hibernate-release-5.0.1.Final/lib/required/geronimo-jta_1.1_spec-1.1.1.jar"/>
 	<classpathentry kind="lib" path="jar/hibernate-release-5.0.1.Final/lib/required/hibernate-commons-annotations-5.0.0.Final.jar"/>
 	<classpathentry kind="lib" path="jar/hibernate-release-5.0.1.Final/lib/required/hibernate-core-5.0.1.Final.jar"/>
-
-
-
 	<classpathentry kind="lib" path="jar/hibernate-release-5.0.1.Final/lib/required/hibernate-jpa-2.1-api-1.0.0.Final.jar"/>
-
 	<classpathentry kind="lib" path="jar/hibernate-release-5.0.1.Final/lib/required/hibernate-validator-4.3.2.Final.jar"/>
 	<classpathentry kind="lib" path="jar/hibernate-release-5.0.1.Final/lib/required/hibernate-validator-5.2.2.Final.jar"/>
 	<classpathentry kind="lib" path="jar/hibernate-release-5.0.1.Final/lib/required/jandex-1.2.2.Final.jar"/>
@@ -34,6 +29,5 @@
 	<classpathentry kind="lib" path="jar/hibernate-release-5.0.1.Final/lib/required/hibernate-java8-5.0.1.Final.jar"/>
 	<classpathentry kind="lib" path="jar/hibernate-release-5.0.1.Final/lib/required/hibernate-envers-5.0.1.Final.jar"/>
 	<classpathentry kind="lib" path="jar/hibernate-release-5.0.1.Final/lib/required/hibernate-jpamodelgen-5.0.1.Final.jar"/>
-	<classpathentry kind="lib" path="jar/hibernate-release-5.0.1.Final/lib/required/eclipselink.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
