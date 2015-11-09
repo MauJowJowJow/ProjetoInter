@@ -2,7 +2,7 @@ package model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import model.dao.GenericDAO;
+import model.dao.GenericDAOImpl;
 import model.pk.EnderecoPK;
 
 @Entity
@@ -98,7 +98,7 @@ public class Endereco extends ModelDefault {
 	}
 
 	public void geraCodigo(){
-		GenericDAO<EnderecoPK, Endereco> dao = new GenericDAO<EnderecoPK, Endereco>();
+		GenericDAOImpl<EnderecoPK, Endereco> dao = new GenericDAOImpl<EnderecoPK, Endereco>();
 		EntityManager em = dao.getEntityManager();
 		
 		try {	

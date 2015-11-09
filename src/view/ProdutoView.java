@@ -12,6 +12,6 @@ public class ProdutoView extends ViewDefault{
 			start(parent, "fxml/ProdutoView.fxml", "Cadastro de Produtos", Modality.NONE);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}	
 	}
 }

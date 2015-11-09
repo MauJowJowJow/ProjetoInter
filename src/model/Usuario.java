@@ -12,7 +12,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import model.bean.formatters.encrypted;
-import model.dao.GenericDAO;
+import model.dao.GenericDAOImpl;
 
 @Entity
 @Table(name="usuario")
@@ -86,7 +86,7 @@ public class Usuario extends ModelDefault{
 	}
 
 	static public Usuario geraHash(Usuario usuario){
-		GenericDAO<Integer, Usuario> dao = new GenericDAO<Integer, Usuario>();
+		GenericDAOImpl<Integer, Usuario> dao = new GenericDAOImpl<Integer, Usuario>();
 		EntityManager em = dao.getEntityManager();
 		EntityManagerFactory emf = dao.getEntityManagerFactory();
 		
