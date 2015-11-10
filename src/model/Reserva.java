@@ -4,7 +4,10 @@ import java.sql.Date;
 
 import javax.persistence.*;
 
+import model.dao.GenericDAOImpl;
+import model.dao.ReservaDAO;
 import model.enums.StatusReserva;
+import model.pk.FaturamentoPK;
 
 @Entity
 @Table(name="reserva")
@@ -59,6 +62,20 @@ public class Reserva extends ModelDefault{
 
 	public boolean cancelaReserva(){
 		//TODO Cancelamento reserva
+		
+		if(getCodigoReserva() == 0){
+			setErrors("Reserva ainda não finalizada!");
+			return false;
+		}
+		
+		ReservaDAO reservaDAO = new ReservaDAO();
+		GenericDAOImpl<FaturamentoPK, Boolean> faturamentoDAO = new GenericDAOImpl<FaturamentoPK, Boolean>();
+		
+		faturamentoDAO.query("SELECT TRUE FROM faturamento where ", null);
+		
+		setStatusReserva(StatusReserva.Cancelada);
+		reservaDAO.update(this);
+
 		return true;
 	}	
 }
