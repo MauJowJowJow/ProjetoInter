@@ -44,4 +44,19 @@ public class Item_faturado extends ModelDefault {
 	public void setValorTotal(int valorTotal) {
 		this.valorTotal = valorTotal;
 	}
+	
+	public int getCodigoFat(){
+		return pk.getCodigoFat();
+	}
+	
+	public void setCodigoFat(int codigoFat){
+		this.pk.setCodigoFat(codigoFat);
+	}
+	public int getCodigoPro(){
+		return pk.getCodigoPro();
+	}
+	
+	public void setCodigoPro(int codigoPro){
+		this.pk.setCodigoPro(codigoPro);
+	}
 }

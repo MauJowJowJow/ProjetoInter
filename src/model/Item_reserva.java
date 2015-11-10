@@ -1,10 +1,8 @@
 package model;
 
 import java.util.Date;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-
 import model.pk.Item_reservaPK;
 
 @Entity
