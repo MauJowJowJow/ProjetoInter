@@ -40,7 +40,6 @@ public class Item_reservaPK implements Serializable{
 		return o instanceof Item_reservaPK &&
 				((Item_reservaPK)o).getCodigo() == this.codigo &&
 				((Item_reservaPK)o).getCodigoQuarto() == this.codigoQuarto;
-
 	}
 	
 	@Override

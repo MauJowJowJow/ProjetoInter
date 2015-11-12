@@ -32,6 +32,7 @@ public class Pessoa extends ModelDefault{
 	@Column(name="nomPes", length=45)
 	private String nome;
 	
+	@Enumerated(EnumType.ORDINAL)
 	@Column(name="tipPes", length=1)
 	private TipoPessoa tipoPessoa;
 	
@@ -59,12 +60,15 @@ public class Pessoa extends ModelDefault{
 	@Column(name="datCad") 
 	private Date dataCadastro;
 	
+	@Enumerated(EnumType.ORDINAL)
 	@Column(name="sexPes")
 	private PessoaSexo sexo;
 	
+	@Enumerated(EnumType.ORDINAL)
 	@Column(name="estCiv")
 	private EstadoCivil estadoCivil;
 	
+	@Enumerated(EnumType.ORDINAL)
 	@Column(name="sitPes")
 	private SitCadPessoa statusPessoa;
 	
