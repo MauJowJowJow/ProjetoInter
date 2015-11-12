@@ -19,6 +19,8 @@
               <MenuItem fx:id="mntmEstados" mnemonicParsing="false" text="Estados" />
                   <SeparatorMenuItem mnemonicParsing="false" />
               <MenuItem fx:id="mntmReservas" mnemonicParsing="false" text="Reservas" />
+              <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem fx:id="mntmQuartos" mnemonicParsing="false" text="Quartos" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Consultas">
