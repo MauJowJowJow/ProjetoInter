@@ -35,6 +35,7 @@ public class Quarto extends ModelDefault{
 	
 	@NotNull(message="Informe o status do quarto!")
 	@Column(name="staQua", length=2)
+	@Enumerated(EnumType.STRING)
 	private StatusQuarto statusQuarto;
 	
 	@NotNull(message="Informe o código do predio!")

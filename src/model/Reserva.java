@@ -25,6 +25,7 @@ public class Reserva extends ModelDefault{
 	@Column(name="emiRes")
 	private Date emissaoReserva;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name="staRes")
 	private StatusReserva statusReserva;
 
