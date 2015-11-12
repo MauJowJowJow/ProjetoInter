@@ -3,6 +3,9 @@ package model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import model.dao.QuartoDAO;
+import util.Alerta;
+
 @Entity
 @Table(name="quarto")
 
@@ -94,5 +97,14 @@ public class Quarto extends ModelDefault{
 		this.codigoPredio = codigoPredio;
 	}
 	
+	public Quarto exists(){
+		QuartoDAO dao = new QuartoDAO();
+		Quarto quarto = dao.getById(getCodigo());
+		
+		if(quarto == null){
+			setErrors("Quarto não cadastrado!");
+		}
+		return quarto;
+	}
 	
 }

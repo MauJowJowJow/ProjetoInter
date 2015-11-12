@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,11 +17,10 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
+import model.bean.formatters.*;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
@@ -48,32 +48,32 @@ public class ReservaController extends ControllerDefault{
 	private boolean item_reservaValido;
 	
 	@FXML
-	private TextField txtCodigo;
+	private CustomTextField txtCodigo;
 	@FXML
-	private TextField txtCodigoPessoa;
+	private CustomTextField txtCodigoPessoa;
 	@FXML
-	private TextField txtNomePessoa;
+	private CustomTextField txtNomePessoa;
 	
 	@FXML
 	private Button btnPesquisaPessoa;
 	
 	@FXML
-	private TextField txtCodigoQuarto;
+	private CustomTextField txtCodigoQuarto;
 	
 	@FXML
-	private TextField txtDescricaoQuarto;
+	private CustomTextField txtDescricaoQuarto;
 	
 	@FXML
-	private DatePicker txtCheckIn;
+	private CustomDatePicker txtCheckIn;
 	
 	@FXML
-	private DatePicker txtCheckOut;
+	private CustomDatePicker txtCheckOut;
 	
 	@FXML
-	private TextField txtDiasEstadia;
+	private CustomTextField txtDiasEstadia;
 	
 	@FXML
-	private TextField txtValor;
+	private CustomTextField txtValor;
 	
 	@FXML
 	private Button btnPesquisaQuarto;
@@ -148,7 +148,7 @@ public class ReservaController extends ControllerDefault{
 	}
 
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
+	public void initialize(URL arg0, ResourceBundle arg1) {	
 		imagensBotoes();
 		eventosPesquisa();
 		eventosBotoes();
@@ -377,14 +377,17 @@ public class ReservaController extends ControllerDefault{
 			}else{
 		    	int codigo = Integer.parseInt(txtCodigoPessoa.getText());
 	
-		    	if(getPessoa() == null || codigo != getPessoa().getCodigo()){
-		    		PessoaDAO dao = new PessoaDAO();
-		    		setPessoa(dao.getById(codigo));
-		    		if(getPessoa() != null)
+		    	if(getPessoa() == null) setPessoa(new Pessoa());
+		    	if(codigo != getPessoa().getCodigo()){
+		    		getPessoa().setCodigo(codigo);
+		    		
+		    		if(getPessoa() != null){
+		    			setPessoa(pessoa);
 		    			txtNomePessoa.setText(getPessoa().getNome());
+		    		}
 		    		else{
 		    			setReservaValida(false);
-		        		Alerta alerta = new Alerta("Reservas", "Pessoa não cadastrada!");
+		        		Alerta alerta = new Alerta("Reservas", getPessoa().getErrors());
 		        		
 		        		alerta.Erro(getStage());
 		        		setReservaValida(false);
@@ -407,14 +410,19 @@ public class ReservaController extends ControllerDefault{
 	    			}else{
 	    			
 				    	int codigo = Integer.parseInt(txtCodigoQuarto.getText());
-				    	if(getQuarto() == null || codigo != getQuarto().getCodigo()){
-				    		QuartoDAO dao = new QuartoDAO();
-				    		setQuarto(dao.getById(codigo));
-				    		if(getQuarto() != null)
+				    	
+				    	if(getQuarto()==null) setQuarto(new Quarto());
+				    	if(codigo != getQuarto().getCodigo()){
+				    		getQuarto().setCodigo(codigo);
+				    		Quarto quarto = getQuarto().exists();
+				    		
+				    		if(quarto != null){
+				    			setQuarto(quarto);
 				    			txtDescricaoQuarto.setText(getQuarto().getDescricao());
+				    		}
 				    		else{
 				    			setItem_reservaValido(false);
-				        		Alerta alerta = new Alerta("Reservas", "Quarto não cadastrado!");
+				        		Alerta alerta = new Alerta("Cadastro de Reservas", getQuarto().getErrors());
 				        		
 				        		alerta.Erro(getStage());
 				    		}
@@ -435,6 +443,12 @@ public class ReservaController extends ControllerDefault{
 	    	}
     	});
 	    
+	    txtCheckOut.focusedProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
+		    if (!newValue.booleanValue()) {
+		    	txtCheckOut.setValue(txtCheckOut.getConverter().fromString(txtCheckOut.getEditor().getText()));
+		    }
+		});
+	    
 	    txtCheckOut.setOnAction(evt ->{
 	    	txtDiasEstadia.setDisable(false);
 			if(txtCheckIn.getValue() == null) return;
@@ -447,9 +461,12 @@ public class ReservaController extends ControllerDefault{
 	    	if(diasDiferenca > 0){
 	    		txtDiasEstadia.setDisable(true);
 	    		
-	    		long valor;
+	    		if(txtValor.getText() == null) txtValor.setText("0");
+	    		long valor= Long.parseLong(txtValor.getText());
 	    		
-	    		valor = diasDiferenca * getQuarto().getValorQuarto();
+	    		if(getQuarto() != null)
+	    			valor = diasDiferenca * getQuarto().getValorQuarto();
+	    		
 	    		txtValor.setText(Long.toString(valor));
 	    	}
 	    });

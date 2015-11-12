@@ -10,6 +10,8 @@ import javax.validation.Validator;
 import javax.validation.constraints.NotNull;
 
 import model.bean.validations.CheckCGC;
+import model.dao.PessoaDAO;
+import model.dao.QuartoDAO;
 import model.enums.EstadoCivil;
 import model.enums.PessoaSexo;
 import model.enums.SitCadPessoa;
@@ -65,6 +67,10 @@ public class Pessoa extends ModelDefault{
 	
 	@Column(name="sitPes")
 	private SitCadPessoa statusPessoa;
+	
+	public void setCodigo(int codigo){
+		this.codigo = codigo;
+	}
 
 	public int getCodigo() {
 		return codigo;
@@ -184,6 +190,16 @@ public class Pessoa extends ModelDefault{
 
 	public void setEstadoCivil(EstadoCivil estadoCivil) {
 		this.estadoCivil = estadoCivil;
+	}
+	
+	public Pessoa exists(){
+		PessoaDAO dao = new PessoaDAO();
+		Pessoa model = dao.getById(getCodigo());
+		
+		if(model == null){
+			setErrors("Quarto não cadastrado!");
+		}
+		return model;
 	}
 }
 

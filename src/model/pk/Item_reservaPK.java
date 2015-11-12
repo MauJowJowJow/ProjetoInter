@@ -47,5 +47,4 @@ public class Item_reservaPK implements Serializable{
 	public int hashCode(){
 		return 31 * (codigo + codigoQuarto);
 	}
-
 }

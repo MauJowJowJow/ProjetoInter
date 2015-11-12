@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+
+<BorderPane prefHeight="451.0" prefWidth="649.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="33.0" layoutY="35.0" text="Código" />
+            <TextField disable="true" layoutX="84.0" layoutY="31.0" prefHeight="25.0" prefWidth="81.0" promptText="Código" />
+         </children>
+      </Pane>
+   </center>
+</BorderPane>
