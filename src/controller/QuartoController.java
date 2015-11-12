@@ -58,6 +58,18 @@ public class QuartoController extends ControllerDefault implements Initializable
 			
 			model.setStatusQuarto(cbStatus.getValue());
 			
+			model.setDescricao(txtDescricao.getText());
+			
+			if(txtAndar.getText().isEmpty())
+				txtAndar.setText("0");
+			
+			model.setAndarQuarto(Integer.parseInt(txtAndar.getText()));
+			
+			if(txtDormitorios.getText().isEmpty())
+				txtDormitorios.setText("0");
+			
+			model.setAndarQuarto(Integer.parseInt(txtAndar.getText()));
+			
 			QuartoDAO dao = new QuartoDAO();
 			
 			if(model.getCodigo() == 0){

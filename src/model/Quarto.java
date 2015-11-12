@@ -3,9 +3,7 @@ package model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import model.enums.StatusQuarto;
-
 import model.dao.QuartoDAO;
-import util.Alerta;
 
 @Entity
 @Table(name="quarto")
