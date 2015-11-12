@@ -2,10 +2,10 @@ package model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import model.enums.StatusQuarto;
 
 @Entity
 @Table(name="quarto")
-
 public class Quarto extends ModelDefault{
 
 	@Id
@@ -16,27 +16,30 @@ public class Quarto extends ModelDefault{
 	
 	@NotNull(message="Informe o nome do quarto!")
 	@Column(name="desQua", length=35)
-	private String descricao;
+	private String nome;
 	
 	@NotNull(message="Informe o andar do quarto!")
-	@Column(name="andQua", length=7)
+	@Column(name="andQua", length=3)
 	private int andarQuarto;
 	
 	@NotNull(message="Informe a quantidade de dormitorios no quarto!")
-	@Column(name="qtdDor", length=7)
+	@Column(name="qtdDor", length=2)
 	private int dormitorios;
 	
 	@NotNull(message="Informe o valor da diária!")
-	@Column(name="vlrQua", length=7)
+	@Column(name="vlrQua", length=12)
 	private int valorQuarto;
 	
 	@NotNull(message="Informe o status do quarto!")
 	@Column(name="staQua", length=2)
-	private String statusQuarto;
+	private StatusQuarto statusQuarto;
 	
 	@NotNull(message="Informe o código do predio!")
 	@Column(name="codPre", length=7)
 	private int codigoPredio;
+	
+	@Column(name="comQua", length=300)
+	private String descricao ;
 
 	public int getCodigo() {
 		return codigo;
@@ -46,6 +49,13 @@ public class Quarto extends ModelDefault{
 		this.codigo = codigo;
 	}
 
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 	public String getDescricao() {
 		return descricao;
 	}
@@ -78,11 +88,11 @@ public class Quarto extends ModelDefault{
 		this.valorQuarto = valorQuarto;
 	}
 
-	public String getStatusQuarto() {
+	public StatusQuarto getStatusQuarto() {
 		return statusQuarto;
 	}
 
-	public void setStatusQuarto(String statusQuarto) {
+	public void setStatusQuarto(StatusQuarto statusQuarto) {
 		this.statusQuarto = statusQuarto;
 	}
 
@@ -92,7 +102,5 @@ public class Quarto extends ModelDefault{
 
 	public void setCodigoPredio(int codigoPredio) {
 		this.codigoPredio = codigoPredio;
-	}
-	
-	
+	}	
 }

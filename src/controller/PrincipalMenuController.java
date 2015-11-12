@@ -16,6 +16,7 @@ import view.ConsultaPessoaView;
 import view.EstadoView;
 import view.PessoaView;
 import view.ProdutoView;
+import view.QuartoView;
 import view.ReservaView;
 
 
@@ -24,9 +25,9 @@ public class PrincipalMenuController implements Initializable{
 	private PessoaController pessoaController;
 	private ProdutoController produtoController;
 	private ReservaController reservaController;
-	
 	private ConsultaPessoaController consultaPessoaController;
 	private EstadoController estadoController;
+	private QuartoController quartoController;
 	
 	private Scene scene;
 	
@@ -47,6 +48,9 @@ public class PrincipalMenuController implements Initializable{
 	
 	@FXML
 	private MenuItem mntmEstados;
+	
+	@FXML
+	private MenuItem mntmQuartos;
 	
 	public void setScene(Scene scene) { 
 		this.scene = scene; 
@@ -142,6 +146,28 @@ public class PrincipalMenuController implements Initializable{
 					view.start(scene);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+			
+		});
+		
+		mntmQuartos.setOnAction(new EventHandler<ActionEvent>(){
+			
+			@Override
+            public void handle(ActionEvent event) {
+            	if(quartoController != null){
+	            	if(quartoController.getStatusScene() == StatusScene.Aberto){
+						Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
+						alerta.Alertar( (Stage) scene.getWindow());
+						return;
+	            	}
+            	}
+            	
+        		try {
+					QuartoView view = new QuartoView();
+					view.start(scene);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
             }

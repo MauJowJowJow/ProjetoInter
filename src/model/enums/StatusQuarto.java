@@ -7,9 +7,12 @@ public enum StatusQuarto {
 	StatusQuarto(String statusQuarto){
 		this.statusQuarto = statusQuarto;
 	}
-	
-	public String getStatusQuarto(){
+	public String getStatusQuarto() {
 		return statusQuarto;
 	}
+	public void setStatusQuarto(String statusQuarto) {
+		this.statusQuarto = statusQuarto;
+	}
+	
 
 }
