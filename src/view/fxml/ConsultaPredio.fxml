@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="-123.0" layoutY="-94.0" prefHeight="363.0" prefWidth="522.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label layoutX="30.0" layoutY="41.0" text="Codigo:" />
+            <Label layoutX="162.0" layoutY="41.0" text="Nome:" />
+            <TextField fx:id="txtCodigo" layoutX="77.0" layoutY="38.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="70.0" promptText="Código" />
+            <TextField fx:id="txtNome" layoutX="201.0" layoutY="38.0" prefHeight="25.0" prefWidth="289.0" promptText="Nome do prédio" />
+            <TableView fx:id="tablePredio" layoutX="30.0" layoutY="80.0" prefHeight="200.0" prefWidth="461.0">
+              <columns>
+                <TableColumn fx:id="colCodigo" prefWidth="75.0" text="Codigo" />
+                <TableColumn fx:id="colNome" prefWidth="300.0" text="Nome" />
+                  <TableColumn fx:id="colQuartos" minWidth="0.0" prefWidth="85.0" text="Qtd. Quartos" />
+              </columns>
+            </TableView>
+            <Button fx:id="btnSelecionar" layoutX="226.0" layoutY="310.0" mnemonicParsing="false" text="Selecionar" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

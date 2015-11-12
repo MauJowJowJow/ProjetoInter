@@ -18,14 +18,14 @@
 				<Label layoutX="52.0" layoutY="247.0" text="Descrição:" />
 				<Label layoutX="53.0" layoutY="104.0" text="Nome:" />
 
-				<TextField fx:id="txtCodigo" disable="true" editable="false" layoutX="126.0" layoutY="27.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="70.0" />
-				<TextField fx:id="txtPredio" layoutX="126.0" layoutY="63.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="70.0" />
+				<TextField fx:id="txtCodigo" promptText="Código" disable="true" editable="false" layoutX="126.0" layoutY="27.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="70.0" />
+				<TextField fx:id="txtPredio" promptText="Código" layoutX="126.0" layoutY="63.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="70.0" />
 				<Button fx:id="btnProcurar" layoutX="200.0" layoutY="63.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
-				<TextField fx:id="txtNomePredio" editable="false" layoutX="230.0" layoutY="63.0" prefHeight="25.0" prefWidth="241.0" />
+				<TextField fx:id="txtNomePredio" promptText="Nome do prédio" editable="false" layoutX="230.0" layoutY="63.0" prefHeight="25.0" prefWidth="241.0" />
 				<TextField fx:id="txtAndar" layoutX="521.0" layoutY="63.0" prefHeight="25.0" prefWidth="30.0" />
-				<TextField fx:id="txtNome" layoutX="127.0" layoutY="100.0" prefHeight="25.0" prefWidth="346.0" />
+				<TextField fx:id="txtNome" promptText="Nome do quarto" layoutX="127.0" layoutY="100.0" prefHeight="25.0" prefWidth="346.0" />
 				<TextField fx:id="txtDormitorios" layoutX="126.0" layoutY="136.0" prefHeight="25.0" prefWidth="30.0" />
-				<TextField fx:id="txtValorDiaria" layoutX="126.0" layoutY="172.0" />
+				<TextField fx:id="txtValorDiaria" promptText="Valor da diária" layoutX="126.0" layoutY="172.0" />
 				<ComboBox fx:id="cbStatus" layoutX="125.0" layoutY="208.0" prefWidth="150.0" />
 				<TextArea fx:id="txtDescricao" layoutX="51.0" layoutY="267.0" prefHeight="91.0" prefWidth="505.0" />
 				<Button fx:id="btnSalvar" layoutX="274.0" layoutY="382.0" mnemonicParsing="false" text="Salvar" />

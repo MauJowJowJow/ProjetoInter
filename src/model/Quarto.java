@@ -5,7 +5,6 @@ import javax.validation.constraints.NotNull;
 import model.enums.StatusQuarto;
 import model.enums.StatusQuartoConverter;
 import model.dao.QuartoDAO;
-import util.Alerta;
 
 @Entity
 @Table(name="quarto")
@@ -31,7 +30,7 @@ public class Quarto extends ModelDefault{
 	
 	@NotNull(message="Informe o valor da diária!")
 	@Column(name="vlrQua", length=12)
-	private int valorQuarto;
+	private Double valorQuarto;
 	
 	@NotNull(message="Informe o status do quarto!")
 	@Column(name="staQua", length=2)
@@ -84,11 +83,11 @@ public class Quarto extends ModelDefault{
 		this.dormitorios = dormitorios;
 	}
 
-	public int getValorQuarto() {
+	public Double getValorQuarto() {
 		return valorQuarto;
 	}
 
-	public void setValorQuarto(int valorQuarto) {
+	public void setValorQuarto(Double valorQuarto) {
 		this.valorQuarto = valorQuarto;
 	}
 
