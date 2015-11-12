@@ -3,7 +3,7 @@ package model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import model.enums.StatusQuarto;
-
+import model.enums.StatusQuartoConverter;
 import model.dao.QuartoDAO;
 import util.Alerta;
 
@@ -35,7 +35,7 @@ public class Quarto extends ModelDefault{
 	
 	@NotNull(message="Informe o status do quarto!")
 	@Column(name="staQua", length=2)
-	@Enumerated(EnumType.STRING)
+	@Convert(converter = StatusQuartoConverter.class)
 	private StatusQuarto statusQuarto;
 	
 	@NotNull(message="Informe o código do predio!")

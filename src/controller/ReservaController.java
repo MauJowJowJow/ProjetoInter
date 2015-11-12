@@ -17,10 +17,12 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import model.bean.formatters.*;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
@@ -48,11 +50,11 @@ public class ReservaController extends ControllerDefault{
 	private boolean item_reservaValido;
 	
 	@FXML
-	private CustomTextField txtCodigo;
+	private TextField txtCodigo;
 	@FXML
-	private CustomTextField txtCodigoPessoa;
+	private TextField txtCodigoPessoa;
 	@FXML
-	private CustomTextField txtNomePessoa;
+	private TextField txtNomePessoa;
 	
 	@FXML
 	private Button btnPesquisaPessoa;
@@ -61,19 +63,19 @@ public class ReservaController extends ControllerDefault{
 	private CustomTextField txtCodigoQuarto;
 	
 	@FXML
-	private CustomTextField txtDescricaoQuarto;
+	private TextField txtDescricaoQuarto;
 	
 	@FXML
-	private CustomDatePicker txtCheckIn;
+	private DatePicker txtCheckIn;
 	
 	@FXML
-	private CustomDatePicker txtCheckOut;
+	private DatePicker txtCheckOut;
 	
 	@FXML
-	private CustomTextField txtDiasEstadia;
+	private TextField txtDiasEstadia;
 	
 	@FXML
-	private CustomTextField txtValor;
+	private TextField txtValor;
 	
 	@FXML
 	private Button btnPesquisaQuarto;
@@ -148,7 +150,9 @@ public class ReservaController extends ControllerDefault{
 	}
 
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {	
+	public void initialize(URL arg0, ResourceBundle arg1) {		
+		super.initialize(arg0, arg1);
+		
 		imagensBotoes();
 		eventosPesquisa();
 		eventosBotoes();

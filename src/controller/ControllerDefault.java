@@ -3,9 +3,17 @@ package controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.ModelDefault;
@@ -16,6 +24,9 @@ public class ControllerDefault implements Initializable {
 		private ViewDefault view;
 		private Scene scene;
 		private StatusScene statusScene;
+		
+		@FXML
+		private Pane PanePrincipal;
 				
 		public ControllerDefault() {
 		}
@@ -69,6 +80,19 @@ public class ControllerDefault implements Initializable {
 
 		@Override
 		public void initialize(URL arg0, ResourceBundle arg1) {
-		
+			for (Node node : PanePrincipal.getChildren()) {
+				node.focusedProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
+					if (!newValue.booleanValue()) {
+						if(node instanceof TextField || 
+						   node instanceof DatePicker){
+							
+							if(node instanceof DatePicker){
+								((DatePicker)node).setValue(((DatePicker) node).getConverter().fromString(((DatePicker) node).getEditor().getText()));
+							}
+							Event.fireEvent(node, new ActionEvent());
+						}
+					}
+				});
+			}
 		}
 }

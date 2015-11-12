@@ -11,20 +11,14 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.WindowEvent;
 import model.Pessoa;
 import model.dao.PessoaDAO;
 import util.Alerta;
-import view.ConsultaPessoaView;
-import view.PessoaView;
-import model.bean.formatters.*;
 
 public class ConsultaPessoaController extends ControllerDefault {	
 	@FXML
@@ -37,16 +31,16 @@ public class ConsultaPessoaController extends ControllerDefault {
 	private TextField filtroCPFCNPJ;
 	
 	@FXML
-	private TableView tablePessoas;
+	private TableView<Pessoa> tablePessoas;
 	
 	@FXML
-	private TableColumn colCodigo;
+	private TableColumn<Pessoa,String> colCodigo;
 	
 	@FXML
-	private TableColumn colNome;
+	private TableColumn<Pessoa,String> colNome;
 	
 	@FXML
-	private TableColumn colCPFCNPJ;
+	private TableColumn<Pessoa,String> colCPFCNPJ;
 	
 	private ObservableList<Pessoa> data;
 	
@@ -94,7 +88,7 @@ public class ConsultaPessoaController extends ControllerDefault {
 		        FXCollections.observableList(
 		        			dao.query(
 		        					"SELECT p FROM Pessoa p"
-		        						, new java.util.ArrayList())
+		        						, new java.util.ArrayList<String>())
 		        		);
 		
         FilteredList<Pessoa> filteredData = new FilteredList<>(data, p -> true);

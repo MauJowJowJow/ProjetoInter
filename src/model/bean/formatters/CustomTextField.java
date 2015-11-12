@@ -11,6 +11,6 @@ public class CustomTextField extends TextField{
 				if (!newValue.booleanValue()) {
 					Event.fireEvent(this, new ActionEvent());
 				}
-			});			
+			});
 		}
 }

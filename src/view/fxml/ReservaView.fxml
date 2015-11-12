@@ -8,23 +8,23 @@
 
 <BorderPane prefHeight="423.0" prefWidth="819.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReservaController">
    <top>
-      <Pane prefHeight="423.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="423.0" prefWidth="800.0" BorderPane.alignment="CENTER" fx:id="PanePrincipal">
          <children>
             <Label contentDisplay="RIGHT" layoutX="40.0" layoutY="37.0" text="Código" />
             <Label contentDisplay="RIGHT" layoutX="40.0" layoutY="71.0" text="Pessoa" />
             
-            <CustomTextField fx:id="txtCodigo" disable="true" editable="false" layoutX="88.0" layoutY="33.0" prefHeight="25.0" prefWidth="78.0" promptText="Código" />
-            <CustomTextField fx:id="txtCodigoPessoa" layoutX="88.0" layoutY="67.0" prefHeight="25.0" prefWidth="78.0" promptText="Cód Pessoa" />
+            <TextField fx:id="txtCodigo" disable="true" editable="false" layoutX="88.0" layoutY="33.0" prefHeight="25.0" prefWidth="78.0" promptText="Código" />
+            <TextField fx:id="txtCodigoPessoa" layoutX="88.0" layoutY="67.0" prefHeight="25.0" prefWidth="78.0" promptText="Cód Pessoa" />
             <Button fx:id="btnPesquisaPessoa" layoutX="171.0" layoutY="67.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
-            <CustomTextField fx:id="txtNomePessoa" editable="false" focusTraversable="false" layoutX="201.0" layoutY="67.0" prefHeight="25.0" prefWidth="309.0" promptText="Nome Pessoa" />
+            <TextField fx:id="txtNomePessoa" editable="false" focusTraversable="false" layoutX="201.0" layoutY="67.0" prefHeight="25.0" prefWidth="309.0" promptText="Nome Pessoa" />
             
-            <CustomTextField fx:id="txtCodigoQuarto" layoutX="37.0" layoutY="113.0" prefWidth="78.0" promptText="Cód Quarto" />
+            <CustomTextField fx:id="txtCodigoQuarto" layoutX="37.0" layoutY="113.0" prefWidth="78.0" promptText="Cód Quarto"/>
             <Button fx:id="btnPesquisaQuarto" layoutX="121.0" layoutY="113.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
-            <CustomTextField fx:id="txtDescricaoQuarto" editable="false" focusTraversable="false" layoutX="154.0" layoutY="113.0" prefHeight="25.0" prefWidth="223.0" promptText="Descrição Quarto" />
-            <CustomDatePicker fx:id="txtCheckIn" layoutX="381.0" layoutY="113.0" prefHeight="25.0" prefWidth="118.0" promptText="Check In" />
-            <CustomDatePicker fx:id="txtCheckOut" layoutX="503.0" layoutY="113.0" prefHeight="25.0" prefWidth="118.0" promptText="Check Out" />
-            <CustomTextField fx:id="txtDiasEstadia" layoutX="624.0" layoutY="113.0" prefWidth="70.0" promptText="Dias Estadia" />
-            <CustomTextField fx:id="txtValor" layoutX="697.0" layoutY="113.0" prefWidth="70.0" promptText="Valor" />
+            <TextField fx:id="txtDescricaoQuarto" editable="false" focusTraversable="false" layoutX="154.0" layoutY="113.0" prefHeight="25.0" prefWidth="223.0" promptText="Descrição Quarto" />
+            <DatePicker fx:id="txtCheckIn" layoutX="381.0" layoutY="113.0" prefHeight="25.0" prefWidth="118.0" promptText="Check In" />
+            <DatePicker fx:id="txtCheckOut" layoutX="503.0" layoutY="113.0" prefHeight="25.0" prefWidth="118.0" promptText="Check Out" />
+            <TextField fx:id="txtDiasEstadia" layoutX="624.0" layoutY="113.0" prefWidth="70.0" promptText="Dias Estadia" />
+            <TextField fx:id="txtValor" layoutX="697.0" layoutY="113.0" prefWidth="70.0" promptText="Valor" />
             
             <Button fx:id="btnAddLinha" layoutX="776.0" layoutY="113.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
             <Button fx:id="btnDelLinha" layoutX="776.0" layoutY="146.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
