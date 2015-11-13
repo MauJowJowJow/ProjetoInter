@@ -7,6 +7,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+
 import java.util.ResourceBundle;
 import model.Quarto;
 import model.dao.QuartoDAO;
@@ -46,6 +48,10 @@ public class QuartoController extends ControllerDefault implements Initializable
 		
 		cbStatus.getItems().addAll(StatusQuarto.values());
 		cbStatus.setValue(StatusQuarto.Ativo);
+		
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();	
+		btnProcurar.setGraphic(new ImageView(classLoader.getResource("Search.png").toString()));
+        
 		
 		btnSalvar.setOnAction(evt -> {
 			Quarto model = (Quarto) getModel();

@@ -3,10 +3,10 @@ package view;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 
-public class ConsultaQuartoView extends ViewDefault{
+public class ConsultaPredioView extends ViewDefault{
 	public void iniciaTela(Scene parent, Modality modality){
 		try {
-			start(parent, "fxml/ConsultaQuartoView.fxml", "Consulta de Quartos", modality);
+			start(parent, "fxml/ConsultaPredio.fxml", "Consulta de Predios", modality);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
