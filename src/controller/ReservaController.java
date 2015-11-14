@@ -469,7 +469,7 @@ public class ReservaController extends ControllerDefault{
 	    		long valor= Long.parseLong(txtValor.getText());
 	    		
 	    		if(getQuarto() != null)
-	    			valor = diasDiferenca * getQuarto().getValorQuarto();
+	    			//valor = diasDiferenca * getQuarto().getValorQuarto();
 	    		
 	    		txtValor.setText(Long.toString(valor));
 	    	}
