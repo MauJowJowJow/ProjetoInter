@@ -4,6 +4,6 @@ import model.Predio;
 
 public class PredioDAO extends GenericDAOImpl<Integer, Predio> {
 	
-	PredioDAO(){}
+	public PredioDAO(){}
 
 }

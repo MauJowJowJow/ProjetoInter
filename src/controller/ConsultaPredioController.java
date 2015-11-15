@@ -1,15 +1,15 @@
 package controller;
 
 import java.net.URL;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import model.ModelDefault;
+import javafx.scene.control.cell.PropertyValueFactory;
 import model.Predio;
+import model.dao.PredioDAO;
 import util.Alerta;
 import javafx.event.EventHandler;
 import javafx.collections.ObservableList;
@@ -37,11 +37,11 @@ public class ConsultaPredioController extends ControllerDefault {
 	private Button btnSelecionar;
 	
 	public ConsultaPredioController(){}
-
+ 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1){
 		
-		iniciarGrid();
+		iniciaGrid();
 		
 		btnSelecionar.setOnAction(new EventHandler<ActionEvent>() {
 			
@@ -62,7 +62,41 @@ public class ConsultaPredioController extends ControllerDefault {
 		});
 	}
 	
-	public void iniciarGrid(){
+	public void iniciaGrid(){
+		colCodigo.setCellValueFactory(
+				new PropertyValueFactory<Predio,String>("codigo"));
 		
+		colNome.setCellValueFactory(
+			    new PropertyValueFactory<Predio,String>("nome"));
+		
+		colQuartos.setCellValueFactory(
+			    new PropertyValueFactory<Predio,String>("quartos"));
+		
+		PredioDAO dao = new PredioDAO();
+		
+		ObservableList<Predio> data =
+				FXCollections.observableList(
+						dao.query("SELECT p FROM predio p", new java.util.ArrayList<String>()));
+		
+		FilteredList<Predio>filteredData = new FilteredList<>(data, p -> true);
+		
+		txtNome.textProperty().addListener((observable, oldValue, newValue) -> {
+			filteredData.setPredicate(predio -> {
+				if (newValue == null || newValue.isEmpty()){
+					return true;
+				};
+				
+				String lowerCaseFilter = newValue.toLowerCase();
+				
+				if(predio.getDescricao().toLowerCase().contains(lowerCaseFilter)){
+					return true;
+				}
+				return false;
+			});		
+		});
+		
+		SortedList<Predio>sortedData = new SortedList<>(filteredData);
+		sortedData.comparatorProperty().bind(tablePredio.comparatorProperty());
+		tablePredio.setItems(sortedData);
 	}
 }

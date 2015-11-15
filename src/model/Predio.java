@@ -15,6 +15,17 @@ public class Predio extends ModelDefault{
 	
 	@Column(name="desPre", length=30)
 	private String descricao;
+	
+	@Column(name="qtdQua", length=6)
+	private String quartos;
+
+	public String getQuartos() {
+		return quartos;
+	}
+
+	public void setQuartos(String quartos) {
+		this.quartos = quartos;
+	}
 
 	public int getCodigoPredio() {
 		return codigoPredio;
@@ -31,8 +42,4 @@ public class Predio extends ModelDefault{
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
-
-	
-
 }
