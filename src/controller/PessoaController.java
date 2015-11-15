@@ -1,11 +1,12 @@
 package controller;
 
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.ResourceBundle;
+import org.apache.commons.beanutils.BeanUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -14,6 +15,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
+import javafx.util.converter.NumberStringConverter;
 import model.Endereco;
 import model.Pessoa;
 import model.dao.PessoaDAO;
@@ -28,10 +30,14 @@ import model.enums.EstadoCivil;
 import model.enums.SitCadPessoa;
 
 public class PessoaController extends ControllerDefault implements Initializable{
+	private Pessoa pessoa = new Pessoa();
+	
 	@FXML
 	private Button btnSalvar;
 	@FXML
 	private Button btnEnderecos;
+	@FXML
+	private Button btnNovo;
 	@FXML
 	private Button btnPesquisaPessoa;
 	
@@ -66,11 +72,45 @@ public class PessoaController extends ControllerDefault implements Initializable
 	@FXML
 	private DatePicker dateCadastro;
 	
+	// Só copia as propriedades pra não perder os Bindings.
+	public void setPessoa(Pessoa pessoa){
+		try {
+			BeanUtils.copyProperties(this.pessoa, pessoa);
+		} catch (IllegalAccessException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public Pessoa getPessoa(){
+		return pessoa;
+	}
+	
 	public PessoaController() {
 	}
 
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {		
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		super.initialize(arg0, arg1);
+		
+        // Ligação entre model e view
+        Bindings.bindBidirectional(txtCodigo.textProperty(), getPessoa().getCodigoProperty(), new NumberStringConverter());
+        txtNomeCliente.textProperty().bindBidirectional(getPessoa().getNomeProperty());
+        txtCGC.textProperty().bindBidirectional(getPessoa().getCNPJCPFProperty());
+        txtIsncEstadualRG.textProperty().bindBidirectional( getPessoa().getInscricaoEstadualProperty());
+        cbPessoa.valueProperty().bindBidirectional(getPessoa().getTipoPessoaProperty());
+    	txtTelComercial.textProperty().bindBidirectional(getPessoa().getTelefoneComProperty());
+    	txtTelResidencial.textProperty().bindBidirectional(getPessoa().getTelResProperty());
+    	txtCelular.textProperty().bindBidirectional(getPessoa().getCelularProperty());
+    	txtEMail.textProperty().bindBidirectional(getPessoa().getEmailProperty()); 
+    	cbSexo.valueProperty().bindBidirectional(getPessoa().getSexoProperty());
+    	cbPessoa.valueProperty().bindBidirectional(getPessoa().getTipoPessoaProperty());
+    	cbEstCivil.valueProperty().bindBidirectional(getPessoa().getEstadoCivilProperty());
+    	cbSituacao.valueProperty().bindBidirectional(getPessoa().getstatusPessoaProperty());
+    	dateNascimento.valueProperty().bindBidirectional(getPessoa().getDataNascimentoProperty());
+    	
+    	dateCadastro.valueProperty().bindBidirectional(getPessoa().getDataCadastroProperty());
+        
 		cbSexo.getItems().addAll(PessoaSexo.values());
 		cbSexo.setValue(PessoaSexo.Masculino);
 
@@ -97,9 +137,7 @@ public class PessoaController extends ControllerDefault implements Initializable
 					
 					ConsultaPessoaController controller = consultaPessoaView.getFxmlLoader().<ConsultaPessoaController>getController();
 					if(controller.getModel() != null){
-						setModel(controller.getModel());
-
-						carregaModel();
+						setPessoa((Pessoa)controller.getModel());
 					}
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -108,42 +146,8 @@ public class PessoaController extends ControllerDefault implements Initializable
         });
         		
 		
-		btnSalvar.setOnAction(evt -> {
-            	if(getModel() == null)
-            		setModel(new Pessoa());
-            	
-            	Pessoa pessoa = (Pessoa) getModel();
+		btnSalvar.setOnAction(evt -> {            	
             	PessoaView view = (PessoaView) getView();
-            	
-            	if(!txtNomeCliente.getText().isEmpty())
-            		pessoa.setNome(txtNomeCliente.getText());
-            	
-            	pessoa.setSexo(cbSexo.getValue());
-            	pessoa.setTipoPessoa(cbPessoa.getValue());
-            	pessoa.setEstadoCivil(cbEstCivil.getValue());
-            	pessoa.setstatusPessoa(cbSituacao.getValue());
-            	
-            	pessoa.setInscricaoEstadual(txtIsncEstadualRG.getText());
-            	pessoa.setTelefoneCom(txtTelComercial.getText());
-            	pessoa.setTelRes(txtTelResidencial.getText());
-            	pessoa.setCelular(txtCelular.getText());
-            	pessoa.setEmail(txtEMail.getText());
-            	
-            	if(dateNascimento.getValue() != null)
-	            	pessoa.setDataNascimento(Date.from(
-	            			dateNascimento.getValue().atStartOfDay()
-	            			.atZone(ZoneId.systemDefault()).toInstant()
-	            			));
-            	
-            	if(dateCadastro.getValue() != null)
-	            	pessoa.setDataCadastro(Date.from(
-	            			dateCadastro.getValue().atStartOfDay()
-	            			.atZone(ZoneId.systemDefault()).toInstant()
-	            			));
-            	
-            	if(!txtCGC.getText().equals(""))
-            		pessoa.setCNPJCPF(txtCGC.getText());
-            	
             	
             	if(pessoa.isValid()){
             		PessoaDAO dao = new PessoaDAO();
@@ -193,13 +197,15 @@ public class PessoaController extends ControllerDefault implements Initializable
 	            		alerta.Erro(getView().getStage());
 					}
 		});
-	}
-	
-	private void carregaModel(){
-		Pessoa pessoa = (Pessoa) getModel();
 		
-		String codigo = Integer.toString(pessoa.getCodigo());
-		
-		txtCodigo.setText(codigo);
+		btnNovo.setOnAction(evt -> {
+			if(getPessoa().getCodigo() == 0)
+				setPessoa(new Pessoa());
+			else{
+				Alerta alerta = new Alerta("Cadastro de Pessoas", "Cadastro pode ter sofrido alterações, deseja mesmo criar uma nova pessoa?");
+				if(alerta.Confirm(getStage()))
+					setPessoa(new Pessoa());				
+			}
+		});
 	}
 }

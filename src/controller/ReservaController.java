@@ -211,8 +211,8 @@ public class ReservaController extends ControllerDefault{
 	}
 	
 	public void limpaTela(){
-		EventHandler<ActionEvent> evt = txtCheckIn.getOnAction();
-		txtCheckIn.setOnAction(null);
+		//EventHandler<ActionEvent> evt = txtCheckIn.getOnAction();
+		//txtCheckIn.setOnAction(null);
 		
 		txtCodigo.setText("");
 		txtCodigoPessoa.setText("");
@@ -233,7 +233,7 @@ public class ReservaController extends ControllerDefault{
 		setPessoa(new Pessoa());
 		setQuarto(new Quarto());
 		
-		txtCheckIn.setOnAction(evt);
+		//txtCheckIn.setOnAction(evt);
 	}
 	
 	public void eventosBotoes(){
@@ -371,8 +371,11 @@ public class ReservaController extends ControllerDefault{
 	}
 	
 	public void eventosCampos(){
-	    txtCodigoPessoa.setOnAction(evt -> {
+	    txtCodigoPessoa.focusedProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
+	    	if(newValue) return;
+	    	
 	    	setReservaValida(true);
+	    	
 			if(txtCodigoPessoa.getText().isEmpty())
 				txtCodigoPessoa.setText("0");
 			
@@ -384,8 +387,9 @@ public class ReservaController extends ControllerDefault{
 		    	if(getPessoa() == null) setPessoa(new Pessoa());
 		    	if(codigo != getPessoa().getCodigo()){
 		    		getPessoa().setCodigo(codigo);
+		    		Pessoa pessoa = getPessoa().exists();
 		    		
-		    		if(getPessoa() != null){
+		    		if(pessoa != null){
 		    			setPessoa(pessoa);
 		    			txtNomePessoa.setText(getPessoa().getNome());
 		    		}
@@ -404,7 +408,9 @@ public class ReservaController extends ControllerDefault{
 			}
 	    });
 
-	    txtCodigoQuarto.setOnAction(evt-> {
+	    txtCodigoQuarto.focusedProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
+	    			if(newValue) return;
+	    			
 	    			setItem_reservaValido(true);
 	    			if(txtCodigoQuarto.getText().isEmpty())
 	    				txtCodigoQuarto.setText("0");
@@ -438,7 +444,9 @@ public class ReservaController extends ControllerDefault{
 	    			}
 		});
 	    
-	    txtCheckIn.setOnAction(evt ->{
+	    txtCheckIn.focusedProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
+	    	if(newValue) return;
+	    	
 	    	if(txtCheckIn.getValue() == null){
 	    		setItem_reservaValido(false);
 	    		
@@ -448,12 +456,8 @@ public class ReservaController extends ControllerDefault{
     	});
 	    
 	    txtCheckOut.focusedProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
-		    if (!newValue.booleanValue()) {
-		    	txtCheckOut.setValue(txtCheckOut.getConverter().fromString(txtCheckOut.getEditor().getText()));
-		    }
-		});
-	    
-	    txtCheckOut.setOnAction(evt ->{
+	    	if(newValue) return;
+	    	
 	    	txtDiasEstadia.setDisable(false);
 			if(txtCheckIn.getValue() == null) return;
 			
@@ -466,12 +470,12 @@ public class ReservaController extends ControllerDefault{
 	    		txtDiasEstadia.setDisable(true);
 	    		
 	    		if(txtValor.getText() == null) txtValor.setText("0");
-	    		long valor= Long.parseLong(txtValor.getText());
+	    		double valor= Double.parseDouble(txtValor.getText());
 	    		
 	    		if(getQuarto() != null)
-	    			//valor = diasDiferenca * getQuarto().getValorQuarto();
+	    			valor = diasDiferenca * getQuarto().getValorQuarto();
 	    		
-	    		txtValor.setText(Long.toString(valor));
+	    		txtValor.setText(Double.toString(valor));
 	    	}
 	    });
 	}

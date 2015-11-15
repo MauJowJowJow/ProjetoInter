@@ -7,7 +7,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ConsultaPessoaController">
    <center>
-      <Pane prefHeight="546.0" prefWidth="732.0" BorderPane.alignment="CENTER">
+      <Pane fx:id="PanePrincipal" prefHeight="546.0" prefWidth="732.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="29.0" layoutY="50.0" text="Nome" />
             <TextField fx:id="filtroNome" layoutX="74.0" layoutY="46.0" prefHeight="25.0" prefWidth="222.0" promptText="Filtre por nome" />

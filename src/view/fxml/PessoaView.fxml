@@ -8,11 +8,11 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="559.0" prefWidth="727.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PessoaController">
+<BorderPane prefHeight="445.0" prefWidth="675.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PessoaController">
    <left>
-      <Pane prefHeight="895.0" prefWidth="727.0" BorderPane.alignment="CENTER">
+      <Pane fx:id="PanePrincipal" prefHeight="445.0" prefWidth="677.0" BorderPane.alignment="CENTER">
          <children>
-            <GridPane layoutX="41.0" layoutY="66.0" prefHeight="338.0" prefWidth="646.0">
+            <GridPane layoutX="17.0" layoutY="14.0" prefHeight="338.0" prefWidth="646.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="10.0" prefWidth="112.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.0" minWidth="10.0" prefWidth="160.0" />
@@ -68,24 +68,25 @@
                </children>
             </GridPane>
             
-            <GridPane layoutX="41.0" layoutY="404.0" prefHeight="30.0" prefWidth="491.0">
+            <GridPane layoutX="17.0" layoutY="357.0" prefHeight="30.0" prefWidth="491.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.0" minWidth="10.0" prefWidth="120.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="10.0" prefWidth="130.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="388.0" minWidth="10.0" prefWidth="380.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label prefHeight="28.0" prefWidth="115.0" text="E-mail:" />
-                  <TextField fx:id="txtEMail" prefHeight="25.0" prefWidth="254.0" promptText="e-mail" GridPane.columnIndex="1" />
+                  <Label prefHeight="42.0" prefWidth="107.0" text="E-mail:" />
+                  <TextField fx:id="txtEMail" prefHeight="25.0" prefWidth="390.0" promptText="e-mail" GridPane.columnIndex="1" />
                </children>
             </GridPane>
-            <Button fx:id="btnSalvar" layoutX="340.0" layoutY="453.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="61.0" text="Salvar" />
-            <Button fx:id="btnEnderecos" layoutX="419.0" layoutY="456.0" mnemonicParsing="false" text="Endereço" />
+            <Button fx:id="btnSalvar" layoutX="230.0" layoutY="406.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Salvar" />
+            <Button fx:id="btnEnderecos" layoutX="304.0" layoutY="406.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Endereço" />
             
-            <Button fx:id="btnPesquisaPessoa" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="234.0" layoutY="75.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" textAlignment="CENTER">
+                  <Button fx:id="btnPesquisaPessoa" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="208.0" layoutY="23.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" textAlignment="CENTER">
             </Button>
+            <Button fx:id="btnNovo" layoutX="378.0" layoutY="406.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Novo" />
          </children>
       </Pane>
    </left>

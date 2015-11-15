@@ -75,7 +75,7 @@ public class PrincipalMenu extends Application{
 		
 		loginView.iniciaTela(null);
 	
-		LoginController Controller = loginView.getFxmlLoader().<LoginController>getController();
+		LoginController Controller = (LoginController) loginView.getController();
 		return Controller.getLogou();
 	}
 		

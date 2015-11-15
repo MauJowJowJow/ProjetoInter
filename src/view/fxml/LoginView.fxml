@@ -10,7 +10,7 @@
 
 <BorderPane prefHeight="239.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <center>
-      <Pane prefHeight="249.0" prefWidth="360.0" BorderPane.alignment="CENTER">
+      <Pane fx:id="PanePrincipal" prefHeight="249.0" prefWidth="360.0" BorderPane.alignment="CENTER">
          <children>
          	<Text fill="#fffefe" layoutX="23.0" layoutY="42.0" stroke="#0d0000" strokeLineJoin="BEVEL" strokeType="OUTSIDE" strokeWidth="4.0" text="Hotel DM" wrappingWidth="130.275390625">
                <font>

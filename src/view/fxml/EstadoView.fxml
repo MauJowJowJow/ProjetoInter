@@ -9,7 +9,7 @@
 
 <BorderPane prefHeight="304.0" prefWidth="538.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EstadoController">
    <top>
-      <Pane prefHeight="300.0" prefWidth="538.0" BorderPane.alignment="CENTER">
+      <Pane fx:id="PanePrincipal" prefHeight="300.0" prefWidth="538.0" BorderPane.alignment="CENTER">
          <children>
             <GridPane layoutX="109.0" layoutY="35.0" prefHeight="168.0" prefWidth="308.0">
               <columnConstraints>

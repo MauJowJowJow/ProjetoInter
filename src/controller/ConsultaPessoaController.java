@@ -116,9 +116,9 @@ public class ConsultaPessoaController extends ControllerDefault {
                 
                 String cpfcnpj = newValue.replace(".", "").replace("-", ""); 
 
-                if (pessoa.getCNPJCPF().replace(".", "").replace("-", "").contains(cpfcnpj)) {
-                    return true;
-                }
+                //if (pessoa.getCNPJCPF().replace(".", "").replace("-", "").contains(cpfcnpj)) {
+                // return true;
+                    //}
                 return false;
             });
         });

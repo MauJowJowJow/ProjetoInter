@@ -7,7 +7,7 @@
 
 <AnchorPane prefHeight="191.0" prefWidth="399.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PredioController">
    <children>
-      <Pane layoutX="84.0" prefHeight="195.0" prefWidth="287.0">
+      <Pane fx:id="PanePrincipal" layoutX="84.0" prefHeight="195.0" prefWidth="287.0">
          <children>
             <Label layoutX="-45.0" layoutY="38.0" text="Código:" />
             <Label layoutX="-45.0" layoutY="68.0" text="Nome:" />

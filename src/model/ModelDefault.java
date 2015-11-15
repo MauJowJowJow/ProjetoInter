@@ -7,7 +7,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 
-public class ModelDefault {
+public abstract class ModelDefault {
 	@Transient
 	private String errors;
 

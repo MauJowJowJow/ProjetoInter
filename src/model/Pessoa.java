@@ -1,17 +1,17 @@
 package model;
 
-import java.util.Date;
-import java.util.Set;
-
+import java.time.LocalDate;
 import javax.persistence.*;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
 import javax.validation.constraints.NotNull;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import model.bean.validations.CheckCGC;
 import model.dao.PessoaDAO;
-import model.dao.QuartoDAO;
 import model.enums.EstadoCivil;
 import model.enums.PessoaSexo;
 import model.enums.SitCadPessoa;
@@ -22,178 +22,223 @@ import model.enums.TipoPessoa;;
 @CheckCGC(tipoPessoa="tipoPessoa", CGC="CNPJCPF")
 public class Pessoa extends ModelDefault{
 	
+	//private int codigo;
+	
+	private final IntegerProperty codigo = new SimpleIntegerProperty(this, "codigo");
+
 	@Id
 	@Column(name="codPes", length=7)
     @SequenceGenerator(name = "PessoaSequence", sequenceName = "hotel.pessoa_sequence", allocationSize=1)
 	@GeneratedValue(generator = "PessoaSequence", strategy = GenerationType.SEQUENCE)
-	private int codigo;
-
-	@NotNull(message = "Informe o nome da pessoa!")
-	@Column(name="nomPes", length=45)
-	private String nome;
-	
-	@Enumerated(EnumType.ORDINAL)
-	@Column(name="tipPes", length=1)
-	private TipoPessoa tipoPessoa;
-	
-	@Column(name="CGCPes", length=18)
-	private String CNPJCPF;
-	
-	@Column(name="iscEst", length=13)
-	private String inscricaoEstadual;
-	
-	@Column(name="emaPes", length=45)
-	private String email;
-	
-	@Column(name="datNas")
-	private Date dataNascimento;
-	
-	@Column(name="telPes", length=15)
-	private String telefoneCom;
-	
-	@Column(name="telPes2", length=15)
-	private String celular;
-	
-	@Column(name="telPes3", length=15)
-	private String telRes;
-	
-	@Column(name="datCad") 
-	private Date dataCadastro;
-	
-	@Enumerated(EnumType.ORDINAL)
-	@Column(name="sexPes")
-	private PessoaSexo sexo;
-	
-	@Enumerated(EnumType.ORDINAL)
-	@Column(name="estCiv")
-	private EstadoCivil estadoCivil;
-	
-	@Enumerated(EnumType.ORDINAL)
-	@Column(name="sitPes")
-	private SitCadPessoa statusPessoa;
+	public int getCodigo() {
+		return codigo.get();
+	}
 	
 	public void setCodigo(int codigo){
-		this.codigo = codigo;
+		this.codigo.set(codigo);
 	}
-
-	public int getCodigo() {
-		return codigo;
+	
+	@Transient
+	 public IntegerProperty getCodigoProperty() {
+	        return codigo;
 	}
-
+	
+	
+	private StringProperty nome = new SimpleStringProperty(this, "nome");
+	
+	@NotNull(message = "Informe o nome da pessoa!")
+	@Column(name="nomPes", length=45)
 	public String getNome() {
-		return nome;
+		return nome.get();
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nome.set(nome);
 	}
-
-
-	public String getCNPJCPF() {
-		return CNPJCPF;
+	
+	@Transient
+	public StringProperty getNomeProperty(){
+		return this.nome;
 	}
+	
+	private ObjectProperty<TipoPessoa> tipoPessoa = new SimpleObjectProperty<TipoPessoa>(this, "tipoPessoa");
 
-	public void setCNPJCPF(String CNPJCPF) {
-		this.CNPJCPF = CNPJCPF;
-	}
-
-
+	@Column(name="tipPes", length=1)
 	public TipoPessoa getTipoPessoa() {
-		return tipoPessoa;
+		return tipoPessoa.get();
 	}
 
 	public void setTipoPessoa(TipoPessoa tipoPessoa) {
-		this.tipoPessoa = tipoPessoa;
+		this.tipoPessoa.set(tipoPessoa);
+	}
+	
+	@Transient
+	public ObjectProperty<TipoPessoa> getTipoPessoaProperty() {
+		return tipoPessoa;
+	}
+	
+	private StringProperty CNPJCPF = new SimpleStringProperty(this, "CNPJCPF");
+	@Column(name="CGCPes", length=18)
+	public String getCNPJCPF() {
+		return CNPJCPF.get();
 	}
 
+	public void setCNPJCPF(String CNPJCPF) {
+		this.CNPJCPF.set(CNPJCPF);
+	}
+	
+	@Transient
+	public StringProperty getCNPJCPFProperty() {
+		return CNPJCPF;
+	}
+
+	private StringProperty inscricaoEstadual = new SimpleStringProperty(this, "inscricaoEstadual");
+	@Column(name="iscEst", length=13)
 	public String getInscricaoEstadual() {
-		return inscricaoEstadual;
+		return inscricaoEstadual.get();
 	}
-
 
 	public void setInscricaoEstadual(String inscricaoEstadual) {
-		this.inscricaoEstadual = inscricaoEstadual;
+		this.inscricaoEstadual.set(inscricaoEstadual);
 	}
-
-
+	
+	@Transient
+	public StringProperty getInscricaoEstadualProperty() {
+		return inscricaoEstadual;
+	}
+	
+	private StringProperty email = new SimpleStringProperty(this, "email");
+	@Column(name="emaPes", length=45)
 	public String getEmail() {
-		return email;
+		return email.get();
 	}
-
 
 	public void setEmail(String email) {
-		this.email = email;
+		this.email.set(email);
+	}
+	
+	@Transient
+	public StringProperty getEmailProperty() {
+		return email;
+	}
+	
+	private ObjectProperty<LocalDate> dataNascimento = new SimpleObjectProperty<LocalDate>(this, "dataNascimento");
+	@Column(name="datNas")
+	public LocalDate getDataNascimento() {		
+		return dataNascimento.get();
 	}
 
-
-	public Date getDataNascimento() {
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento.set(dataNascimento);
+	}
+	
+	@Transient
+	public ObjectProperty<LocalDate> getDataNascimentoProperty() {
 		return dataNascimento;
 	}
-
-
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento = dataNascimento;
-	}
-
+	
+	private StringProperty telefoneCom = new SimpleStringProperty(this, "telefoneCom");
+	@Column(name="telPes", length=15)
 	public String getTelefoneCom() {
-		return telefoneCom;
+		return telefoneCom.get();
 	}
 
 	public void setTelefoneCom(String telefoneCom) {
-		this.telefoneCom = telefoneCom;
+		this.telefoneCom.set(telefoneCom);
 	}
-
-	public String getTelRes() {
-		return telRes;
+	
+	@Transient
+	public StringProperty getTelefoneComProperty() {
+		return telefoneCom;
 	}
-
-	public void setTelRes(String telRes) {
-		this.telRes = telRes;
-	}
-
+	
+	private StringProperty celular = new SimpleStringProperty(this, "celular");
+	@Column(name="telPes2", length=15)
 	public String getCelular() {
-		return celular;
+		return celular.get();
 	}
 
 	public void setCelular(String celular) {
-		this.celular = celular;
+		this.celular.set(celular);
+	}
+	
+	@Transient
+	public StringProperty getCelularProperty() {
+		return celular;
+	}
+	
+	private StringProperty telRes = new SimpleStringProperty(this, "telRes");
+	@Column(name="telPes3", length=15)
+	public String getTelRes() {
+		return telRes.get();
+	}
+	
+	public void setTelRes(String telRes) {
+		this.telRes.set(telRes);
 	}
 
-	public Date getDataCadastro() {
+	@Transient
+	public StringProperty getTelResProperty() {
+		return telRes;
+	}
+	
+	private ObjectProperty<LocalDate> dataCadastro = new SimpleObjectProperty<LocalDate>(this, "dataCadastro");
+	@Column(name="datCad") 
+	public LocalDate getDataCadastro() {		
+		return dataCadastro.get();
+	}
+
+	public void setDataCadastro(LocalDate dataCadastro) {
+		this.dataCadastro.set(dataCadastro);
+	}
+	
+	@Transient
+	public ObjectProperty<LocalDate> getDataCadastroProperty() {
 		return dataCadastro;
 	}
-
-
-	public void setDataCadastro(Date dataCadastro) {
-		this.dataCadastro = dataCadastro;
+	
+	private ObjectProperty<PessoaSexo> sexo = new SimpleObjectProperty<PessoaSexo>(this, "sexo");
+	@Column(name="sexPes")
+	public PessoaSexo getSexo() {
+		return sexo.get();
+	}
+	
+	public void setSexo(PessoaSexo sexo) {
+		this.sexo.set(sexo);
 	}
 
-
-	public PessoaSexo getSexo() {
+	@Transient
+	public ObjectProperty<PessoaSexo> getSexoProperty() {
 		return sexo;
 	}
-
-
-	public void setSexo(PessoaSexo sexo) {
-		this.sexo = sexo;
-	}
-
-
+	
+	private ObjectProperty<EstadoCivil> estadoCivil = new SimpleObjectProperty<EstadoCivil>(this, "estadoCivil");
+	@Column(name="estCiv")
 	public EstadoCivil getEstadoCivil() {
+		return estadoCivil.get();
+	}
+	public void setEstadoCivil(EstadoCivil estadoCivil) {
+		this.estadoCivil.set(estadoCivil);
+	}
+	
+	@Transient
+	public ObjectProperty<EstadoCivil> getEstadoCivilProperty() {
 		return estadoCivil;
 	}
 	
+	private ObjectProperty<SitCadPessoa> statusPessoa = new SimpleObjectProperty<SitCadPessoa>(this, "statusPessoa");
+	@Column(name="sitPes")
 	public SitCadPessoa getstatusPessoa(){
-		return statusPessoa;
+		return statusPessoa.get();
 	}
 	
 	public void setstatusPessoa(SitCadPessoa statusPessoa){
-		this.statusPessoa = statusPessoa;
+		this.statusPessoa.set(statusPessoa);
 	}
-
-
-	public void setEstadoCivil(EstadoCivil estadoCivil) {
-		this.estadoCivil = estadoCivil;
+	
+	@Transient
+	public ObjectProperty<SitCadPessoa> getstatusPessoaProperty(){
+		return statusPessoa;
 	}
 	
 	public Pessoa exists(){
@@ -201,7 +246,7 @@ public class Pessoa extends ModelDefault{
 		Pessoa model = dao.getById(getCodigo());
 		
 		if(model == null){
-			setErrors("Quarto não cadastrado!");
+			setErrors("Pessoa não cadastrada!");
 		}
 		return model;
 	}

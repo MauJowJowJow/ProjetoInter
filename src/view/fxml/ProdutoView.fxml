@@ -7,7 +7,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProdutoController">
    <top>
-      <Pane prefHeight="481.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+      <Pane fx:id="PanePrincipal" prefHeight="481.0" prefWidth="500.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnSalvar" layoutX="183.0" layoutY="424.0" mnemonicParsing="false" text="Salvar" />
             <TextField fx:id="txtCodigo" layoutX="169.0" layoutY="40.0" promptText="Código" />

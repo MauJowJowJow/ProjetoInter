@@ -1,6 +1,5 @@
 package view;
 
-import controller.ConsultaPessoaController;
 import controller.ControllerDefault;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,6 +10,7 @@ import javafx.stage.Stage;
 public class ViewDefault {
 	private Stage window;
 	private FXMLLoader fxmlLoader;
+	private ControllerDefault controller;
 	
 	public ViewDefault() {
 	}
@@ -21,6 +21,10 @@ public class ViewDefault {
 	
 	public Stage getStage(){
 		return window;
+	}
+	
+	public ControllerDefault getController(){
+		return controller;
 	}
 
 	public void carrega(Scene parent, String caminhoFXML, String title, Modality modality) throws Exception{
@@ -40,11 +44,12 @@ public class ViewDefault {
 			window.initOwner(parent.getWindow());
 		
 		window.initModality(modality);
-		
-		fxmlLoader = new FXMLLoader(getClass().getResource(caminhoFXML));		
+
+		fxmlLoader = new FXMLLoader(getClass().getResource(caminhoFXML));
+	
 		Parent root = fxmlLoader.load();
 		
-		ControllerDefault controller = fxmlLoader.<ControllerDefault>getController();
+		controller = fxmlLoader.<ControllerDefault>getController();
 		
 		root.autosize();
 		
