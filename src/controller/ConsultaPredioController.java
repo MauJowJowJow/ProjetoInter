@@ -64,10 +64,10 @@ public class ConsultaPredioController extends ControllerDefault {
 	
 	public void iniciaGrid(){
 		colCodigo.setCellValueFactory(
-				new PropertyValueFactory<Predio,String>("codigo"));
+				new PropertyValueFactory<Predio,String>("codigoPredio"));
 		
 		colNome.setCellValueFactory(
-			    new PropertyValueFactory<Predio,String>("nome"));
+			    new PropertyValueFactory<Predio,String>("descricao"));
 		
 		colQuartos.setCellValueFactory(
 			    new PropertyValueFactory<Predio,String>("quartos"));
