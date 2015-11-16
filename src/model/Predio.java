@@ -44,14 +44,18 @@ public class Predio extends ModelDefault{
 		return this.descricao;
 	}
 	
+	private final IntegerProperty quartos = new SimpleIntegerProperty(this, "qtdQua");
 	@Column(name="qtdQua", length=6)
-	public String getQuartos() {
-		return quartos;
+	public int getQuartos(){
+		return quartos.get();
 	}
 
-	public void setQuartos(String quartos) {
-		this.quartos = quartos;
+	public void setQuartos(int quartos) {
+		this.quartos.set(quartos);
 	}
-
+	@Transient
+	public IntegerProperty getQuartosProperty(){
+		return this.quartos;
+	}
 	
 }
