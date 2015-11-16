@@ -76,7 +76,7 @@ public class ConsultaPredioController extends ControllerDefault {
 		
 		ObservableList<Predio> data =
 				FXCollections.observableList(
-						dao.query("SELECT p FROM predio p", new java.util.ArrayList<String>()));
+						dao.query("SELECT p FROM Predio p", new java.util.ArrayList<String>()));
 		
 		FilteredList<Predio>filteredData = new FilteredList<>(data, p -> true);
 		
