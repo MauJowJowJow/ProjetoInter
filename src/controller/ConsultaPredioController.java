@@ -8,6 +8,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.converter.NumberStringConverter;
+import model.Pessoa;
 import model.Predio;
 import model.dao.PredioDAO;
 import util.Alerta;
@@ -94,6 +96,17 @@ public class ConsultaPredioController extends ControllerDefault {
 				return false;
 			});		
 		});
+		
+		
+		txtCodigo.textProperty().addListener((observable, oldValue, newValue) -> {
+			filteredData.setPredicate(predio -> {
+				if (newValue == null || newValue.isEmpty()){
+					return true;
+				};
+				return false;
+			});		
+		});
+		
 		
 		SortedList<Predio>sortedData = new SortedList<>(filteredData);
 		sortedData.comparatorProperty().bind(tablePredio.comparatorProperty());

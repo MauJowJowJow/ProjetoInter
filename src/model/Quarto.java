@@ -3,9 +3,13 @@ package model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.DoubleProperty;
 import model.enums.StatusQuarto;
 import model.enums.StatusQuartoConverter;
 import model.dao.QuartoDAO;
@@ -22,7 +26,6 @@ public class Quarto extends ModelDefault{
 	public int getCodigo() {
 		return codigo.get();
 	}
-
 	public void setCodigo(int codigo) {
 		this.codigo.set(codigo);
 	}
@@ -37,7 +40,6 @@ public class Quarto extends ModelDefault{
 	public String getNome() {
 		return nome.get();
 	}
-
 	public void setNome(String nome) {
 		this.nome.set(nome);
 	}
@@ -45,80 +47,92 @@ public class Quarto extends ModelDefault{
 	public StringProperty getNomeProperty(){
 		return nome;
 	}
-	
+	private final IntegerProperty andarQuarto = new SimpleIntegerProperty(this, "andQua");
 	@NotNull(message="Informe o andar do quarto!")
 	@Column(name="andQua", length=3)
-	private int andarQuarto;
-	
-	@NotNull(message="Informe a quantidade de dormitorios no quarto!")
-	@Column(name="qtdDor", length=2)
-	private int dormitorios;
-	
-	@NotNull(message="Informe o valor da diária!")
-	@Column(name="vlrQua", length=12)
-	private Double valorQuarto;
-	
-	@NotNull(message="Informe o status do quarto!")
-	@Column(name="staQua", length=2)
-	@Convert(converter = StatusQuartoConverter.class)
-	private StatusQuarto statusQuarto;
-	
-	@NotNull(message="Informe o código do predio!")
-	@Column(name="codPre", length=7)
-	private int codigoPredio;
-	
-	@Column(name="comQua", length=300)
-	private String descricao ;
-
-
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
 	public int getAndarQuarto() {
+		return andarQuarto.get();
+	}
+	public void setAndarQuarto(int andarQuarto) {
+		this.andarQuarto.set(andarQuarto);
+	}
+	@Transient
+	public IntegerProperty getAndarQuartoProperty(){
 		return andarQuarto;
 	}
-
-	public void setAndarQuarto(int andarQuarto) {
-		this.andarQuarto = andarQuarto;
-	}
-
+	
+	private final IntegerProperty dormitorios = new SimpleIntegerProperty(this, "qtdDor");
+	@NotNull(message="Informe a quantidade de dormitorios no quarto!")
+	@Column(name="qtdDor", length=2)
 	public int getDormitorios() {
+		return dormitorios.get();
+	}
+	public void setDormitorios(int dormitorios) {
+		this.dormitorios.set(dormitorios);;
+	}
+	@Transient
+	public IntegerProperty getDormitoriosProperty(){
 		return dormitorios;
 	}
 
-	public void setDormitorios(int dormitorios) {
-		this.dormitorios = dormitorios;
-	}
-
+	private final DoubleProperty valorQuarto = new SimpleDoubleProperty(this, "vlrQua");
+	@NotNull(message="Informe o valor da diária!")
+	@Column(name="vlrQua", length=12)
 	public Double getValorQuarto() {
+		return valorQuarto.get();
+	}
+	public void setValorQuarto(Double valorQuarto) {
+		this.valorQuarto.set(valorQuarto);
+	}
+	@Transient
+	public DoubleProperty getValorQuartoProperty(){
 		return valorQuarto;
 	}
-
-	public void setValorQuarto(Double valorQuarto) {
-		this.valorQuarto = valorQuarto;
-	}
-
+	
+	private ObjectProperty<StatusQuarto> statusQuarto = new SimpleObjectProperty<StatusQuarto>(this, "staQua");
+	@NotNull(message="Informe o status do quarto!")
+	@Column(name="staQua", length=2)
+	@Convert(converter = StatusQuartoConverter.class)
 	public StatusQuarto getStatusQuarto() {
+		return statusQuarto.get();
+	}
+	public void setStatusQuarto(StatusQuarto statusQuarto) {
+		this.statusQuarto.set(statusQuarto);
+	}
+	@Transient
+	public ObjectProperty<StatusQuarto> getStatusQuartoProperty() {
 		return statusQuarto;
 	}
-
-	public void setStatusQuarto(StatusQuarto statusQuarto) {
-		this.statusQuarto = statusQuarto;
-	}
-
+	
+	private final IntegerProperty codigoPredio = new SimpleIntegerProperty(this, "codPre");
+	@NotNull(message="Informe o código do predio!")
+	@Column(name="codPre", length=7)
 	public int getCodigoPredio() {
+		return codigoPredio.get();
+	}
+	public void setCodigoPredio(int codigoPredio) {
+		this.codigoPredio.set(codigoPredio);;
+	}
+	@Transient
+	public IntegerProperty getCodigoPredioProperty(){
 		return codigoPredio;
 	}
-
-	public void setCodigoPredio(int codigoPredio) {
-		this.codigoPredio = codigoPredio;
+	
+	
+	private StringProperty descricao = new SimpleStringProperty(this, "comQua");
+	@Column(name="comQua", length=300)
+	public String getDescricao() {
+		return descricao.get();
 	}
+
+	public void setDescricao(String descricao) {
+		this.descricao.set(descricao);;
+	}
+	@Transient
+	public StringProperty getDescricaoProperty() {
+		return descricao;
+	}
+	
 	
 	public Quarto exists(){
 		QuartoDAO dao = new QuartoDAO();

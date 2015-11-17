@@ -40,7 +40,6 @@ public class PessoaController extends ControllerDefault implements Initializable
 	private Button btnNovo;
 	@FXML
 	private Button btnPesquisaPessoa;
-	
 	@FXML
 	private TextField txtCodigo;
 	@FXML
@@ -57,7 +56,6 @@ public class PessoaController extends ControllerDefault implements Initializable
 	private TextField txtCelular;
 	@FXML
 	private TextField txtEMail; 
-	
 	@FXML
 	private ComboBox<PessoaSexo> cbSexo;
 	@FXML
@@ -66,7 +64,6 @@ public class PessoaController extends ControllerDefault implements Initializable
 	private ComboBox<EstadoCivil> cbEstCivil;
 	@FXML
 	private ComboBox<SitCadPessoa> cbSituacao;
-	
 	@FXML
 	private DatePicker dateNascimento;	
 	@FXML
