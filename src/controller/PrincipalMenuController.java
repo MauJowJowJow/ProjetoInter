@@ -15,6 +15,7 @@ import util.Alerta;
 import view.ConsultaPessoaView;
 import view.EstadoView;
 import view.PessoaView;
+import view.PredioView;
 import view.ProdutoView;
 import view.QuartoView;
 import view.ReservaView;
@@ -30,6 +31,7 @@ public class PrincipalMenuController implements Initializable{
 	private EstadoController estadoController;
 	private QuartoController quartoController;
 	private ConsultaPredioController consultaPredioController;
+	private PredioController predioController;
 	
 	private Scene scene;
 	
@@ -56,6 +58,9 @@ public class PrincipalMenuController implements Initializable{
 	
 	@FXML
 	private MenuItem mntmConsultaPredios;
+	
+	@FXML
+	private MenuItem mntmPredios;
 	
 	public void setScene(Scene scene) { 
 		this.scene = scene; 
@@ -171,6 +176,28 @@ public class PrincipalMenuController implements Initializable{
             	
         		try {
 					QuartoView view = new QuartoView();
+					view.start(scene);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+            }
+			
+		});
+		
+		mntmPredios.setOnAction(new EventHandler<ActionEvent>(){
+			
+			@Override
+            public void handle(ActionEvent event) {
+            	if(predioController != null){
+	            	if(predioController.getStatusScene() == StatusScene.Aberto){
+						Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
+						alerta.Alertar( (Stage) scene.getWindow());
+						return;
+	            	}
+            	}
+            	
+        		try {
+					PredioView view = new PredioView();
 					view.start(scene);
 				} catch (Exception e) {
 					e.printStackTrace();

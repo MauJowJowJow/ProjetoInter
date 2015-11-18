@@ -20,7 +20,7 @@
                   <SeparatorMenuItem mnemonicParsing="false" />
               <MenuItem fx:id="mntmReservas" mnemonicParsing="false" text="Reservas" />
               <SeparatorMenuItem mnemonicParsing="false" />
-              <MenuItem fx:id="mntmQuartos" mnemonicParsing="false" text="Prédios" />
+              <MenuItem fx:id="mntmPredios" mnemonicParsing="false" text="Prédios" />
               <MenuItem fx:id="mntmQuartos" mnemonicParsing="false" text="Quartos" />
             </items>
           </Menu>
