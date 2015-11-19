@@ -2,6 +2,7 @@ package model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import model.enums.UniMedProduto;
 
 @Entity
 @Table(name="produto")
@@ -20,7 +21,7 @@ public class Produto extends ModelDefault {
 	
 	@NotNull(message="Informe a unidade de venda do produto!")
 	@Column(name="uniPro", length=5)
-	private String uniProduto;
+	private UniMedProduto uniProduto;
 	
 	@NotNull(message="Informe o valor do produto!")
 	@Column(name="vlrUni", length=10)
@@ -45,11 +46,11 @@ public class Produto extends ModelDefault {
 		this.descProduto = descProduto;
 	}
 
-	public String getUniProduto() {
+	public UniMedProduto getUniProduto() {
 		return uniProduto;
 	}
 
-	public void setUniProduto(String uniProduto) {
+	public void setUniProduto(UniMedProduto uniProduto) {
 		this.uniProduto = uniProduto;
 	}
 

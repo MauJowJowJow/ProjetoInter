@@ -4,13 +4,13 @@ import java.net.URL;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.WindowEvent;
 import model.Produto;
@@ -27,6 +27,18 @@ public class ProdutoController extends ControllerDefault implements Initializabl
 	
 	@FXML
 	private Button btnSalvar;
+	
+	@FXML
+	private TextField txtProduto;
+	
+	@FXML
+	private TextField txtValor;
+	
+	@FXML
+	private TextField txtCodBarra;
+	
+	@FXML
+	private ComboBox cbUniMedida;
 	
 	public ProdutoController() {}
 
