@@ -31,8 +31,7 @@ import model.enums.StatusQuarto;
 
 
 public class QuartoController extends ControllerDefault implements Initializable  {
-	private Predio predio;
-	private Quarto quarto;
+	private Quarto quarto = new Quarto();
 	
 	@FXML
 	private Button btnSalvar;
@@ -67,18 +66,19 @@ public class QuartoController extends ControllerDefault implements Initializable
 	}
 	
 	public Quarto getQuarto(){
-		if(getModel() == null)
-			setModel(new Quarto());
-		
-		return (Quarto) getModel();
-	}
-	
-	public Predio getPredio(){
-		return predio;
+		return quarto;
 	}
 	
 	public void setPredio(Predio predio){
-		this.predio = predio;
+		try{
+			BeanUtils.copyProperties(this.quarto.getPredio(), predio);
+		}catch (IllegalAccessException | InvocationTargetException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public Predio getPredio(){
+		return getQuarto().getPredio();
 	}
 	
 	public QuartoController(){}
@@ -94,8 +94,8 @@ public class QuartoController extends ControllerDefault implements Initializable
 		txtValorDiaria.textProperty().bindBidirectional(getQuarto().getValorQuartoProperty(),new NumberStringConverter());
 		txtDescricao.textProperty().bindBidirectional(getQuarto().getDescricaoProperty());
 		cbStatus.valueProperty().bindBidirectional(getQuarto().getStatusQuartoProperty());
-		//txtNomePredio.textProperty().bindBidirectional(getPredio().getDescricaoProperty());
-		//txtPredio.textProperty().bindBidirectional(getQuarto().getCodigoPredioProperty(),new NumberStringConverter());
+		txtPredio.textProperty().bindBidirectional(getQuarto().getPredio().getCodigoPredioProperty(),new NumberStringConverter());
+		txtNomePredio.textProperty().bindBidirectional(getQuarto().getPredio().getDescricaoProperty());
 		
 		cbStatus.getItems().addAll(StatusQuarto.values());
 		cbStatus.setValue(StatusQuarto.Ativo);
@@ -114,13 +114,7 @@ public class QuartoController extends ControllerDefault implements Initializable
 					ConsultaPredioController controller = consultaPredioView.getFxmlLoader().<ConsultaPredioController>getController();
 					if(controller.getModel() != null){
 						setPredio((Predio)controller.getModel());
-						
-						txtPredio.setText(Integer.toString(getPredio().getCodigoPredio()));
-						//txtNomePredio.textProperty().bindBidirectional(getPredio().getDescricaoProperty());
-						//txtPredio.textProperty().bindBidirectional(getPredio().getCodigoPredioProperty(),new NumberStringConverter());
-						txtNomePredio.setText(getPredio().getDescricao());
-						
-					}
+					} 
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}

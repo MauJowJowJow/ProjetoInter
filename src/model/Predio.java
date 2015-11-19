@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 import javax.persistence.*;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -9,8 +11,7 @@ import javafx.beans.property.StringProperty;
 @Entity
 @Table(name="predio")
 
-public class Predio extends ModelDefault{
-	
+public class Predio extends ModelDefault{	
 	private final IntegerProperty codigoPredio = new SimpleIntegerProperty(this, "codigoPredio");
 	
 	@Id
@@ -30,7 +31,7 @@ public class Predio extends ModelDefault{
 		return codigoPredio;
 	}
 	
-	private StringProperty descricao = new SimpleStringProperty(this,"desPre");
+	private StringProperty descricao = new SimpleStringProperty(this,"descricao");
 	@Column(name="desPre", length=30)
 	public String getDescricao() {
 		return descricao.get();
@@ -44,18 +45,17 @@ public class Predio extends ModelDefault{
 		return this.descricao;
 	}
 	
-	private final IntegerProperty quartos = new SimpleIntegerProperty(this, "qtdQua");
+	private final IntegerProperty qtdQuartos = new SimpleIntegerProperty(this, "qtdQuartos");
 	@Column(name="qtdQua", length=6)
-	public int getQuartos(){
-		return quartos.get();
+	public int getQtdQuartos(){
+		return qtdQuartos.get();
 	}
 
-	public void setQuartos(int quartos) {
-		this.quartos.set(quartos);
+	public void setQtdQuartos(int qtdQuartos) {
+		this.qtdQuartos.set(qtdQuartos);
 	}
 	@Transient
-	public IntegerProperty getQuartosProperty(){
-		return this.quartos;
+	public IntegerProperty getQtdQuartosProperty(){
+		return this.qtdQuartos;
 	}
-	
 }

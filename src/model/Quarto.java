@@ -18,7 +18,7 @@ import model.dao.QuartoDAO;
 @Table(name="quarto")
 public class Quarto extends ModelDefault{
 	
-	private final IntegerProperty codigo = new SimpleIntegerProperty(this, "codQua");
+	private final IntegerProperty codigo = new SimpleIntegerProperty(this, "codigo");
 	@Id
 	@Column(name="codQua", length=7)
 	@SequenceGenerator(name="QuartoSequence", sequenceName="hotel.quarto_sequence", allocationSize=1)
@@ -34,7 +34,7 @@ public class Quarto extends ModelDefault{
 		return codigo;
 	}
 	
-	private StringProperty nome = new SimpleStringProperty(this, "desQua");
+	private StringProperty nome = new SimpleStringProperty(this, "nome");
 	@NotNull(message="Informe o nome do quarto!")
 	@Column(name="desQua", length=35)
 	public String getNome() {
@@ -47,7 +47,7 @@ public class Quarto extends ModelDefault{
 	public StringProperty getNomeProperty(){
 		return nome;
 	}
-	private final IntegerProperty andarQuarto = new SimpleIntegerProperty(this, "andQua");
+	private final IntegerProperty andarQuarto = new SimpleIntegerProperty(this, "andarQuarto");
 	@NotNull(message="Informe o andar do quarto!")
 	@Column(name="andQua", length=3)
 	public int getAndarQuarto() {
@@ -61,21 +61,21 @@ public class Quarto extends ModelDefault{
 		return andarQuarto;
 	}
 	
-	private final IntegerProperty dormitorios = new SimpleIntegerProperty(this, "qtdDor");
+	private final IntegerProperty dormitorios = new SimpleIntegerProperty(this, "dormitorios");
 	@NotNull(message="Informe a quantidade de dormitorios no quarto!")
 	@Column(name="qtdDor", length=2)
 	public int getDormitorios() {
 		return dormitorios.get();
 	}
 	public void setDormitorios(int dormitorios) {
-		this.dormitorios.set(dormitorios);;
+		this.dormitorios.set(dormitorios);
 	}
 	@Transient
 	public IntegerProperty getDormitoriosProperty(){
 		return dormitorios;
 	}
 
-	private final DoubleProperty valorQuarto = new SimpleDoubleProperty(this, "vlrQua");
+	private final DoubleProperty valorQuarto = new SimpleDoubleProperty(this, "valorQuarto");
 	@NotNull(message="Informe o valor da diária!")
 	@Column(name="vlrQua", length=12)
 	public Double getValorQuarto() {
@@ -89,7 +89,7 @@ public class Quarto extends ModelDefault{
 		return valorQuarto;
 	}
 	
-	private ObjectProperty<StatusQuarto> statusQuarto = new SimpleObjectProperty<StatusQuarto>(this, "staQua");
+	private ObjectProperty<StatusQuarto> statusQuarto = new SimpleObjectProperty<StatusQuarto>(this, "statusQuarto");
 	@NotNull(message="Informe o status do quarto!")
 	@Column(name="staQua", length=2)
 	@Convert(converter = StatusQuartoConverter.class)
@@ -104,22 +104,12 @@ public class Quarto extends ModelDefault{
 		return statusQuarto;
 	}
 	
-	private final IntegerProperty codigoPredio = new SimpleIntegerProperty(this, "codPre");
-	@NotNull(message="Informe o código do predio!")
-	@Column(name="codPre", length=7)
-	public int getCodigoPredio() {
-		return codigoPredio.get();
-	}
-	public void setCodigoPredio(int codigoPredio) {
-		this.codigoPredio.set(codigoPredio);;
-	}
-	@Transient
-	public IntegerProperty getCodigoPredioProperty(){
-		return codigoPredio;
-	}
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinTable(name="predio")
+	@JoinColumn(name="codPre")
+	private Predio predio = new Predio();
 	
-	
-	private StringProperty descricao = new SimpleStringProperty(this, "comQua");
+	private StringProperty descricao = new SimpleStringProperty(this, "descricao");
 	@Column(name="comQua", length=300)
 	public String getDescricao() {
 		return descricao.get();
@@ -133,6 +123,22 @@ public class Quarto extends ModelDefault{
 		return descricao;
 	}
 	
+	@Transient
+	public Predio getPredio() {
+		return predio;
+	}
+	public void setPredio(Predio predio) {
+		this.predio = predio;
+	}
+	
+	@Transient
+	private IntegerProperty codigoPredio;
+	
+	@Transient
+	public IntegerProperty getCodigoPredio(){
+		codigoPredio = getPredio().getCodigoPredioProperty(); 
+		return codigoPredio;
+	}
 	
 	public Quarto exists(){
 		QuartoDAO dao = new QuartoDAO();

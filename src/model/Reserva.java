@@ -1,13 +1,10 @@
 package model;
 
 import java.sql.Date;
-
 import javax.persistence.*;
-
 import model.dao.GenericDAOImpl;
 import model.dao.ReservaDAO;
 import model.enums.StatusReserva;
-import model.pk.FaturamentoPK;
 
 @Entity
 @Table(name="reserva")
@@ -70,7 +67,7 @@ public class Reserva extends ModelDefault{
 		}
 		
 		ReservaDAO reservaDAO = new ReservaDAO();
-		GenericDAOImpl<FaturamentoPK, Boolean> faturamentoDAO = new GenericDAOImpl<FaturamentoPK, Boolean>();
+		GenericDAOImpl<Integer, Boolean> faturamentoDAO = new GenericDAOImpl<Integer, Boolean>();
 		
 		faturamentoDAO.query("SELECT TRUE FROM faturamento where ", null);
 		
