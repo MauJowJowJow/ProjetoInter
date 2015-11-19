@@ -104,10 +104,16 @@ public class Quarto extends ModelDefault{
 		return statusQuarto;
 	}
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinTable(name="predio")
-	@JoinColumn(name="codPre")
-	private Predio predio = new Predio();
+	private Predio predio = new Predio();	
+	@ManyToOne
+	@JoinColumn(name="codPre")	
+	public Predio getPredio() {
+		return predio;
+	}
+	
+	public void setPredio(Predio predio) {
+		this.predio = predio;
+	}
 	
 	private StringProperty descricao = new SimpleStringProperty(this, "descricao");
 	@Column(name="comQua", length=300)
@@ -121,14 +127,6 @@ public class Quarto extends ModelDefault{
 	@Transient
 	public StringProperty getDescricaoProperty() {
 		return descricao;
-	}
-	
-	@Transient
-	public Predio getPredio() {
-		return predio;
-	}
-	public void setPredio(Predio predio) {
-		this.predio = predio;
 	}
 	
 	@Transient
