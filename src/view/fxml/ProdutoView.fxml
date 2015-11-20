@@ -10,16 +10,16 @@
       <Pane fx:id="PanePrincipal" prefHeight="350.0" prefWidth="340.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnSalvar" layoutX="146.0" layoutY="206.0" mnemonicParsing="false" text="Salvar" />
-            <TextField fx:id="txtCodigo" layoutX="125.0" layoutY="31.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="70.0" promptText="Código" />
+            <TextField fx:id="txtCodigo" editable="false" layoutX="125.0" layoutY="31.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="70.0" promptText="Código" />
             <Label layoutX="44.0" layoutY="35.0" prefHeight="20.0" prefWidth="86.0" text="Codigo:" />
             <Label layoutX="44.0" layoutY="68.0" prefHeight="24.0" prefWidth="62.0" text="Produto:" />
             <Label layoutX="44.0" layoutY="99.0" prefHeight="26.0" prefWidth="80.0" text="Unid. Medida:" />
             <Label layoutX="44.0" layoutY="134.0" prefHeight="24.0" prefWidth="59.0" text="Valor:" />
             <Label layoutX="44.0" layoutY="169.0" prefHeight="23.0" prefWidth="79.0" text="Cód. Barra:" />
-            <TextField fx:id="txtProduto" layoutX="125.0" layoutY="64.0" />
+            <TextField fx:id="txtProduto" promptText="Descrição do produto" layoutX="125.0" layoutY="64.0" />
             <ComboBox fx:id="cbUniMedida" layoutX="125.0" layoutY="98.0" prefHeight="25.0" prefWidth="70.0" />
-            <TextField fx:id="txtValor" layoutX="125.0" layoutY="132.0" />
-            <TextField fx:id="txtCodBarra" layoutX="125.0" layoutY="166.0" />
+            <TextField fx:id="txtValor" promptText="Valor de venda" layoutX="125.0" layoutY="132.0" />
+            <TextField fx:id="txtCodBarra" promptText="Código de barra" layoutX="125.0" layoutY="166.0" />
          </children>
       </Pane>
    </center>

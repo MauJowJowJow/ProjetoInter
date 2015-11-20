@@ -2,71 +2,102 @@ package model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import model.dao.ProdutoDAO;
 import model.enums.UniMedProduto;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.DoubleProperty;
 
 @Entity
 @Table(name="produto")
 
 public class Produto extends ModelDefault {
 	
+	private final IntegerProperty codigo = new SimpleIntegerProperty(this, "codigo");
 	@Id
 	@Column(name="codPro", length=7)
 	@SequenceGenerator(name="ProdutoSequence", sequenceName="hotel.produto_sequence", allocationSize=1)
 	@GeneratedValue(generator="ProdutoSequence", strategy=GenerationType.SEQUENCE)
-	private int codigo;
-	
-	@NotNull(message="Informe o nome do produto!")
-	@Column(name="desPro", length=30)
-	private String descProduto;
-	
-	@NotNull(message="Informe a unidade de venda do produto!")
-	@Column(name="uniPro", length=5)
-	private UniMedProduto uniProduto;
-	
-	@NotNull(message="Informe o valor do produto!")
-	@Column(name="vlrUni", length=10)
-	private int valorProduto;
-	
-	@Column(name="codBar", length=13)
-	private int codBarra;
-
 	public int getCodigo() {
-		return codigo;
+		return codigo.get();
 	}
 
 	public void setCodigo(int codigo) {
-		this.codigo = codigo;
+		this.codigo.set(codigo);;
 	}
-
+	@Transient
+	public IntegerProperty getCodigoProperty() {
+		return codigo;
+	}
+	
+	private StringProperty descProduto = new SimpleStringProperty(this, "descProduto");
+	@NotNull(message="Informe o nome do produto!")
+	@Column(name="desPro", length=30)
 	public String getDescProduto() {
-		return descProduto;
+		return descProduto.get();
 	}
 
 	public void setDescProduto(String descProduto) {
-		this.descProduto = descProduto;
+		this.descProduto.set(descProduto);;
 	}
-
+	@Transient
+	public StringProperty getDescProdutoProperty(){
+		return descProduto;
+	}
+	
+	private ObjectProperty<UniMedProduto> uniMedProduto = new SimpleObjectProperty<UniMedProduto>(this, "uniMedProduto");
+	@NotNull(message="Informe a unidade de venda do produto!")
+	@Column(name="uniPro", length=5)
 	public UniMedProduto getUniProduto() {
-		return uniProduto;
+		return uniMedProduto.get();
 	}
-
-	public void setUniProduto(UniMedProduto uniProduto) {
-		this.uniProduto = uniProduto;
+	public void setUniProduto(UniMedProduto uniMedProduto) {
+		this.uniMedProduto.set(uniMedProduto);;
 	}
-
-	public int getValorProduto() {
+	@Transient
+	public ObjectProperty<UniMedProduto> getUniProdutoProperty() {
+		return uniMedProduto;
+	}
+	
+	private final DoubleProperty valorProduto = new SimpleDoubleProperty(this, "valorProduto");
+	@NotNull(message="Informe o valor do produto!")
+	@Column(name="vlrUni", length=12)
+	public Double getValorProduto() {
+		return valorProduto.get();
+	}
+	public void setValorProduto(Double valorProduto) {
+		this.valorProduto.set(valorProduto);
+	}
+	@Transient
+	public DoubleProperty getValorProdutoProperty(){
 		return valorProduto;
 	}
-
-	public void setValorProduto(int valorProduto) {
-		this.valorProduto = valorProduto;
-	}
-
+	
+	private final IntegerProperty codBarra = new SimpleIntegerProperty(this, "codBarra");
+	@Column(name="codBar", length=13)
 	public int getCodBarra() {
+		return codBarra.get();
+	}
+	public void setCodBarra(int codBarra) {
+		this.codBarra.set(codBarra);;
+	}
+	@Transient
+	public IntegerProperty getCodBarraProperty() {
 		return codBarra;
 	}
-
-	public void setCodBarra(int codBarra) {
-		this.codBarra = codBarra;
+	
+	public Produto exists(){
+		ProdutoDAO dao = new ProdutoDAO();
+		Produto produto = dao.getById(getCodigo());
+		
+		if(produto == null){
+			setErrors("Produto não cadastrado!");
+		}
+		return produto;
 	}
 }
