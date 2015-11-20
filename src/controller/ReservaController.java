@@ -14,11 +14,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
-import model.bean.formatters.*;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
@@ -34,7 +32,6 @@ import model.Pessoa;
 import model.Quarto;
 import model.Reserva;
 import model.dao.Item_reservaDAO;
-import model.dao.PessoaDAO;
 import model.dao.QuartoDAO;
 import model.dao.ReservaDAO;
 import model.enums.StatusReserva;
@@ -60,7 +57,7 @@ public class ReservaController extends ControllerDefault{
 	private Button btnPesquisaPessoa;
 	
 	@FXML
-	private CustomTextField txtCodigoQuarto;
+	private TextField txtCodigoQuarto;
 	
 	@FXML
 	private TextField txtDescricaoQuarto;

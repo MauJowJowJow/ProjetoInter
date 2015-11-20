@@ -4,7 +4,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
-<?import model.bean.formatters.*?>
 
 <BorderPane prefHeight="423.0" prefWidth="819.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReservaController">
    <top>
@@ -18,7 +17,7 @@
             <Button fx:id="btnPesquisaPessoa" layoutX="171.0" layoutY="67.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
             <TextField fx:id="txtNomePessoa" editable="false" focusTraversable="false" layoutX="201.0" layoutY="67.0" prefHeight="25.0" prefWidth="309.0" promptText="Nome Pessoa" />
             
-            <CustomTextField fx:id="txtCodigoQuarto" layoutX="37.0" layoutY="113.0" prefWidth="78.0" promptText="Cód Quarto"/>
+            <TextField fx:id="txtCodigoQuarto" layoutX="37.0" layoutY="113.0" prefWidth="78.0" promptText="Cód Quarto"/>
             <Button fx:id="btnPesquisaQuarto" layoutX="121.0" layoutY="113.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
             <TextField fx:id="txtDescricaoQuarto" editable="false" focusTraversable="false" layoutX="154.0" layoutY="113.0" prefHeight="25.0" prefWidth="223.0" promptText="Descrição Quarto" />
             <DatePicker fx:id="txtCheckIn" layoutX="381.0" layoutY="113.0" prefHeight="25.0" prefWidth="118.0" promptText="Check In" />

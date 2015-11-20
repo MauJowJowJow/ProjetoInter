@@ -5,12 +5,48 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="451.0" prefWidth="649.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="501.0" prefWidth="695.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FaturamentoController">
    <center>
       <Pane fx:id="PanePrincipal" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="33.0" layoutY="35.0" text="Código" />
-            <TextField disable="true" layoutX="84.0" layoutY="31.0" prefHeight="25.0" prefWidth="81.0" promptText="Código" />
+            <TextField disable="true" layoutX="84.0" layoutY="31.0" prefHeight="25.0" prefWidth="85.0" promptText="Código" />
+            <Label layoutX="33.0" layoutY="65.0" text="Reserva" />
+            <TextField layoutX="84.0" layoutY="61.0" prefWidth="85.0" promptText="Cód. Reserva" />
+            <Label layoutX="33.0" layoutY="95.0" text="Cliente" />
+            <TextField layoutX="84.0" layoutY="91.0" prefHeight="20.0" prefWidth="85.0" />
+            <Button layoutX="172.0" layoutY="91.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
+            <TextField layoutX="200.0" layoutY="91.0" prefHeight="25.0" prefWidth="311.0" />
+            <TextField layoutX="84.0" layoutY="121.0" prefHeight="20.0" prefWidth="85.0" />
+            <Label layoutX="32.0" layoutY="125.0" text="Quarto" />
+            <Button layoutX="172.0" layoutY="121.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
+            <TextField layoutX="200.0" layoutY="121.0" prefHeight="25.0" prefWidth="311.0" />
+            <Label layoutX="346.0" layoutY="35.0" text="Data Emissão" />
+            <TextField layoutX="426.0" layoutY="31.0" prefHeight="20.0" prefWidth="85.0" />
+            <Label layoutX="136.0" layoutY="427.0" text="Valor Reserva" />
+            <TableView layoutX="33.0" layoutY="182.0" prefHeight="234.0" prefWidth="604.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="Produto" />
+                <TableColumn prefWidth="295.0" text="Descrição" />
+                  <TableColumn prefWidth="83.0" text="Quantidade" />
+                  <TableColumn prefWidth="75.0" text="Vlr. Unitário" />
+                  <TableColumn prefWidth="75.0" text="Vlr. Total" />
+              </columns>
+            </TableView>
+            <TextField layoutX="213.0" layoutY="423.0" prefHeight="20.0" prefWidth="85.0" />
+            <Label layoutX="316.0" layoutY="427.0" text="Valor Serviço" />
+            <TextField layoutX="391.0" layoutY="423.0" prefHeight="20.0" prefWidth="85.0" />
+            <Label layoutX="491.0" layoutY="427.0" text="Valor Total" />
+            <TextField layoutX="553.0" layoutY="423.0" prefHeight="20.0" prefWidth="85.0" />
+            <TextField layoutX="31.0" layoutY="153.0" prefHeight="25.0" prefWidth="77.0" />
+            <Button layoutX="110.0" layoutY="153.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
+            <TextField layoutX="138.0" layoutY="153.0" prefHeight="25.0" prefWidth="265.0" />
+            <TextField layoutX="407.0" layoutY="153.0" prefHeight="25.0" prefWidth="75.0" />
+            <TextField layoutX="486.0" layoutY="153.0" prefHeight="25.0" prefWidth="75.0" />
+            <TextField layoutX="565.0" layoutY="153.0" prefHeight="25.0" prefWidth="72.0" />
+            <Button layoutX="641.0" layoutY="153.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
+            <Button layoutX="641.0" layoutY="182.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
+            <Button layoutX="398.0" layoutY="61.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" text="Carregar Serviços" />
          </children>
       </Pane>
    </center>
