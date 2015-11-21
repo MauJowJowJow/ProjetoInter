@@ -5,14 +5,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import org.apache.commons.beanutils.BeanUtils;
 import javafx.beans.binding.Bindings;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.util.converter.NumberStringConverter;
+import model.Pessoa;
 import model.Produto;
 import model.dao.ProdutoDAO;
 import util.Alerta;
@@ -26,6 +26,12 @@ public class ProdutoController extends ControllerDefault implements Initializabl
 	
 	@FXML
 	private Button btnSalvar;
+	
+	@FXML
+	private Button btnNovo;
+	
+	@FXML
+	private Button btnProcurar;
 	
 	@FXML
 	private TextField txtProduto;
@@ -65,7 +71,46 @@ public class ProdutoController extends ControllerDefault implements Initializabl
 		cbUniMedida.getItems().addAll(UniMedProduto.values());
 		cbUniMedida.setValue(UniMedProduto.UN);
 		
-		btnSalvar.setOnAction(new EventHandler<ActionEvent>() {
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();	
+		btnProcurar.setGraphic(new ImageView(classLoader.getResource("Search.png").toString()));
+		
+		
+		btnSalvar.setOnAction(evt -> {
+			Produto model = getProduto();
+			
+			if(model == null)
+				model = new Produto();
+			ProdutoView view = (ProdutoView) getView();
+
+			ProdutoDAO dao = new ProdutoDAO();
+			
+			if(model.getCodigo() == 0){
+    			dao.insert(model);
+    			
+    			Alerta alerta = new Alerta("Inserção", "Produto inserido com o código " + model.getCodigo() + "!");
+        		alerta.Mensagem(view.getStage());
+        		
+        		txtCodigo.setText(Integer.toString(model.getCodigo()));
+    		}else{
+    			dao.update(model);
+    			
+    			Alerta alerta = new Alerta("Atualização", "Produto Atualizado!");
+        		alerta.Mensagem(view.getStage());
+    		}
+		});
+		
+		btnNovo.setOnAction(evt -> {
+			if(getProduto().getCodigo() == 0)
+				setProduto(new Produto());
+			else{
+				Alerta alerta = new Alerta("Cadastro de Produtos", "Cadastro pode ter sofrido alterações, deseja mesmo criar um novo produto?");
+				if(alerta.Confirm(getStage()))
+					setProduto(new Produto());				
+			}
+		});
+		
+		
+	/*	btnSalvar.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
@@ -74,7 +119,7 @@ public class ProdutoController extends ControllerDefault implements Initializabl
 				
 				
 				
-				//if (model.isValid()) {
+				if (model.isValid()) {
 					ProdutoDAO dao = new ProdutoDAO();
 
 					if (model.getCodigo() == 0) {
@@ -93,14 +138,14 @@ public class ProdutoController extends ControllerDefault implements Initializabl
 					}
 
 					dao.closeEntity();
-				}// else {
-				//	Alerta alerta = new Alerta("Validação ", model.getErrors());
+				} else {
+					Alerta alerta = new Alerta("Validação ", model.getErrors());
 
-					//alerta.Erro(view.getStage());
-				//}
+					alerta.Erro(view.getStage());
+				}
 
-			//}
-		});
+			}
+		});*/
 	}
 
 }

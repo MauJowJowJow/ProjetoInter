@@ -3,6 +3,7 @@ package model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import model.dao.ProdutoDAO;
+import model.enums.UniMedProConverter;
 import model.enums.UniMedProduto;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -53,6 +54,7 @@ public class Produto extends ModelDefault {
 	private ObjectProperty<UniMedProduto> uniMedProduto = new SimpleObjectProperty<UniMedProduto>(this, "uniMedProduto");
 	@NotNull(message="Informe a unidade de venda do produto!")
 	@Column(name="uniPro", length=5)
+	@Convert(converter = UniMedProConverter.class)
 	public UniMedProduto getUniProduto() {
 		return uniMedProduto.get();
 	}
