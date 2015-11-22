@@ -5,28 +5,25 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import org.apache.commons.beanutils.BeanUtils;
 import javafx.beans.binding.Bindings;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.stage.Modality;
 import javafx.util.converter.NumberStringConverter;
-import model.Pessoa;
-import model.Predio;
 import model.Produto;
 import model.dao.ProdutoDAO;
 import util.Alerta;
-import view.ConsultaPredioView;
 import view.Estoque_produtoView;
 import view.ProdutoView;
 import model.enums.UniMedProduto;
+import model.Endereco;
+import model.Estoque_produto;
 
 public class ProdutoController extends ControllerDefault implements Initializable{	
 	private Produto produto = new Produto();
+	private Estoque_produto estoque = new Estoque_produto();
 	@FXML
 	private TextField txtCodigo;
 	
@@ -65,6 +62,18 @@ public class ProdutoController extends ControllerDefault implements Initializabl
 	}
 	public Produto getProduto(){
 		return produto;
+	}
+	
+	public void setEstoque(Estoque_produto estoque){
+		try{
+			BeanUtils.copyProperties(this.estoque, estoque);
+		}catch (IllegalAccessException | InvocationTargetException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public Estoque_produto getEstoque(){
+		return estoque;
 	}
 
 	@Override
@@ -118,24 +127,26 @@ public class ProdutoController extends ControllerDefault implements Initializabl
 			}
 		});
 		
-		btnEstoque.setOnAction(new EventHandler<ActionEvent>(){
+		btnEstoque.setOnAction(evt -> {
+			Produto produto = (Produto) getModel();
 			
-			@Override
-            public void handle(ActionEvent event) {
-				Estoque_produtoView estoque_produtoView = new Estoque_produtoView();
+			if(produto.getCodigo() != 0){
+				Estoque_produtoView estoqueView = new Estoque_produtoView();
+
+				Estoque_produto estoque = new Estoque_produto();
+				estoque.setCodigo(produto.getCodigo());
 				
 				try {
-					estoque_produtoView.iniciaTela(getScene(), Modality.WINDOW_MODAL);
-					
-					Estoque_produtoController controller = estoque_produtoView.getFxmlLoader().<Estoque_produtoController>getController();
-					if(controller.getModel() != null){
-						set((Estoque_produto)controller.getModel());
-					} 
+					estoqueView.iniciaTela(getScene());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
-            }
-        });
+			} else{
+				Alerta alerta = new Alerta("Cadastro de Estoque", "Um produto já cadastrado deve ser selecionado para alteração de seu estoque!");
+        		
+        		alerta.Erro(getView().getStage());
+			}
+});
 		
 		
 	/*	btnSalvar.setOnAction(new EventHandler<ActionEvent>() {
