@@ -7,7 +7,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="124.0" prefWidth="196.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Estoque_produtoController">
    <children>
-      <Pane prefHeight="132.0" prefWidth="202.0">
+      <Pane fx:id="PanePrincipal" prefHeight="132.0" prefWidth="202.0">
          <children>
             <Label layoutX="22.0" layoutY="22.0" text="Cod. Produto:" />
             <Label layoutX="22.0" layoutY="56.0" text="Quatidade:" />

@@ -15,10 +15,10 @@ public class Item_faturado extends ModelDefault {
 	private int quantidadeItem;
 	
 	@Column(name="vlrUni", length=12)
-	private int valorUnitario;
+	private double valorUnitario;
 	
 	@Column(name="vlrTot", length=12)
-	private int valorTotal;
+	private double valorTotal;
 
 
 	public int getQuantidadeItem() {
@@ -29,34 +29,27 @@ public class Item_faturado extends ModelDefault {
 		this.quantidadeItem = quantidadeItem;
 	}
 
-	public int getValorUnitario() {
+	public double getValorUnitario() {
 		return valorUnitario;
 	}
 
-	public void setValorUnitario(int valorUnitario) {
+	public void setValorUnitario(double valorUnitario) {
 		this.valorUnitario = valorUnitario;
 	}
 
-	public int getValorTotal() {
+	public double getValorTotal() {
 		return valorTotal;
 	}
 
-	public void setValorTotal(int valorTotal) {
+	public void setValorTotal(double valorTotal) {
 		this.valorTotal = valorTotal;
 	}
 	
-	public int getCodigoFat(){
-		return pk.getCodigoFat();
+	public Item_faturadoPK getPK(){
+		return pk;
 	}
 	
-	public void setCodigoFat(int codigoFat){
-		this.pk.setCodigoFat(codigoFat);
-	}
-	public int getCodigoPro(){
-		return pk.getCodigoPro();
-	}
-	
-	public void setCodigoPro(int codigoPro){
-		this.pk.setCodigoPro(codigoPro);
+	public void setPK(Item_faturadoPK pk){
+		this.pk = pk;
 	}
 }

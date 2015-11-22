@@ -128,7 +128,7 @@ public class ProdutoController extends ControllerDefault implements Initializabl
 		});
 		
 		btnEstoque.setOnAction(evt -> {
-			Produto produto = (Produto) getModel();
+			Produto produto = getProduto();
 			
 			if(produto.getCodigo() != 0){
 				Estoque_produtoView estoqueView = new Estoque_produtoView();

@@ -199,7 +199,7 @@ public class ReservaController extends ControllerDefault{
 					setQuarto((Quarto) controller.getModel());
 					
 					txtCodigoQuarto.setText(Integer.toString(getQuarto().getCodigo()));
-					txtDescricaoQuarto.setText(getQuarto().getDescricao());
+					txtDescricaoQuarto.setText(getQuarto().getNome());
 				}
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -425,8 +425,9 @@ public class ReservaController extends ControllerDefault{
 				    		
 				    		if(quarto != null){
 				    			setQuarto(quarto);
-				    			txtDescricaoQuarto.setText(getQuarto().getDescricao());
+				    			txtDescricaoQuarto.setText(getQuarto().getNome());
 				    		}
+				    		
 				    		else{
 				    			setItem_reservaValido(false);
 				        		Alerta alerta = new Alerta("Cadastro de Reservas", getQuarto().getErrors());
@@ -466,7 +467,7 @@ public class ReservaController extends ControllerDefault{
 	    	if(diasDiferenca > 0){
 	    		txtDiasEstadia.setDisable(true);
 	    		
-	    		if(txtValor.getText() == null) txtValor.setText("0");
+	    		if(txtValor.getText().isEmpty()) txtValor.setText("0");
 	    		double valor= Double.parseDouble(txtValor.getText());
 	    		
 	    		if(getQuarto() != null)
@@ -482,21 +483,7 @@ public class ReservaController extends ControllerDefault{
 			    new PropertyValueFactory<Item_reserva, Integer>("codigoQuarto")
 		);
 
-		colCodigoQuarto.setOnEditCommit(evt -> {
-				QuartoDAO dao = new QuartoDAO();
-				
-				if(colCodigoQuarto.getText() == null)
-					colCodigoQuarto.setText("0");
-				else{
-					int codigo = evt.getNewValue();
-					Quarto quarto = dao.getById(codigo);
-					
-					evt.getRowValue().setDescricaoQuarto(quarto.getDescricao());
-				}
-			});
-
 		colDescricaoQuarto.setCellValueFactory(
-				//new ReadOnlyStringWrapper(data.getValue().getDescricao())
 			    new PropertyValueFactory<Item_reserva, String>("descricaoQuarto")
 			);
 
@@ -525,9 +512,8 @@ public class ReservaController extends ControllerDefault{
 			    } 
 			});
 		
-		colDiasEstadia.setCellFactory(
-				TextFieldTableCell.<Item_reserva, Integer>forTableColumn(new IntegerStringConverter())
-			    //new PropertyValueFactory<Item_reserva, Integer>("diasReserva")
+		colDiasEstadia.setCellValueFactory(
+			    new PropertyValueFactory<Item_reserva, Integer>("diasReserva")
 			);
 
 		colValor.setCellValueFactory(

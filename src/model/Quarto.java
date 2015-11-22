@@ -122,7 +122,7 @@ public class Quarto extends ModelDefault{
 	}
 
 	public void setDescricao(String descricao) {
-		this.descricao.set(descricao);;
+		this.descricao.set(descricao);
 	}
 	@Transient
 	public StringProperty getDescricaoProperty() {
@@ -141,9 +141,10 @@ public class Quarto extends ModelDefault{
 	public Quarto exists(){
 		QuartoDAO dao = new QuartoDAO();
 		Quarto quarto = dao.getById(getCodigo());
-		
+	
 		if(quarto == null){
-			setErrors("Quarto não cadastrado!");
+			setErrors("Quarto não cadastrado");
+			
 		}
 		return quarto;
 	}
