@@ -14,14 +14,22 @@
         <menus>
           <Menu mnemonicParsing="false" text="Cadastros">
             <items>
-              <MenuItem fx:id="mntmPessoas" mnemonicParsing="false" text="Pessoas" />
-              <MenuItem fx:id="mntmProdutos" mnemonicParsing="false" text="Produtos" />
-              <MenuItem fx:id="mntmEstados" mnemonicParsing="false" text="Estados" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-              <MenuItem fx:id="mntmReservas" mnemonicParsing="false" text="Reservas" />
+                  <Menu mnemonicParsing="false" text="Gerais">
+                    <items>
+                    <MenuItem fx:id="mntmPessoas" mnemonicParsing="false" text="Pessoas" />
+                    <MenuItem fx:id="mntmProdutos" mnemonicParsing="false" text="Produtos" />
+                    <MenuItem fx:id="mntmEstados" mnemonicParsing="false" text="Estados" />
+                    <MenuItem fx:id="mntmPredios" mnemonicParsing="false" text="Prédios" />
+                    <MenuItem fx:id="mntmQuartos" mnemonicParsing="false" text="Quartos" />
+                    </items>
+                  </Menu>
               <SeparatorMenuItem mnemonicParsing="false" />
-              <MenuItem fx:id="mntmPredios" mnemonicParsing="false" text="Prédios" />
-              <MenuItem fx:id="mntmQuartos" mnemonicParsing="false" text="Quartos" />
+                  <Menu mnemonicParsing="false" text="Processos">
+                    <items>
+                    <MenuItem fx:id="mntmReservas" mnemonicParsing="false" text="Reservas" />
+                      <MenuItem fx:id="mntmFaturamento" mnemonicParsing="false" text="Faturamento" />
+                    </items>
+                  </Menu>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Consultas">

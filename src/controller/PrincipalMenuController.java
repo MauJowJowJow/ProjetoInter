@@ -14,6 +14,7 @@ import javafx.stage.WindowEvent;
 import util.Alerta;
 import view.ConsultaPessoaView;
 import view.EstadoView;
+import view.FaturamentoView;
 import view.PessoaView;
 import view.PredioView;
 import view.ProdutoView;
@@ -32,6 +33,7 @@ public class PrincipalMenuController implements Initializable{
 	private QuartoController quartoController;
 	private ConsultaPredioController consultaPredioController;
 	private PredioController predioController;
+	private FaturamentoController faturamentoController;
 	
 	private Scene scene;
 	
@@ -43,6 +45,9 @@ public class PrincipalMenuController implements Initializable{
 	
 	@FXML
 	private MenuItem mntmReservas;
+	
+	@FXML
+	private MenuItem mntmFaturamento;
 	
 	@FXML
 	private MenuItem mntmConsultaPessoas;
@@ -138,6 +143,24 @@ public class PrincipalMenuController implements Initializable{
 				}
             }
         });
+		
+		mntmFaturamento.setOnAction(evt -> {
+            	if(faturamentoController != null){
+	            	if(faturamentoController.getStatusScene() == StatusScene.Aberto){
+						Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
+						alerta.Alertar( (Stage) scene.getWindow());
+						return;
+	            	}
+            	}
+            	
+        		try {
+        			FaturamentoView view = new FaturamentoView();
+					view.iniciaTela(scene);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		});
 		
 		mntmEstados.setOnAction(new EventHandler<ActionEvent>(){
 			
