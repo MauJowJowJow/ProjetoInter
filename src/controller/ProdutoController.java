@@ -5,17 +5,23 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import org.apache.commons.beanutils.BeanUtils;
 import javafx.beans.binding.Bindings;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import javafx.util.converter.NumberStringConverter;
 import model.Pessoa;
+import model.Predio;
 import model.Produto;
 import model.dao.ProdutoDAO;
 import util.Alerta;
+import view.ConsultaPredioView;
+import view.Estoque_produtoView;
 import view.ProdutoView;
 import model.enums.UniMedProduto;
 
@@ -29,6 +35,9 @@ public class ProdutoController extends ControllerDefault implements Initializabl
 	
 	@FXML
 	private Button btnNovo;
+	
+	@FXML
+	private Button btnEstoque;
 	
 	@FXML
 	private Button btnProcurar;
@@ -108,6 +117,25 @@ public class ProdutoController extends ControllerDefault implements Initializabl
 					setProduto(new Produto());				
 			}
 		});
+		
+		btnEstoque.setOnAction(new EventHandler<ActionEvent>(){
+			
+			@Override
+            public void handle(ActionEvent event) {
+				Estoque_produtoView estoque_produtoView = new Estoque_produtoView();
+				
+				try {
+					estoque_produtoView.iniciaTela(getScene(), Modality.WINDOW_MODAL);
+					
+					Estoque_produtoController controller = estoque_produtoView.getFxmlLoader().<Estoque_produtoController>getController();
+					if(controller.getModel() != null){
+						set((Estoque_produto)controller.getModel());
+					} 
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+            }
+        });
 		
 		
 	/*	btnSalvar.setOnAction(new EventHandler<ActionEvent>() {

@@ -16,16 +16,11 @@ import javafx.stage.Modality;
 import javafx.util.converter.NumberStringConverter;
 import java.util.ResourceBundle;
 import org.apache.commons.beanutils.BeanUtils;
-
-import model.Pessoa;
 import model.Predio;
-import model.dao.PredioDAO;
 import model.Quarto;
-import model.Reserva;
 import model.dao.QuartoDAO;
 import util.Alerta;
 import view.QuartoView;
-import view.ConsultaPessoaView;
 import view.ConsultaPredioView;
 import model.enums.StatusQuarto;
 
@@ -37,7 +32,6 @@ public class QuartoController extends ControllerDefault implements Initializable
 	private Button btnSalvar;
 	@FXML
 	private Button btnProcurar;
-	
 	@FXML
 	private TextField txtCodigo;
 	@FXML

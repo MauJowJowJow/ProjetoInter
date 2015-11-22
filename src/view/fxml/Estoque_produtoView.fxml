@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="124.0" prefWidth="196.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Estoque_produtoController">
+   <children>
+      <Pane prefHeight="132.0" prefWidth="202.0">
+         <children>
+            <Label layoutX="22.0" layoutY="22.0" text="Cod. Produto:" />
+            <Label layoutX="22.0" layoutY="56.0" text="Quatidade:" />
+            <TextField fx:id="txtCodigo" editable="false" layoutX="101.0" layoutY="18.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="70.0" />
+            <TextField fx:id="txtQuantidade" layoutX="101.0" layoutY="53.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="70.0" />
+            <Button fx:id="btnSalvar" layoutX="55.0" layoutY="93.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Salvar" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
