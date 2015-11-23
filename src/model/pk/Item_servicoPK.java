@@ -3,26 +3,37 @@ package model.pk;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.Transient;
+
+import model.Predio;
+import model.Servico;
 
 @Embeddable
 public class Item_servicoPK implements Serializable {
-
-	@Column(name="codSer", length=7)
-	private int codigoSer;
+	private static final long serialVersionUID=1L;
+	
+	
+	@MapsId("codSer")
+	@ManyToOne
+	@JoinColumn(name="codSer")
+	private Servico servico = new Servico();
+	
+	public Servico getServico() {
+		return servico;
+	}
+	
+	public void setServico(Servico servico){
+		this.servico = servico;
+	}
 	
 	@Column(name="codPro", length=7)
 	private int codigoPro;
 	
 	@Column(name="codFun", length=7)
 	private int codigoFun;
-
-	public int getCodigoSer() {
-		return codigoSer;
-	}
-
-	public void setCodigoSer(int codigoSer) {
-		this.codigoSer = codigoSer;
-	}
 
 	public int getCodigoPro() {
 		return codigoPro;
@@ -40,18 +51,16 @@ public class Item_servicoPK implements Serializable {
 		this.codigoFun = codigoFun;
 	}
 	
-	private static final long serialVersionUID=1L;
-	
 	@Override
 	public boolean equals (Object o){
 		return o instanceof Item_servicoPK &&
 				((Item_servicoPK)o).getCodigoFun() == this.codigoFun &&
 				((Item_servicoPK)o).getCodigoPro() == this.codigoPro &&
-				((Item_servicoPK)o).getCodigoSer() == this.codigoSer;
+				((Item_servicoPK)o).getServico().getCodigo() == this.getServico().getCodigo();
 	}
 	
 	@Override
 	public int hashCode(){
-		return 31 * (codigoFun + codigoPro + codigoSer);
+		return 31 * (codigoFun + codigoPro + getServico().getCodigo());
 	}
 }

@@ -34,6 +34,7 @@
             <Button fx:id="btnDelLinha" layoutX="641.0" layoutY="182.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />            
             <TableView fx:id="tbvItem_faturado" layoutX="33.0" layoutY="182.0" prefHeight="234.0" prefWidth="604.0">
               <columns>
+                <TableColumn fx:id="tbcCodigoServico" prefWidth="75.0" text="Produto" />
                 <TableColumn fx:id="tbcCodProduto" prefWidth="75.0" text="Produto" />
                 <TableColumn fx:id="tbcNomeProduto" prefWidth="295.0" text="Descrição" />
                   <TableColumn fx:id="tbcQuantidade" prefWidth="83.0" text="Quantidade" />

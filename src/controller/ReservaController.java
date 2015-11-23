@@ -207,10 +207,7 @@ public class ReservaController extends ControllerDefault{
 	    });
 	}
 	
-	public void limpaTela(){
-		//EventHandler<ActionEvent> evt = txtCheckIn.getOnAction();
-		//txtCheckIn.setOnAction(null);
-		
+	public void limpaTela(){		
 		txtCodigo.setText("");
 		txtCodigoPessoa.setText("");
 		txtNomePessoa.setText("");
@@ -229,8 +226,6 @@ public class ReservaController extends ControllerDefault{
 		setModel(new Reserva());
 		setPessoa(new Pessoa());
 		setQuarto(new Quarto());
-		
-		//txtCheckIn.setOnAction(evt);
 	}
 	
 	public void eventosBotoes(){
@@ -300,7 +295,7 @@ public class ReservaController extends ControllerDefault{
 	    	Reserva reserva = getReserva();
 	    	ReservaDAO reservaDAO = new ReservaDAO();
 	    	
-	    	reserva.setCodigoPessoa(getPessoa().getCodigo());
+	    	reserva.setPessoa(getPessoa());
 	    	
 	    	if(reserva.getCodigoReserva() == 0){
 	    		reserva.setEmissaoReserva(new Date(new java.util.Date().getTime()));

@@ -22,27 +22,12 @@ public class Item_servico extends ModelDefault {
 	@Column(name="vlrTot", length=12)
 	private int valorTotal;
 
-	public int getCodigoSer() {
-		return pk.getCodigoSer();
-	}
-
-	public void setCodigoSer(int codigoSer) {
-		this.pk.setCodigoSer(codigoSer);
+	public void setPK(Item_servicoPK pk) {
+		this.pk = pk;
 	}
 	
-	public int getCodigoPro() {
-		return pk.getCodigoPro();
-	}
-
-	public void setCodigoPro(int codigoPro) {
-		this.pk.setCodigoPro(codigoPro);
-	}
-	public int getCodigoFun() {
-		return pk.getCodigoFun();
-	}
-
-	public void setCodigoFun(int codigoFun) {
-		this.pk.setCodigoFun(codigoFun);
+	public Item_servicoPK getPK() {
+		return pk;
 	}
 
 	public int getQuantidadeVendido() {

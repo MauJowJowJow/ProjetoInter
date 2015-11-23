@@ -5,6 +5,6 @@ import model.pk.Item_servicoPK;
 
 public class Item_servicoDAO extends GenericDAOImpl<Item_servicoPK, Item_servico> {
 	
-	Item_servicoDAO(){}
+	public Item_servicoDAO(){}
 
 }

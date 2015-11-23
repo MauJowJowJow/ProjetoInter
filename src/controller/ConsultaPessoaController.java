@@ -88,7 +88,7 @@ public class ConsultaPessoaController extends ControllerDefault {
 		        FXCollections.observableList(
 		        			dao.query(
 		        					"SELECT p FROM Pessoa p"
-		        						, new java.util.ArrayList<String>())
+		        						, new java.util.HashMap<String, Object>())
 		        		);
 		
         FilteredList<Pessoa> filteredData = new FilteredList<>(data, p -> true);

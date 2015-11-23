@@ -1,6 +1,7 @@
 package model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 public interface GenericDAO<PK, T> {
 	
@@ -12,5 +13,5 @@ public interface GenericDAO<PK, T> {
 	
 	public void delete(T entity);
 	
-	public List<T> query(String SQL, List<String> parametros);
+	public List<T> query(String SQL, Map<String, Object> parametros);
 }

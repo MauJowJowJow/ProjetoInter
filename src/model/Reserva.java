@@ -16,11 +16,23 @@ public class Reserva extends ModelDefault{
 	@GeneratedValue(generator="ReservaSequence", strategy=GenerationType.SEQUENCE)
 	private int codigoReserva;
 	
-	@Column(name="codPes", length=7)
-	private int codigoPessoa;
-	
 	@Column(name="emiRes")
 	private Date emissaoReserva;
+	
+	@Transient
+	private Pessoa pessoa = new Pessoa();
+	
+	@ManyToOne
+	@JoinColumn(name="codPes")
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+	
+	@Column(name="vlrTot", length = 12, precision = 2)
+	private double valorTotal;
 	
 	@Column(name="staRes")
 	private StatusReserva statusReserva;
@@ -33,14 +45,6 @@ public class Reserva extends ModelDefault{
 		this.codigoReserva = codigoReserva;
 	}
 
-	public int getCodigoPessoa() {
-		return codigoPessoa;
-	}
-
-	public void setCodigoPessoa(int codigoPessoa) {
-		this.codigoPessoa = codigoPessoa;
-	}
-
 	public Date getEmissaoReserva() {
 		return emissaoReserva;
 	}
@@ -49,12 +53,30 @@ public class Reserva extends ModelDefault{
 		this.emissaoReserva = emissaoReserva;
 	}
 	
+	public double getValorTotal() {
+		return valorTotal;
+	}
+
+	public void setValorTotal(double valorTotal) {
+		this.valorTotal = valorTotal;
+	}
+
 	public StatusReserva getStatusReserva() {
 		return statusReserva;
 	}
 
 	public void setStatusReserva(StatusReserva statusReserva) {
 		this.statusReserva = statusReserva;
+	}
+	
+	public Reserva exists(){
+		ReservaDAO dao = new ReservaDAO();
+		Reserva model = dao.getById(getCodigoReserva());
+		
+		if(model == null){
+			setErrors("Reserva não cadastrada!");
+		}
+		return model;
 	}
 
 	public boolean cancelaReserva(){

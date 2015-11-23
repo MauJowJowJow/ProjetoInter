@@ -8,9 +8,22 @@ import javax.persistence.ManyToOne;
 
 import model.Predio;
 import model.Produto;
+import model.Reserva;
+import model.Servico;
 
 @Embeddable
 public class Item_faturadoPK implements Serializable{
+	
+	private Servico servico = new Servico();	
+	@ManyToOne
+	@JoinColumn(name="codSer")	
+	public Servico getServico() {
+		return servico;
+	}
+	
+	public void setServico(Servico servico){
+		this.servico = servico;
+	}
 
 	@Column(name="codFat", length=7)
 	private int codigoFat;
@@ -39,7 +52,8 @@ public class Item_faturadoPK implements Serializable{
 	@Override
 	public boolean equals(Object o){
 		return o instanceof Item_faturadoPK &&
-				((Item_faturadoPK)o).getCodigoFat() == this.codigoFat &&
+				((Item_faturadoPK)o).getServico().getCodigo() == this.getServico().getCodigo() &&
+				((Item_faturadoPK)o).getCodigoFat() == this.getCodigoFat() &&
 				((Item_faturadoPK)o).getProduto().getCodigo() == this.getProduto().getCodigo();
 	}
 	

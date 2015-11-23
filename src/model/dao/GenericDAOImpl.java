@@ -8,6 +8,7 @@ import javax.persistence.Query;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("unchecked")
 public class GenericDAOImpl<PK, T> implements GenericDAO<PK, T> {
@@ -109,16 +110,16 @@ public class GenericDAOImpl<PK, T> implements GenericDAO<PK, T> {
 	}
 
 	@Override
-	public List<T> query(String SQL, List<String> parametros) {
+	public List<T> query(String SQL, Map<String, Object> parametros) {
 		createEntity("");
 
 		Query query = entityManager.createQuery(SQL);
 
-		String parametro;
+		Object parametro;
 
-		for (int i = 0; i < parametros.size(); i++) {
-			parametro = parametros.get(i);
-			query.setParameter(i, parametro);
+		for(String key : parametros.keySet()){
+			parametro = parametros.get(key);
+			query.setParameter(key, parametro);
 		}
 
 		return query.getResultList();
