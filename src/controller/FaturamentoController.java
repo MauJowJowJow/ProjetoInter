@@ -3,7 +3,6 @@ package controller;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,12 +33,12 @@ import model.Quarto;
 import model.Reserva;
 import model.dao.Item_reservaDAO;
 import model.dao.Item_servicoDAO;
-import model.dao.ServicoDAO;
 import model.enums.StatusReserva;
 import model.enums.StatusServico;
 import model.pk.Item_faturadoPK;
 import util.Alerta;
 import view.ConsultaPessoaView;
+import view.ConsultaQuartoView;
 
 public class FaturamentoController extends ControllerDefault{
 	private Reserva reserva = new Reserva();
@@ -258,7 +257,7 @@ public class FaturamentoController extends ControllerDefault{
 			}
 	    });
 	
-	    btnPesquisaQuarto.setOnAction(evt -> {/*
+	    btnPesquisaQuarto.setOnAction(evt -> {
 	    	ConsultaQuartoView consultaQuartoView = new ConsultaQuartoView();
 			
 			try {
@@ -267,13 +266,10 @@ public class FaturamentoController extends ControllerDefault{
 				ConsultaQuartoController controller = consultaQuartoView.getFxmlLoader().<ConsultaQuartoController>getController();
 				if(controller.getModel() != null){
 					setQuarto((Quarto) controller.getModel());
-					
-					txtCodigoQuarto.setText(Integer.toString(getQuarto().getCodigo()));
-					txtDescricaoQuarto.setText(getQuarto().getDescricao());
 				}
 			} catch (Exception e1) {
 				e1.printStackTrace();
-			}*/
+			}
 	    });
 	    
 	    btnPesquisaProduto.setOnAction(evt -> {

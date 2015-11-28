@@ -5,22 +5,32 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ConsultaQuartoController">
+<BorderPane prefHeight="510.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ConsultaQuartoController">
    <center>
       <Pane fx:id="PanePrincipal" prefHeight="546.0" prefWidth="732.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="29.0" layoutY="50.0" text="Nome" />
-            <TextField fx:id="filtroDescricao" layoutX="74.0" layoutY="46.0" prefHeight="25.0" prefWidth="222.0" promptText="Filtre por descrição" />
-            <Label layoutX="334.0" layoutY="50.0" text="CPF/CNPJ" />
-            <TableView fx:id="tableQuartos" layoutX="29.0" layoutY="127.0" prefHeight="363.0" prefWidth="675.0">
+            <Label layoutX="29.0" layoutY="28.0" text="Descrição" />
+            <TextField fx:id="txtDescricao" layoutX="122.0" layoutY="24.0" prefHeight="25.0" prefWidth="222.0" promptText="Filtre por descrição" />
+            <Label layoutX="390.0" layoutY="28.0" text="Status" />
+            <ComboBox fx:id="cbStatus" layoutX="436.0" layoutY="24.0" prefWidth="150.0" promptText="Selecione o Status" />
+            <Label layoutX="29.0" layoutY="64.0" text="Qtd. Dormitórios" />
+            <Label layoutX="392.0" layoutY="64.0" text="Valor" />
+            <Label layoutX="528.0" layoutY="64.0" text="ate" />
+            <TextField fx:id="txtQtdDormitorios" layoutX="122.0" layoutY="60.0" prefWidth="85.0" promptText="Qtd. Dormit." />
+            <TextField fx:id="txtValorInicial" layoutX="436.0" layoutY="60.0" prefHeight="25.0" prefWidth="85.0" promptText="Inicial" />
+            <TextField fx:id="txtValorFinal" layoutX="551.0" layoutY="60.0" prefWidth="85.0" promptText="Final" />            
+            <TableView fx:id="tableQuartos" layoutX="29.0" layoutY="101.0" prefHeight="363.0" prefWidth="675.0">
               <columns>
                 <TableColumn fx:id="colCodigo" editable="false" minWidth="0.0" prefWidth="120.0" text="Codigo" />
-                <TableColumn fx:id="colNome" editable="false" prefWidth="400.0" text="Nome" />
-                <TableColumn fx:id="colCPFCNPJ" editable="false" prefWidth="154.0" text="CPF/CNPJ" />
+                <TableColumn fx:id="colDescricao" editable="false" prefWidth="284.0" text="Descrição" />
+                <TableColumn fx:id="colStatus" prefWidth="71.0" text="Status" />
+                <TableColumn fx:id="colQtdDormitorio" prefWidth="111.0" text="Qtd. Dormitórios" />
+                <TableColumn fx:id="colValor" prefWidth="88.0" text="Vlr. Diária" />
               </columns>
             </TableView>
-            <Button fx:id="btnSelecionar" layoutX="360.0" layoutY="507.0" mnemonicParsing="false" text="Selecionar" />
-            
+            <Button fx:id="btnSelecionar" layoutX="252.0" layoutY="472.0" mnemonicParsing="false" prefWidth="75.0" text="Selecionar" />
+            <Button fx:id="btnAtualizar" layoutX="329.0" layoutY="472.0" mnemonicParsing="false" prefWidth="75.0" text="Atualizar" />
+            <Button fx:id="btnSair" layoutX="406.0" layoutY="472.0" mnemonicParsing="false" prefWidth="75.0" text="Sair" />            
          </children>
       </Pane>
    </center>

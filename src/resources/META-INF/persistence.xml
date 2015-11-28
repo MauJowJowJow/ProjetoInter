@@ -15,6 +15,7 @@
 		<class>model.Reserva</class> 
 		<class>model.Usuario</class>
 		<class>model.Produto</class>
+		<class>model.Estoque_produto</class>
 		<class>model.Servico</class>
 		<class>model.Item_servico</class>
 		
@@ -28,6 +29,7 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
 			<property name="hibernate.use_sql_comments" value="true" />
+			<property name="hibernate.type" value="TRACE"/>
             <property name="javax.persistence.validation.mode" value="none"/>
         </properties>
     </persistence-unit>

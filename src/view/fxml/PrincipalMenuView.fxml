@@ -36,6 +36,8 @@
           	<items>
           		<MenuItem fx:id="mntmConsultaPessoas" mnemonicParsing="false" text="Pessoas" />
           		<MenuItem fx:id="mntmConsultaPredios" mnemonicParsing="false" text="Prédios" />
+                <MenuItem fx:id="mntmConsultaQuartos" mnemonicParsing="false" text="Quartos" />
+                <MenuItem fx:id="mntmConsultaProdutos" mnemonicParsing="false" text="Produtos" />
           	</items>
           </Menu>
           <Menu mnemonicParsing="false" text="Relatorios" />

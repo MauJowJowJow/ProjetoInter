@@ -44,6 +44,7 @@ import model.enums.StatusReserva;
 import model.pk.Item_reservaPK;
 import util.Alerta;
 import view.ConsultaPessoaView;
+import view.ConsultaQuartoView;
 
 public class ReservaController extends ControllerDefault{
 	private Pessoa pessoa = new Pessoa();
@@ -216,7 +217,7 @@ public class ReservaController extends ControllerDefault{
 				}
 	    });
 
-	    btnPesquisaQuarto.setOnAction(evt -> {/*
+	    btnPesquisaQuarto.setOnAction(evt -> {
 	    	ConsultaQuartoView consultaQuartoView = new ConsultaQuartoView();
 			
 			try {
@@ -225,13 +226,10 @@ public class ReservaController extends ControllerDefault{
 				ConsultaQuartoController controller = consultaQuartoView.getFxmlLoader().<ConsultaQuartoController>getController();
 				if(controller.getModel() != null){
 					setQuarto((Quarto) controller.getModel());
-					
-					txtCodigoQuarto.setText(Integer.toString(getQuarto().getCodigo()));
-					txtDescricaoQuarto.setText(getQuarto().getNome());
 				}
 			} catch (Exception e1) {
 				e1.printStackTrace();
-			}*/
+			}
 	    });
 	}
 	

@@ -1,12 +1,11 @@
 package model;
 
-import java.util.List;
-
 import javax.persistence.*;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
+import model.dao.PredioDAO;
 
 @Entity
 @Table(name="predio")
@@ -57,5 +56,15 @@ public class Predio extends ModelDefault{
 	@Transient
 	public IntegerProperty getQtdQuartosProperty(){
 		return this.qtdQuartos;
+	}
+	
+	public Predio exists(){
+		PredioDAO dao = new PredioDAO();
+		Predio predio = dao.getById(getCodigoPredio());
+	
+		if(predio == null){
+			setErrors("Quarto não cadastrado");
+		}
+		return predio;
 	}
 }
