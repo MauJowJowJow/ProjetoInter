@@ -80,18 +80,19 @@ public class GenericDAOImpl<PK, T> implements GenericDAO<PK, T> {
 	}
 
 	@Override
-	public void update(T entity) {
+	public T update(T entity) {
 		createEntity("");
 		entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();
 
 		try {
-			entityManager.merge(entity);
+			entity = entityManager.merge(entity);
 			entityTransaction.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 			entityTransaction.rollback();			
 		}
+		return entity;
 	}
 
 	@Override

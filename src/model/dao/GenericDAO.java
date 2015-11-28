@@ -9,7 +9,7 @@ public interface GenericDAO<PK, T> {
 	
 	public T insert(T entity);
 	
-	public void update(T entity);
+	public T update(T entity);
 	
 	public void delete(T entity);
 	

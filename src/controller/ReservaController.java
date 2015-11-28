@@ -1,11 +1,15 @@
 package controller;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.ResourceBundle;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.hibernate.Hibernate;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -27,11 +31,13 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.util.Callback;
 import javafx.util.converter.IntegerStringConverter;
+import javafx.util.converter.NumberStringConverter;
 import model.Item_reserva;
 import model.Pessoa;
 import model.Quarto;
 import model.Reserva;
 import model.dao.Item_reservaDAO;
+import model.dao.PessoaDAO;
 import model.dao.QuartoDAO;
 import model.dao.ReservaDAO;
 import model.enums.StatusReserva;
@@ -40,8 +46,8 @@ import util.Alerta;
 import view.ConsultaPessoaView;
 
 public class ReservaController extends ControllerDefault{
-	private Pessoa pessoa;
-	private Quarto quarto;
+	private Pessoa pessoa = new Pessoa();
+	private Quarto quarto = new Quarto();
 	
 	private boolean reservaValida;
 	private boolean item_reservaValido;
@@ -115,7 +121,12 @@ public class ReservaController extends ControllerDefault{
 	}
 
 	public void setPessoa(Pessoa pessoa){
-		this.pessoa = pessoa;
+		// Copia Propriedades para não perder os binbings com um novo objeto
+		try{
+			BeanUtils.copyProperties(this.pessoa, pessoa);
+		}catch (IllegalAccessException | InvocationTargetException e){
+			e.printStackTrace();
+		}
 	}
 	
 	public Pessoa getPessoa(){
@@ -123,7 +134,12 @@ public class ReservaController extends ControllerDefault{
 	}
 
 	public void setQuarto(Quarto quarto){
-		this.quarto = quarto;
+		// Copia Propriedades para não perder os binbings com um novo objeto
+		try{
+			BeanUtils.copyProperties(this.quarto, quarto);
+		}catch (IllegalAccessException | InvocationTargetException e){
+			e.printStackTrace();
+		}
 	}
 
 	public Quarto getQuarto(){
@@ -150,11 +166,23 @@ public class ReservaController extends ControllerDefault{
 	public void initialize(URL arg0, ResourceBundle arg1) {		
 		super.initialize(arg0, arg1);
 		
+		criaBinding();
 		imagensBotoes();
 		eventosPesquisa();
 		eventosBotoes();
 		eventosCampos();
 	    iniciaTableView();
+	}
+	
+	private void criaBinding(){
+		// Binda Pessoa
+		txtCodigoPessoa.textProperty().bindBidirectional(getPessoa().getCodigoProperty(), new NumberStringConverter());
+		txtNomePessoa.textProperty().bindBidirectional(getPessoa().getNomeProperty());
+		
+		// Binda Quarto
+		txtCodigoQuarto.textProperty().bindBidirectional(getQuarto().getCodigoProperty(), new NumberStringConverter());
+		txtDescricaoQuarto.textProperty().bindBidirectional(getQuarto().getNomeProperty());
+
 	}
 	
 	private void imagensBotoes(){
@@ -209,11 +237,9 @@ public class ReservaController extends ControllerDefault{
 	
 	public void limpaTela(){		
 		txtCodigo.setText("");
-		txtCodigoPessoa.setText("");
-		txtNomePessoa.setText("");
 		
-		txtCodigoQuarto.setText("");
-		txtDescricaoQuarto.setText("");
+		setPessoa(new Pessoa());
+		setQuarto(new Quarto());
 		
 		txtCheckIn.setValue(null);
 		txtCheckOut.setValue(null);
@@ -239,8 +265,7 @@ public class ReservaController extends ControllerDefault{
     		if(txtCodigoQuarto.getText().isEmpty())
     			txtCodigoQuarto.setText("0");
     		
-    		item_reserva.setCodigoQuarto(Integer.parseInt(txtCodigoQuarto.getText()));
-    		item_reserva.setDescricaoQuarto(txtDescricaoQuarto.getText());
+    		item_reserva.getPK().setQuarto(getQuarto());
     		
     		if(txtCheckIn.getValue() != null)
 	    		item_reserva.setCheckIn(Date.from(
@@ -294,12 +319,13 @@ public class ReservaController extends ControllerDefault{
 	    	// Nivel 1
 	    	Reserva reserva = getReserva();
 	    	ReservaDAO reservaDAO = new ReservaDAO();
+	    	PessoaDAO pessoaDAO = new PessoaDAO();
 	    	
 	    	reserva.setPessoa(getPessoa());
+	    	//reserva.setPessoa(pessoaDAO.update(reserva.getPessoa()));
 	    	
 	    	if(reserva.getCodigoReserva() == 0){
 	    		reserva.setEmissaoReserva(new Date(new java.util.Date().getTime()));
-	    		reserva.setStatusReserva(StatusReserva.Aberta);
 	    		
 	    		reservaDAO.insert(reserva);
 	    		alerta = new Alerta("Cadastro de Reservas", "Código da reserva cadastrada " + reserva.getCodigoReserva());
@@ -314,10 +340,11 @@ public class ReservaController extends ControllerDefault{
 		    	Item_reservaPK pk;
 		    	for(Item_reserva item_reserva : tbvItemReserva.getItems()){
 		    		pk = new Item_reservaPK();
-		    		pk.setCodigo(reserva.getCodigoReserva());
-		    		pk.setCodigoQuarto(item_reserva.getCodigoQuarto());
+		    		pk.setReserva(reserva);
+		    		pk.setQuarto(item_reserva.getPK().getQuarto());
 		    		
-		    		item_reserva.setCodigo(reserva.getCodigoReserva());
+		    		item_reserva.getPK().setReserva(reserva);
+		    		item_reserva.setStatusReserva(StatusReserva.Aberta);
 		    		if(item_reservaDAO.getById(pk) == null){
 		    			item_reservaDAO.insert(item_reserva);
 		    		}else{
@@ -367,32 +394,21 @@ public class ReservaController extends ControllerDefault{
 	    	if(newValue) return;
 	    	
 	    	setReservaValida(true);
-	    	
-			if(txtCodigoPessoa.getText().isEmpty())
-				txtCodigoPessoa.setText("0");
 			
 			if(!validaPessoa()){
 				setReservaValida(false);
 			}else{
-		    	int codigo = Integer.parseInt(txtCodigoPessoa.getText());
-	
-		    	if(getPessoa() == null) setPessoa(new Pessoa());
-		    	if(codigo != getPessoa().getCodigo()){
-		    		getPessoa().setCodigo(codigo);
-		    		Pessoa pessoa = getPessoa().exists();
-		    		
-		    		if(pessoa != null){
-		    			setPessoa(pessoa);
-		    			txtNomePessoa.setText(getPessoa().getNome());
-		    		}
-		    		else{
-		    			setReservaValida(false);
-		        		Alerta alerta = new Alerta("Reservas", getPessoa().getErrors());
-		        		
-		        		alerta.Erro(getStage());
-		        		setReservaValida(false);
-		    		}
-		    	}
+				Pessoa pessoa = getPessoa().exists();
+	    		
+	    		if(pessoa != null){
+	    			setPessoa(pessoa);
+	    		}
+	    		else{
+	    			setReservaValida(false);
+	        		Alerta alerta = new Alerta("Cadastro de Reservas", getPessoa().getErrors());
+	        		
+	        		alerta.Erro(getStage());
+	    		}
 			}
 			
 			if(!isReservaValida()){
@@ -404,33 +420,21 @@ public class ReservaController extends ControllerDefault{
 	    			if(newValue) return;
 	    			
 	    			setItem_reservaValido(true);
-	    			if(txtCodigoQuarto.getText().isEmpty())
-	    				txtCodigoQuarto.setText("0");
 		    		
 	    			if(!validaQuarto()){
 	    				setItem_reservaValido(false);
 	    			}else{
-	    			
-				    	int codigo = Integer.parseInt(txtCodigoQuarto.getText());
-				    	
-				    	if(getQuarto()==null) setQuarto(new Quarto());
-				    	if(codigo != getQuarto().getCodigo()){
-				    		getQuarto().setCodigo(codigo);
-				    		Quarto quarto = getQuarto().exists();
-				    		
-				    		if(quarto != null){
-				    			setQuarto(quarto);
-				    			txtDescricaoQuarto.setText(getQuarto().getNome());
-				    		}
-				    		
-				    		else{
-				    			setItem_reservaValido(false);
-				        		Alerta alerta = new Alerta("Cadastro de Reservas", getQuarto().getErrors());
-				        		
-				        		alerta.Erro(getStage());
-				    		}
-				    	}
-	    			}
+	    				Quarto quarto = getQuarto().exists();
+	    	    		
+	    	    		if(quarto != null){
+	    	    			setQuarto(quarto);
+	    	    		}
+	    	    		else{
+	    	    			setItem_reservaValido(false);
+	    	        		Alerta alerta = new Alerta("Cadastro de Reserva", getQuarto().getErrors());
+	    	        		
+	    	        		alerta.Erro(getStage());
+	    	    		}	    			}
 	    			
 	    			if(!isItem_reservaValido()){
 	    				txtDescricaoQuarto.setText("");
@@ -456,7 +460,11 @@ public class ReservaController extends ControllerDefault{
 			
 	    	if(!validaCheckOut()) return;
 
-	    	long diasDiferenca = Math.abs(txtCheckOut.getValue().toEpochDay() - txtCheckIn.getValue().toEpochDay()); 
+	    	long diasDiferenca = 1;
+	    	diasDiferenca += Math.abs(txtCheckOut.getValue().toEpochDay() - txtCheckIn.getValue().toEpochDay());
+	    	
+	    	if(diasDiferenca == 0) diasDiferenca = 1;
+	    	
 	    	txtDiasEstadia.setText(Long.toString(diasDiferenca));
 	    	
 	    	if(diasDiferenca > 0){
@@ -474,13 +482,21 @@ public class ReservaController extends ControllerDefault{
 	}
 	
 	private void iniciaTableView(){
-		colCodigoQuarto.setCellValueFactory(
-			    new PropertyValueFactory<Item_reserva, Integer>("codigoQuarto")
-		);
+		colCodigoQuarto.setCellValueFactory(c -> {
+			if(c.getValue() != null){
+				return c.getValue().getPK().getQuarto().getCodigoProperty().asObject();
+			}else{
+				return new SimpleIntegerProperty(0).asObject();
+			}
+		});	
 
-		colDescricaoQuarto.setCellValueFactory(
-			    new PropertyValueFactory<Item_reserva, String>("descricaoQuarto")
-			);
+		colDescricaoQuarto.setCellValueFactory(c -> {
+			if(c.getValue() != null){
+				return c.getValue().getPK().getQuarto().getNomeProperty();
+			}else{
+				return new SimpleStringProperty("");
+			}
+		});		
 
 		colCheckIn.setCellValueFactory( item_reserva ->{
 				SimpleStringProperty property = new SimpleStringProperty();
@@ -518,7 +534,7 @@ public class ReservaController extends ControllerDefault{
 
 	private boolean quartoJaExiste(Item_reserva item_reserva){
 		for(Item_reserva item_reserva2 : tbvItemReserva.getItems()){
-			if(item_reserva2.getCodigoQuarto() == item_reserva.getCodigoQuarto())
+			if(item_reserva2.getPK().getQuarto().getCodigo() == item_reserva.getPK().getQuarto().getCodigo())
 				return true;
 		}
 		return false;

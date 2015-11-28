@@ -16,27 +16,23 @@ public class Reserva extends ModelDefault{
 	@GeneratedValue(generator="ReservaSequence", strategy=GenerationType.SEQUENCE)
 	private int codigoReserva;
 	
-	@Column(name="emiRes")
-	private Date emissaoReserva;
-	
-	@Transient
-	private Pessoa pessoa = new Pessoa();
-	
 	@ManyToOne
 	@JoinColumn(name="codPes")
+	private Pessoa pessoa = new Pessoa();
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
+	
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
 	
+	@Column(name="emiRes")
+	private Date emissaoReserva;
+	
 	@Column(name="vlrTot", length = 12, precision = 2)
 	private double valorTotal;
 	
-	@Column(name="staRes")
-	private StatusReserva statusReserva;
-
 	public int getCodigoReserva() {
 		return codigoReserva;
 	}
@@ -59,14 +55,6 @@ public class Reserva extends ModelDefault{
 
 	public void setValorTotal(double valorTotal) {
 		this.valorTotal = valorTotal;
-	}
-
-	public StatusReserva getStatusReserva() {
-		return statusReserva;
-	}
-
-	public void setStatusReserva(StatusReserva statusReserva) {
-		this.statusReserva = statusReserva;
 	}
 	
 	public Reserva exists(){
@@ -92,7 +80,7 @@ public class Reserva extends ModelDefault{
 		
 		faturamentoDAO.query("SELECT TRUE FROM faturamento where ", null);
 		
-		setStatusReserva(StatusReserva.Cancelada);
+		//setStatusReserva(StatusReserva.Cancelada);
 		reservaDAO.update(this);
 
 		return true;

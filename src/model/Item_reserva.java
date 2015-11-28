@@ -3,6 +3,8 @@ package model;
 import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import model.enums.StatusReserva;
 import model.pk.Item_reservaPK;
 
 @Entity
@@ -11,9 +13,6 @@ import model.pk.Item_reservaPK;
 public class Item_reserva extends ModelDefault{
 	@EmbeddedId
 	private Item_reservaPK pk = new Item_reservaPK();
-		
-	@Transient
-	private String descricaoQuarto;
 	
 	@NotNull(message="Informe a data de Check-In")
 	@Column(name="datCIn")
@@ -27,29 +26,16 @@ public class Item_reserva extends ModelDefault{
 	
 	@Column(name="vlrRes", length=7)
 	private double valorReserva;
-
-	public int getCodigo() {
-		return pk.getCodigo();
+	
+	@Column(name="staRes")
+	private StatusReserva statusReserva;
+	
+	public Item_reservaPK getPK(){
+		return pk;
 	}
-
-	public void setCodigo(int codigo) {
-		this.pk.setCodigo(codigo);
-	}
-
-	public int getCodigoQuarto() {
-		return pk.getCodigoQuarto();
-	}
-
-	public void setCodigoQuarto(int codigoQuarto) {
-		this.pk.setCodigoQuarto(codigoQuarto);
-	}
-
-	public String getDescricaoQuarto() {
-		return descricaoQuarto;
-	}
-
-	public void setDescricaoQuarto(String descricaoQuarto) {
-		this.descricaoQuarto = descricaoQuarto;
+	
+	public void setPK(Item_reservaPK pk){
+		this.pk = pk;
 	}
 
 	public Date getCheckIn() {
@@ -82,5 +68,13 @@ public class Item_reserva extends ModelDefault{
 
 	public void setValorReserva(double valorReserva) {
 		this.valorReserva = valorReserva;
+	}
+	
+	public StatusReserva getStatusReserva() {
+		return statusReserva;
+	}
+
+	public void setStatusReserva(StatusReserva statusReserva) {
+		this.statusReserva = statusReserva;
 	}
 }

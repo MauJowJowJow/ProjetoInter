@@ -17,9 +17,9 @@ import model.enums.PessoaSexo;
 import model.enums.SitCadPessoa;
 import model.enums.TipoPessoa;;
 
+@CheckCGC(tipoPessoa="tipoPessoa", CGC="CNPJCPF")
 @Entity
 @Table(name="pessoa")
-@CheckCGC(tipoPessoa="tipoPessoa", CGC="CNPJCPF")
 public class Pessoa extends ModelDefault{
 
 	private final IntegerProperty codigo = new SimpleIntegerProperty(this, "codigo");

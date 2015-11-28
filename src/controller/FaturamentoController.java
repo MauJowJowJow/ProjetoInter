@@ -26,14 +26,18 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.util.converter.NumberStringConverter;
 import model.Item_faturado;
+import model.Item_reserva;
 import model.Item_servico;
 import model.Pessoa;
 import model.Produto;
 import model.Quarto;
 import model.Reserva;
+import model.dao.Item_reservaDAO;
 import model.dao.Item_servicoDAO;
 import model.dao.ServicoDAO;
+import model.enums.StatusReserva;
 import model.enums.StatusServico;
+import model.pk.Item_faturadoPK;
 import util.Alerta;
 import view.ConsultaPessoaView;
 
@@ -515,26 +519,63 @@ public class FaturamentoController extends ControllerDefault{
     	if(getReserva().getCodigoReserva()== 0){
     		if(validaPessoa()){
     			if(validaQuarto()){
-    				Item_servicoDAO item_servicoDAO = new Item_servicoDAO();
-    				
-    				Map<String, Object> parametros = new HashMap<String, Object>();
-    				
-    				parametros.put("status", StatusServico.Aberto);
-    				parametros.put("pessoa", getPessoa().getCodigo());
-    				parametros.put("quarto", getQuarto().getCodigo());
-    				
-    				List<Item_servico> arr = item_servicoDAO.query("from Item_servico as its, Servico as s"
-    						+ " WHERE its.pk.servico.codigo = s.codigo AND"
-    						+ " s.statusServico = :status AND"
-    						+ " s.pessoa.codigo = :pessoa AND"
-    						+ " s.quarto.codigo = :quarto", parametros);
-    				
-    				arr.isEmpty();
+    				adicionaServicos(getPessoa(), getQuarto());
     			}
     		}
     	}else{
+    		Item_reservaDAO item_reservaDAO = new Item_reservaDAO();
     		
+    		Map<String, Object> parametros = new HashMap<String, Object>();
+    		
+    		parametros.put("reserva", getReserva().getCodigoReserva());
+    		parametros.put("status", StatusReserva.Aberta);
+
+    		List<Item_reserva> arr = item_reservaDAO.query("select itr from Item_reserva as itr, Reserva as r"
+    				+ " WHERE itr.pk.reserva.codigoReserva = r.codigoReserva"
+    				+ " AND r.codigoReserva = :reserva"
+    				+ " AND itr.statusReserva = :status", parametros);
+    		
+    		for(Item_reserva item_reserva : arr){
+    			adicionaServicos(item_reserva.getPK().getReserva().getPessoa(), item_reserva.getPK().getQuarto());
+    		}
     	}
+    }
+    
+    private void adicionaServicos(Pessoa pessoa, Quarto quarto){
+		Item_servicoDAO item_servicoDAO = new Item_servicoDAO();
+		
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		
+		parametros.put("status", StatusServico.Aberto);
+		parametros.put("pessoa", pessoa.getCodigo());
+		parametros.put("quarto", quarto.getCodigo());
+		
+		List<Item_servico> arr = item_servicoDAO.query("select its from Item_servico as its, Servico as s"
+				+ " WHERE its.pk.servico.codigo = s.codigo AND"
+				+ " s.statusServico = :status AND"
+				+ " s.pessoa.codigo = :pessoa AND"
+				+ " s.quarto.codigo = :quarto", parametros);
+
+		if(!arr.isEmpty()){
+			for(Item_servico its : arr){
+				Item_faturadoPK item_faturadoPK = new Item_faturadoPK();
+				Item_faturado item_faturado = new Item_faturado();
+				
+				item_faturadoPK.setProduto(its.getPK().getProduto());
+				item_faturadoPK.setServico(its.getPK().getServico());
+				item_faturado.setPK(item_faturadoPK);
+				
+				item_faturado.setQuantidadeItem(its.getQuantidadeVendido());
+				item_faturado.setValorUnitario(its.getValorUnitario());
+				item_faturado.setValorTotal(its.getValorTotal());
+				
+				if(!produtoJaExiste(item_faturado)){
+	    			tbvItem_faturado.getItems().add(item_faturado);
+	    			setProduto(null);
+	    		}
+			}
+		}
+
     }
     
     /* Validações especificas*/
@@ -559,7 +600,7 @@ public class FaturamentoController extends ControllerDefault{
     	}
 		return true;
 	}
-	
+
 	private boolean validaProduto(){
 		if(txtCodigoProduto.getText() == "0" || txtCodigoProduto.getText().isEmpty()){
 			setItem_faturadoValido(false);
@@ -570,5 +611,4 @@ public class FaturamentoController extends ControllerDefault{
     	}
 		return true;
 	}
-
 }
