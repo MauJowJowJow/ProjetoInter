@@ -38,43 +38,28 @@ public class Estoque_produtoController extends ControllerDefault implements Init
 		return estoque;
 	}
 	
-	public void setPropduto(Produto produto){
-		try{
-			BeanUtils.copyProperties(this.estoque.getProduto(), produto);
-		}catch (IllegalAccessException | InvocationTargetException e){
-			e.printStackTrace();
-		}
-	}
-	
-	public Produto getProduto(){
-		return getEstoque().getProduto();
-	}
-	
 	public Estoque_produtoController(){}
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1){
-	super.initialize(arg0, arg1);
+		super.initialize(arg0, arg1);
 	
-	Bindings.bindBidirectional(txtCodigo.textProperty(), getEstoque().getProduto().getCodigoProperty(), new NumberStringConverter());
-	txtQuantidade.textProperty().bindBidirectional(getEstoque().getQuatidadeProperty(),new NumberStringConverter());
-	
-	//Bindings.bindBidirectional(txtCodigo.textProperty(), getEstoque().getCodigoProperty(), new NumberStringConverter());
-	//txtQuantidade.textProperty().bindBidirectional(getEstoque().getQuatidadeProperty(), new NumberStringConverter());
-	
-	btnSalvar.setOnAction(evt -> {
-		Estoque_produto model = getEstoque();
-		
-		if(model == null)
-			model = new Estoque_produto();
-		Estoque_produtoView view = (Estoque_produtoView) getView();
 
-		Estoque_produtoDAO dao = new Estoque_produtoDAO();
+		Bindings.bindBidirectional(txtCodigo.textProperty(), getEstoque().getCodigoProperty(), new NumberStringConverter());
+		txtQuantidade.textProperty().bindBidirectional(getEstoque().getQuatidadeProperty(), new NumberStringConverter());
+
 		
-		dao.insert(model);
-		
-	});
+		btnSalvar.setOnAction(evt -> {
+			Estoque_produto model = getEstoque();
+			
+			if(model == null)
+				model = new Estoque_produto();
+			Estoque_produtoView view = (Estoque_produtoView) getView();
 	
+			Estoque_produtoDAO dao = new Estoque_produtoDAO();
+			
+			dao.insert(model);
+			
+		});
 	}
-	
 }

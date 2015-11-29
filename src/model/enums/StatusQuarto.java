@@ -14,5 +14,15 @@ public enum StatusQuarto {
 		this.statusQuarto = statusQuarto;
 	}
 	
-
+	@Override
+	public String toString(){
+		switch(statusQuarto){
+			case "A":
+				return "Ativo";
+			case "I":
+				return "Inativo";
+			default:
+				return "Sem Status";
+		}
+	}
 }

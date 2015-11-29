@@ -29,11 +29,22 @@ public class Produto extends ModelDefault {
 	}
 
 	public void setCodigo(int codigo) {
-		this.codigo.set(codigo);;
+		this.codigo.set(codigo);
 	}
 	@Transient
 	public IntegerProperty getCodigoProperty() {
 		return codigo;
+	}
+	
+	Estoque_produto estoque_produto = new Estoque_produto();	
+	@OneToOne
+	@JoinColumn(name="codPro")	
+	public Estoque_produto getEstoque_produto() {
+		return estoque_produto;
+	}
+	
+	public void setEstoque_produto(Estoque_produto estoque_produto) {
+		this.estoque_produto = estoque_produto;
 	}
 	
 	private StringProperty descProduto = new SimpleStringProperty(this, "descProduto");
@@ -52,6 +63,7 @@ public class Produto extends ModelDefault {
 	}
 	
 	private ObjectProperty<UniMedProduto> uniMedProduto = new SimpleObjectProperty<UniMedProduto>(this, "uniMedProduto");
+	
 	@NotNull(message="Informe a unidade de venda do produto!")
 	@Column(name="uniPro", length=5)
 	@Convert(converter = UniMedProConverter.class)
@@ -92,6 +104,7 @@ public class Produto extends ModelDefault {
 	public IntegerProperty getCodBarraProperty() {
 		return codBarra;
 	}
+
 	
 	public Produto exists(){
 		ProdutoDAO dao = new ProdutoDAO();

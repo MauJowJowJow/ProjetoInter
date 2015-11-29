@@ -21,6 +21,8 @@ import view.ProdutoView;
 import view.QuartoView;
 import view.ReservaView;
 import view.ConsultaPredioView;
+import view.ConsultaProdutoView;
+import view.ConsultaQuartoView;
 
 
 public class PrincipalMenuController implements Initializable{
@@ -31,8 +33,10 @@ public class PrincipalMenuController implements Initializable{
 	private ConsultaPessoaController consultaPessoaController;
 	private EstadoController estadoController;
 	private QuartoController quartoController;
+	private ConsultaQuartoController consultaQuartosController;
 	private ConsultaPredioController consultaPredioController;
 	private PredioController predioController;
+	private ConsultaProdutoController consultaProdutoController;
 	private FaturamentoController faturamentoController;
 	
 	private Scene scene;
@@ -62,7 +66,13 @@ public class PrincipalMenuController implements Initializable{
 	private MenuItem mntmQuartos;
 	
 	@FXML
+	private MenuItem mntmConsultaQuartos;
+	
+	@FXML
 	private MenuItem mntmConsultaPredios;
+	
+	@FXML
+	private MenuItem mntmConsultaProdutos;
 	
 	@FXML
 	private MenuItem mntmPredios;
@@ -78,49 +88,41 @@ public class PrincipalMenuController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
 		// Cadastros
-		mntmPessoas.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-            	if(pessoaController != null){
-	            	if(pessoaController.getStatusScene() == StatusScene.Aberto){
-						Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
-						alerta.Alertar( (Stage) scene.getWindow());
-						return;
-	            	}
-            	}
-            	
-        		try {
-					PessoaView view = new PessoaView();
-					view.iniciaTela(scene);					
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-            }
-        });
+		mntmPessoas.setOnAction(event -> {
+			if(pessoaController != null){
+		    	if(pessoaController.getStatusScene() == StatusScene.Aberto){
+					Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
+					alerta.Alertar( (Stage) scene.getWindow());
+					return;
+		    	}
+			}
+			
+			try {
+				PessoaView view = new PessoaView();
+				view.iniciaTela(scene);					
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 		
-		mntmProdutos.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-            public void handle(ActionEvent event) {
-            	if(produtoController != null){
-	            	if(produtoController.getStatusScene() == StatusScene.Aberto){
-						Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
-						alerta.Alertar( (Stage) scene.getWindow());
-						return;
-	            	}
-            	}
-            	
-        		try {
-					ProdutoView view = new ProdutoView();
-					view.iniciaTela(scene);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-            }
-        });
+		mntmProdutos.setOnAction(event -> {
+			if(produtoController != null){
+		    	if(produtoController.getStatusScene() == StatusScene.Aberto){
+					Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
+					alerta.Alertar( (Stage) scene.getWindow());
+					return;
+		    	}
+			}
+			
+			try {
+				ProdutoView view = new ProdutoView();
+				view.iniciaTela(scene);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 		
 		mntmReservas.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -162,131 +164,140 @@ public class PrincipalMenuController implements Initializable{
 				}
 		});
 		
-		mntmEstados.setOnAction(new EventHandler<ActionEvent>(){
+		mntmEstados.setOnAction(event -> {
+			if(estadoController != null){
+		    	if(estadoController.getStatusScene() == StatusScene.Aberto){
+					Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
+					alerta.Alertar( (Stage) scene.getWindow());
+					return;
+		    	}
+			}
 			
-			@Override
-            public void handle(ActionEvent event) {
-            	if(estadoController != null){
-	            	if(estadoController.getStatusScene() == StatusScene.Aberto){
-						Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
-						alerta.Alertar( (Stage) scene.getWindow());
-						return;
-	            	}
-            	}
-            	
-        		try {
-					EstadoView view = new EstadoView();
-					view.start(scene);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-            }
-			
+			try {
+				EstadoView view = new EstadoView();
+				view.start(scene);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		});
 		
-		mntmQuartos.setOnAction(new EventHandler<ActionEvent>(){
+		mntmQuartos.setOnAction(event -> {
+			if(quartoController != null){
+		    	if(quartoController.getStatusScene() == StatusScene.Aberto){
+					Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
+					alerta.Alertar( (Stage) scene.getWindow());
+					return;
+		    	}
+			}
 			
-			@Override
-            public void handle(ActionEvent event) {
-            	if(quartoController != null){
-	            	if(quartoController.getStatusScene() == StatusScene.Aberto){
-						Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
-						alerta.Alertar( (Stage) scene.getWindow());
-						return;
-	            	}
-            	}
-            	
-        		try {
-					QuartoView view = new QuartoView();
-					view.start(scene);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-            }
-			
+			try {
+				QuartoView view = new QuartoView();
+				view.start(scene);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		});
 		
-		mntmPredios.setOnAction(new EventHandler<ActionEvent>(){
+		mntmPredios.setOnAction(event -> {
+			if(predioController != null){
+		    	if(predioController.getStatusScene() == StatusScene.Aberto){
+					Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
+					alerta.Alertar( (Stage) scene.getWindow());
+					return;
+		    	}
+			}
 			
-			@Override
-            public void handle(ActionEvent event) {
-            	if(predioController != null){
-	            	if(predioController.getStatusScene() == StatusScene.Aberto){
-						Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
-						alerta.Alertar( (Stage) scene.getWindow());
-						return;
-	            	}
-            	}
-            	
-        		try {
-					PredioView view = new PredioView();
-					view.start(scene);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-            }
-			
+			try {
+				PredioView view = new PredioView();
+				view.start(scene);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		});
 		
 		// Consultas
 		
-		mntmConsultaPessoas.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-            public void handle(ActionEvent event) {
-            	if(consultaPessoaController != null){
-	            	if(consultaPessoaController.getStatusScene() == StatusScene.Aberto){
-						Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
-						alerta.Alertar( (Stage) scene.getWindow());
-						return;
-	            	}
-            	}
-            	
-        		try {
-					ConsultaPessoaView view = new ConsultaPessoaView();
-					view.iniciaTela(scene, Modality.NONE);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-            }
-        });
+		mntmConsultaPessoas.setOnAction(event -> {
+			if(consultaPessoaController != null){
+		    	if(consultaPessoaController.getStatusScene() == StatusScene.Aberto){
+					Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
+					alerta.Alertar( (Stage) scene.getWindow());
+					return;
+		    	}
+			}
+			
+			try {
+				ConsultaPessoaView view = new ConsultaPessoaView();
+				view.iniciaTela(scene, Modality.NONE);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 		
-		mntmConsultaPredios.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-            public void handle(ActionEvent event) {
-            	if(consultaPredioController != null){
-	            	if(consultaPredioController.getStatusScene() == StatusScene.Aberto){
-						Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
-						alerta.Alertar( (Stage) scene.getWindow());
-						return;
-	            	}
-            	}
-            	
-        		try {
-					ConsultaPredioView view = new ConsultaPredioView();
-					view.iniciaTela(scene, Modality.NONE);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-            }
-        });
+		mntmConsultaQuartos.setOnAction(event -> {
+			if(consultaQuartosController != null){
+		    	if(consultaQuartosController.getStatusScene() == StatusScene.Aberto){
+					Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
+					alerta.Alertar( (Stage) scene.getWindow());
+					return;
+		    	}
+			}
+			
+			try {
+				ConsultaQuartoView view = new ConsultaQuartoView();
+				view.iniciaTela(scene, Modality.NONE);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 		
-		mntmSair.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-            	Stage stage = (Stage) scene.getWindow();
-            	stage.fireEvent(new WindowEvent(
-            						stage,
-            						WindowEvent.WINDOW_CLOSE_REQUEST
-            	));
-           	
-            }
-        });
+		mntmConsultaProdutos.setOnAction(event -> {
+			if(consultaProdutoController != null){
+		    	if(consultaProdutoController.getStatusScene() == StatusScene.Aberto){
+					Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
+					alerta.Alertar( (Stage) scene.getWindow());
+					return;
+		    	}
+			}
+			
+			try {
+				ConsultaProdutoView view = new ConsultaProdutoView();
+				view.iniciaTela(scene, Modality.NONE);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		
+		mntmConsultaPredios.setOnAction(event -> {
+			if(consultaPredioController != null){
+		    	if(consultaPredioController.getStatusScene() == StatusScene.Aberto){
+					Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
+					alerta.Alertar( (Stage) scene.getWindow());
+					return;
+		    	}
+			}
+			
+			try {
+				ConsultaPredioView view = new ConsultaPredioView();
+				view.iniciaTela(scene, Modality.NONE);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		
+		mntmSair.setOnAction(event -> {
+			Stage stage = (Stage) scene.getWindow();
+			stage.fireEvent(new WindowEvent(
+								stage,
+								WindowEvent.WINDOW_CLOSE_REQUEST
+			));
+		
+		});
 		
 	}
 }

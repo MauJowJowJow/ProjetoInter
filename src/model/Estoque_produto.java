@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javafx.beans.property.IntegerProperty;
@@ -30,7 +33,6 @@ public class Estoque_produto extends ModelDefault {
 	}
 	
 	private final IntegerProperty quantidade = new SimpleIntegerProperty(this, "quantidade");
-	@Id
 	@Column(name="qtdPro", length=9)
 	public int getQuatidade() {
 		return quantidade.get();
@@ -44,13 +46,16 @@ public class Estoque_produto extends ModelDefault {
 		return quantidade;
 	}
 	
-	private Produto produto = new Produto();
-	@ManyToOne
-	@JoinColumn(name="codPro")
-	public Produto getProduto(){
+	/*
+	@OneToOne
+	@JoinColumn(name = "codPro")
+	@MapsId("codPro")
+	private Produto produto;
+	public Produto getProduto() {
 		return produto;
 	}
-	public void setProduto(Produto produto){
+
+	public void setProduto(Produto produto) {
 		this.produto = produto;
-	}
+	}*/
 }

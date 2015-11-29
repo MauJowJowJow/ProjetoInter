@@ -1,8 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
+<AnchorPane prefHeight="311.0" prefWidth="542.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ConsultaProdutoController">
+   <children>
+      <Pane fx:id="PanePrincipal" layoutX="-123.0" layoutY="-94.0" prefHeight="327.0" prefWidth="542.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label layoutX="30.0" layoutY="29.0" text="Código" />
+            <Label layoutX="162.0" layoutY="29.0" text="Nome" />
+            <TextField fx:id="txtCodigo" layoutX="77.0" layoutY="26.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="70.0" promptText="Código" />
+            <TextField fx:id="txtNome" layoutX="201.0" layoutY="26.0" prefHeight="25.0" prefWidth="289.0" promptText="Descrição do Produto" />
+            <TableView fx:id="tableProduto" layoutX="30.0" layoutY="68.0" prefHeight="200.0" prefWidth="483.0">
+              <columns>
+               	 <TableColumn fx:id="colCodigo" prefWidth="75.0" text="Código" />
+              	  <TableColumn fx:id="colNome" prefWidth="286.0" text="Descrição" />
+              	  <TableColumn fx:id="colUnidade" minWidth="0.0" prefWidth="34.0" text="UN" />
+                  <TableColumn fx:id="colQtdEstoque" minWidth="0.0" prefWidth="88.0" text="Qtd. Estoque" />
+              </columns>
+            </TableView>
+            <Button fx:id="btnSelecionar" layoutX="156.0" layoutY="285.0" mnemonicParsing="false" prefWidth="75.0" text="Selecionar" />
+            <Button fx:id="btnAtualizar" layoutX="234.0" layoutY="285.0" mnemonicParsing="false" prefWidth="75.0" text="Atualizar" />
+            <Button fx:id="btnSair" layoutX="312.0" layoutY="285.0" mnemonicParsing="false" prefWidth="75.0" text="Sair" />
+         </children>
+      </Pane>
+   </children>
 </AnchorPane>
-

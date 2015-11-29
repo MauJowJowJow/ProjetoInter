@@ -11,15 +11,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import javafx.util.converter.NumberStringConverter;
 import model.Produto;
 import model.dao.ProdutoDAO;
 import util.Alerta;
+import view.ConsultaPredioView;
+import view.ConsultaProdutoView;
 import view.Estoque_produtoView;
 import view.ProdutoView;
 import model.enums.UniMedProduto;
 import model.Endereco;
 import model.Estoque_produto;
+import model.Predio;
 
 public class ProdutoController extends ControllerDefault implements Initializable{	
 	private Produto produto = new Produto();
@@ -49,7 +53,7 @@ public class ProdutoController extends ControllerDefault implements Initializabl
 	private TextField txtCodBarra;
 	
 	@FXML
-	private ComboBox cbUniMedida;
+	private ComboBox<UniMedProduto> cbUniMedida;
 	
 	public ProdutoController() {}
 	
@@ -92,25 +96,33 @@ public class ProdutoController extends ControllerDefault implements Initializabl
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();	
 		btnProcurar.setGraphic(new ImageView(classLoader.getResource("Search.png").toString()));
 		
+		btnProcurar.setOnAction(event -> {
+			ConsultaProdutoView consultaProdutoView = new ConsultaProdutoView();
+			
+			try {
+				consultaProdutoView.iniciaTela(getScene(), Modality.WINDOW_MODAL);
+				
+				ConsultaProdutoController controller = consultaProdutoView.getFxmlLoader().<ConsultaProdutoController>getController();
+				if(controller.getModel() != null){
+					setProduto((Produto)controller.getModel());
+				} 
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		});
 		
 		btnSalvar.setOnAction(evt -> {
 			Produto model = getProduto();
-			
-			if(model == null)
-				model = new Produto();
 			ProdutoView view = (ProdutoView) getView();
-
 			ProdutoDAO dao = new ProdutoDAO();
 			
 			if(model.getCodigo() == 0){
-    			dao.insert(model);
+    			setProduto(dao.insert(model));
     			
     			Alerta alerta = new Alerta("Inserção", "Produto inserido com o código " + model.getCodigo() + "!");
         		alerta.Mensagem(view.getStage());
-        		
-        		txtCodigo.setText(Integer.toString(model.getCodigo()));
     		}else{
-    			dao.update(model);
+    			setProduto(dao.update(model));
     			
     			Alerta alerta = new Alerta("Atualização", "Produto Atualizado!");
         		alerta.Mensagem(view.getStage());
@@ -121,7 +133,7 @@ public class ProdutoController extends ControllerDefault implements Initializabl
 			if(getProduto().getCodigo() == 0)
 				setProduto(new Produto());
 			else{
-				Alerta alerta = new Alerta("Cadastro de Produtos", "Cadastro pode ter sofrido alterações, deseja mesmo criar um novo produto?");
+				Alerta alerta = new Alerta(getStage().getTitle(), "Cadastro pode ter sofrido alterações, deseja mesmo criar um novo produto?");
 				if(alerta.Confirm(getStage()))
 					setProduto(new Produto());				
 			}
@@ -142,49 +154,11 @@ public class ProdutoController extends ControllerDefault implements Initializabl
 					e1.printStackTrace();
 				}
 			} else{
-				Alerta alerta = new Alerta("Cadastro de Estoque", "Um produto já cadastrado deve ser selecionado para alteração de seu estoque!");
+				Alerta alerta = new Alerta(getStage().getTitle(), "Um produto já cadastrado deve ser selecionado para alteração de seu estoque!");
         		
         		alerta.Erro(getView().getStage());
 			}
-});
-		
-		
-	/*	btnSalvar.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				Produto model = (Produto) getModel();
-				ProdutoView view = (ProdutoView) getView();
-				
-				
-				
-				if (model.isValid()) {
-					ProdutoDAO dao = new ProdutoDAO();
-
-					if (model.getCodigo() == 0) {
-						dao.insert(model);
-
-						Alerta alerta = new Alerta("Inserção",
-								"Produto inserido com o código " + model.getCodigo() + "!");
-						alerta.Mensagem(view.getStage());
-
-						txtCodigo.setText(Integer.toString(model.getCodigo()));
-					} else {
-						dao.update(model);
-
-						Alerta alerta = new Alerta("Atualização", "Produto Atualizado!");
-						alerta.Mensagem(view.getStage());
-					}
-
-					dao.closeEntity();
-				} else {
-					Alerta alerta = new Alerta("Validação ", model.getErrors());
-
-					alerta.Erro(view.getStage());
-				}
-
-			}
-		});*/
+		});
 	}
 
 }

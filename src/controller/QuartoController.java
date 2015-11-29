@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -72,7 +73,7 @@ public class QuartoController extends ControllerDefault implements Initializable
 	}
 	
 	public Predio getPredio(){
-		return getQuarto().getPredio();
+		return getPredio();
 	}
 	
 	public QuartoController(){}
@@ -95,6 +96,21 @@ public class QuartoController extends ControllerDefault implements Initializable
 		cbStatus.setValue(StatusQuarto.Ativo);
 		
 		imagensBotoes();
+		
+	    txtPredio.focusedProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
+			if(newValue) return;
+    		
+			Predio predio = getPredio().exists();
+    		
+    		if(predio != null){
+    			setPredio(predio);
+    		}
+    		else{
+        		Alerta alerta = new Alerta(getStage().getTitle(), getPredio().getErrors());
+        		
+        		alerta.Erro(getStage());
+    		}
+	    });
 		
 		btnProcurar.setOnAction(new EventHandler<ActionEvent>(){
 			
@@ -126,14 +142,12 @@ public class QuartoController extends ControllerDefault implements Initializable
 			QuartoDAO dao = new QuartoDAO();
 			
 			if(model.getCodigo() == 0){
-    			dao.insert(model);
+    			setQuarto(dao.insert(model));
     			
     			Alerta alerta = new Alerta("Inserção", "Quarto inserido com o código " + model.getCodigo() + "!");
         		alerta.Mensagem(view.getStage());
-        		
-        		txtCodigo.setText(Integer.toString(model.getCodigo()));
     		}else{
-    			dao.update(model);
+    			setQuarto(dao.update(model));
     			
     			Alerta alerta = new Alerta("Atualização", "Quarto Atualizado!");
         		alerta.Mensagem(view.getStage());
@@ -144,5 +158,5 @@ public class QuartoController extends ControllerDefault implements Initializable
 	private void imagensBotoes(){
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();	
 		btnProcurar.setGraphic(new ImageView(classLoader.getResource("Search.png").toString()));
-		}
+	}
 }

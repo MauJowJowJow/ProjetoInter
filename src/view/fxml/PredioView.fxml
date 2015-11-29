@@ -12,6 +12,7 @@
             <Label layoutX="23.0" layoutY="34.0" text="Código:" />
             <Label layoutX="23.0" layoutY="64.0" text="Nome:" />
             <TextField fx:id="txtCodigo" disable="true" editable="false" layoutX="87.0" layoutY="30.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="70.0" promptText="Código" />
+            <Button fx:id="btnPesquisaPredio" layoutX="160.0" layoutY="30.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
             <TextField fx:id="txtDescricao" layoutX="87.0" layoutY="60.0" promptText="Nome do prédio" />
          </children>
       </Pane>
