@@ -56,11 +56,11 @@ public class Estoque_produtoController extends ControllerDefault implements Init
 	public void initialize(URL arg0, ResourceBundle arg1){
 	super.initialize(arg0, arg1);
 	
-	//Bindings.bindBidirectional(txtCodigo.textProperty(), getEstoque().getProduto().getCodigoProperty(), new NumberStringConverter());
-	//txtQuantidade.textProperty().bindBidirectional(getEstoque().getQuatidadeProperty(),new NumberStringConverter());
+	Bindings.bindBidirectional(txtCodigo.textProperty(), getEstoque().getProduto().getCodigoProperty(), new NumberStringConverter());
+	txtQuantidade.textProperty().bindBidirectional(getEstoque().getQuatidadeProperty(),new NumberStringConverter());
 	
-	Bindings.bindBidirectional(txtCodigo.textProperty(), getEstoque().getCodigoProperty(), new NumberStringConverter());
-	txtQuantidade.textProperty().bindBidirectional(getEstoque().getQuatidadeProperty(), new NumberStringConverter());
+	//Bindings.bindBidirectional(txtCodigo.textProperty(), getEstoque().getCodigoProperty(), new NumberStringConverter());
+	//txtQuantidade.textProperty().bindBidirectional(getEstoque().getQuatidadeProperty(), new NumberStringConverter());
 	
 	btnSalvar.setOnAction(evt -> {
 		Estoque_produto model = getEstoque();
