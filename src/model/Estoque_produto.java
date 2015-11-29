@@ -31,7 +31,7 @@ public class Estoque_produto extends ModelDefault {
 	public IntegerProperty getCodigoProperty() {
 		return codigo;
 	}
-	
+
 	private final IntegerProperty quantidade = new SimpleIntegerProperty(this, "quantidade");
 	@Column(name="qtdPro", length=9)
 	public int getQuatidade() {
@@ -45,17 +45,4 @@ public class Estoque_produto extends ModelDefault {
 	public IntegerProperty getQuatidadeProperty() {
 		return quantidade;
 	}
-	
-	/*
-	@OneToOne
-	@JoinColumn(name = "codPro")
-	@MapsId("codPro")
-	private Produto produto;
-	public Produto getProduto() {
-		return produto;
-	}
-
-	public void setProduto(Produto produto) {
-		this.produto = produto;
-	}*/
 }

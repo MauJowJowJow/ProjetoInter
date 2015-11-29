@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.util.converter.NumberStringConverter;
 import model.Produto;
+import model.dao.Estoque_produtoDAO;
 import model.dao.ProdutoDAO;
 import util.Alerta;
 import view.ConsultaPredioView;
@@ -145,11 +146,16 @@ public class ProdutoController extends ControllerDefault implements Initializabl
 			if(produto.getCodigo() != 0){
 				Estoque_produtoView estoqueView = new Estoque_produtoView();
 
-				Estoque_produto estoque = new Estoque_produto();
-				estoque.setCodigo(produto.getCodigo());
+				Estoque_produtoDAO dao = new Estoque_produtoDAO();
+				Estoque_produto estoque = dao.getById(produto.getCodigo());
+				
+				if(estoque == null){
+					estoque = new Estoque_produto();
+					estoque.setCodigo(produto.getCodigo());
+				}
 				
 				try {
-					estoqueView.iniciaTela(getScene());
+					estoqueView.iniciaTela(getScene(), estoque);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}

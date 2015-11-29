@@ -40,8 +40,7 @@ public class Pessoa extends ModelDefault{
 	 public IntegerProperty getCodigoProperty() {
 	        return codigo;
 	}
-	
-	
+
 	private StringProperty nome = new SimpleStringProperty(this, "nome");
 	
 	@NotNull(message = "Informe o nome da pessoa!")

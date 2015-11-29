@@ -41,7 +41,6 @@ public class LoginController extends ControllerDefault{
 	    
 	    btnLogin.setOnAction(evt -> {
 	    	Usuario usuario = new Usuario();
-	    	
 	    	this.logou = true;
 	    	
 	    	usuario.setLogin(txtLogin.getText());
