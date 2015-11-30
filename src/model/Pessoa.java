@@ -21,6 +21,10 @@ import model.enums.TipoPessoa;;
 @Entity
 @Table(name="pessoa")
 public class Pessoa extends ModelDefault{
+	
+	public Pessoa(){
+		setDataCadastro(LocalDate.now());
+	}
 
 	private final IntegerProperty codigo = new SimpleIntegerProperty(this, "codigo");
 
