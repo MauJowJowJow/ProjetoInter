@@ -1,6 +1,8 @@
 package model;
 
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -76,5 +78,16 @@ public class Item_reserva extends ModelDefault{
 
 	public void setStatusReserva(StatusReserva statusReserva) {
 		this.statusReserva = statusReserva;
+	}
+	
+	public int existeNaLista(List<Item_reserva> lista){
+		int index = -1;
+		for(Item_reserva itr : lista){
+			if(getPK().equals(itr.getPK())){
+				index = lista.indexOf(itr);
+				break;
+			}
+		}
+		return index;
 	}
 }

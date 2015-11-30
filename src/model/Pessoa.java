@@ -21,6 +21,10 @@ import model.enums.TipoPessoa;;
 @Entity
 @Table(name="pessoa")
 public class Pessoa extends ModelDefault{
+	
+	public Pessoa(){
+		setDataCadastro(LocalDate.now());
+	}
 
 	private final IntegerProperty codigo = new SimpleIntegerProperty(this, "codigo");
 
@@ -40,8 +44,7 @@ public class Pessoa extends ModelDefault{
 	 public IntegerProperty getCodigoProperty() {
 	        return codigo;
 	}
-	
-	
+
 	private StringProperty nome = new SimpleStringProperty(this, "nome");
 	
 	@NotNull(message = "Informe o nome da pessoa!")

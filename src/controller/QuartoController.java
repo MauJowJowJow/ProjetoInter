@@ -73,7 +73,7 @@ public class QuartoController extends ControllerDefault implements Initializable
 	}
 	
 	public Predio getPredio(){
-		return getPredio();
+		return quarto.getPredio();
 	}
 	
 	public QuartoController(){}

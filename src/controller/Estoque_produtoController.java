@@ -25,7 +25,7 @@ public class Estoque_produtoController extends ControllerDefault implements Init
 	private TextField txtCodigo;
 	@FXML
 	private TextField txtQuantidade;
-	
+		
 	public void setEstoque(Estoque_produto estoque){
 		try{
 			BeanUtils.copyProperties(this.estoque, estoque);
@@ -52,14 +52,10 @@ public class Estoque_produtoController extends ControllerDefault implements Init
 		btnSalvar.setOnAction(evt -> {
 			Estoque_produto model = getEstoque();
 			
-			if(model == null)
-				model = new Estoque_produto();
-			Estoque_produtoView view = (Estoque_produtoView) getView();
-	
-			Estoque_produtoDAO dao = new Estoque_produtoDAO();
+			Estoque_produtoDAO dao = new Estoque_produtoDAO();			
+			setEstoque(dao.update(model));
 			
-			dao.insert(model);
-			
+			getStage().close();
 		});
 	}
 }
