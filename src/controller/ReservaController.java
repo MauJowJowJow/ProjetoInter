@@ -6,6 +6,9 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -37,8 +40,6 @@ import model.Pessoa;
 import model.Quarto;
 import model.Reserva;
 import model.dao.Item_reservaDAO;
-import model.dao.PessoaDAO;
-import model.dao.QuartoDAO;
 import model.dao.ReservaDAO;
 import model.enums.StatusReserva;
 import model.pk.Item_reservaPK;
@@ -144,6 +145,19 @@ public class ReservaController extends ControllerDefault{
 	}
 
 	public Quarto getQuarto(){
+		Quarto quarto = new Quarto();
+		
+		// Copia Propriedades para não pegar a mesma referencia em memória
+		try{
+			BeanUtils.copyProperties(quarto, this.quarto);
+		}catch (IllegalAccessException | InvocationTargetException e){
+			e.printStackTrace();
+		}
+		
+		return quarto;
+	}
+	
+	public Quarto getQuartoReference(){
 		return quarto;
 	}
 
@@ -181,8 +195,8 @@ public class ReservaController extends ControllerDefault{
 		txtNomePessoa.textProperty().bindBidirectional(getPessoa().getNomeProperty());
 		
 		// Binda Quarto
-		txtCodigoQuarto.textProperty().bindBidirectional(getQuarto().getCodigoProperty(), new NumberStringConverter());
-		txtDescricaoQuarto.textProperty().bindBidirectional(getQuarto().getNomeProperty());
+		txtCodigoQuarto.textProperty().bindBidirectional(getQuartoReference().getCodigoProperty(), new NumberStringConverter());
+		txtDescricaoQuarto.textProperty().bindBidirectional(getQuartoReference().getNomeProperty());
 
 	}
 	
@@ -256,7 +270,7 @@ public class ReservaController extends ControllerDefault{
 		
 	    btnAddLinha.setOnAction(evt -> {
     		Item_reserva item_reserva = new Item_reserva();
-    		
+    		   		
     		if(!validaItemReserva())
     			return;
     		
@@ -288,7 +302,7 @@ public class ReservaController extends ControllerDefault{
     		item_reserva.setValorReserva(Double.parseDouble(txtValor.getText()));
     		
     		if(quartoJaExiste(item_reserva)){
-    			Alerta alerta = new Alerta("Cadastro de Reserva", "Quarto já informado nesta reserva!");
+    			Alerta alerta = new Alerta(getStage().getTitle(), "Quarto já informado nesta reserva!");
     			alerta.Erro(getStage());
     		}else{
     			tbvItemReserva.getItems().add(item_reserva);
@@ -300,7 +314,7 @@ public class ReservaController extends ControllerDefault{
 	    		ObservableList<Item_reserva> list = tbvItemReserva.getSelectionModel().getSelectedItems();
 	
 	    		if(list.size() > 0){
-	    			Alerta alerta = new Alerta("Cadastro de Reserva", "Deseja mesmo excluir este(s) quarto(s) da reserva?");
+	    			Alerta alerta = new Alerta(getStage().getTitle(), "Deseja mesmo excluir este(s) quarto(s) da reserva?");
 	
 	    			if(alerta.Confirm(getStage()))
 	    				tbvItemReserva.getItems().removeAll(list);
@@ -317,54 +331,67 @@ public class ReservaController extends ControllerDefault{
 	    	// Nivel 1
 	    	Reserva reserva = getReserva();
 	    	ReservaDAO reservaDAO = new ReservaDAO();
-	    	PessoaDAO pessoaDAO = new PessoaDAO();
 	    	
 	    	reserva.setPessoa(getPessoa());
-	    	//reserva.setPessoa(pessoaDAO.update(reserva.getPessoa()));
 	    	
 	    	if(reserva.getCodigoReserva() == 0){
 	    		reserva.setEmissaoReserva(new Date(new java.util.Date().getTime()));
 	    		
 	    		reservaDAO.insert(reserva);
-	    		alerta = new Alerta("Cadastro de Reservas", "Código da reserva cadastrada " + reserva.getCodigoReserva());
+	    		alerta = new Alerta(getStage().getTitle(), "Código da reserva cadastrada " + reserva.getCodigoReserva());
 	    	}else{
 	    		reservaDAO.update(reserva);
-	    		alerta = new Alerta("Cadastro de Reservas", "Reserva " + reserva.getCodigoReserva() + " atualizada!");
+	    		alerta = new Alerta(getStage().getTitle(), "Reserva " + reserva.getCodigoReserva() + " atualizada!");
 	    	}
 	    	
 	    	if(reserva.getCodigoReserva() != 0){
 		    	// Nivel 2
 		    	Item_reservaDAO item_reservaDAO = new Item_reservaDAO();
 		    	Item_reservaPK pk;
+	    		pk = new Item_reservaPK();
+	    		pk.setReserva(reserva);
+	    		
+	    		HashMap<String, Object> parametros = new HashMap<String, Object>();
+	    		parametros.put("reserva", pk.getReserva().getCodigoReserva());
+	    		
+	    		List<Item_reserva> listaBD = item_reservaDAO.query("SELECT itr FROM Item_reserva itr" 
+	    										+ " WHERE itr.pk.reserva.codigoReserva = :reserva", parametros);
+	    		
+	    		int index;
 		    	for(Item_reserva item_reserva : tbvItemReserva.getItems()){
-		    		pk = new Item_reservaPK();
-		    		pk.setReserva(reserva);
 		    		pk.setQuarto(item_reserva.getPK().getQuarto());
 		    		
 		    		item_reserva.getPK().setReserva(reserva);
 		    		item_reserva.setStatusReserva(StatusReserva.Aberta);
-		    		if(item_reservaDAO.getById(pk) == null){
+		    		
+		    		index = item_reserva.existeNaLista(listaBD); 
+		    		if(index == -1){
 		    			item_reservaDAO.insert(item_reserva);
 		    		}else{
 		    			item_reservaDAO.update(item_reserva);
+		    			listaBD.remove(index);
 		    		}
+		    	}
+		    	
+		    	// Se sobrou itens, exclui, não estão mais na tabela.
+		    	for(Item_reserva itr : listaBD){
+		    		item_reservaDAO.delete(itr);
 		    	}
 		    	
 		    	setModel(reserva);
 		    	txtCodigo.setText(Integer.toString(reserva.getCodigoReserva()));
-		    	
 	    		
 	    		alerta.Mensagem(getStage());
 	    		
 	    	}else{
-	    		alerta = new Alerta("Cadastro de Reservas", "Erro ao cadastrar a reserva.");
+	    		alerta = new Alerta(getStage().getTitle(), "Erro ao cadastrar a reserva.");
 	    		alerta.Erro(getStage());
 	    	}
 	    });
 	    
 	    btnNovo.setOnAction(evt -> {
 	    	if(getReserva().getCodigoReserva() == 0){
-	    		Alerta alerta = new Alerta("Cadastro de Reservas", "Reserva ainda não foi salva, deseja mesmo limpar tela?");
+	    		Alerta alerta = new Alerta(getStage().getTitle(), "Reserva ainda não foi salva, deseja mesmo limpar tela?");
 	    				
 	    		if(alerta.Confirm(getStage()))
 	    			limpaTela();
@@ -375,10 +402,10 @@ public class ReservaController extends ControllerDefault{
 	    btnCancelar.setOnAction(evt -> {
 	    	Alerta alerta;
 	    	if(getReserva().getCodigoReserva() == 0){
-	    		alerta = new Alerta("Cadastro de Reserva", "Nenhuma reserva finalizada escolhida");
+	    		alerta = new Alerta(getStage().getTitle(), "Nenhuma reserva finalizada escolhida");
 	    		alerta.Alertar(getStage());
 	    	}else{
-		    	alerta = new Alerta("Cadastro de Reserva", "Deseja realmente cancelar a reserva?");
+		    	alerta = new Alerta(getStage().getTitle(), "Deseja realmente cancelar a reserva?");
 				
 				if(alerta.Confirm(getStage())){
 					cancelaReserva();
@@ -403,7 +430,7 @@ public class ReservaController extends ControllerDefault{
 	    		}
 	    		else{
 	    			setReservaValida(false);
-	        		Alerta alerta = new Alerta("Cadastro de Reservas", getPessoa().getErrors());
+	        		Alerta alerta = new Alerta(getStage().getTitle(), getPessoa().getErrors());
 	        		
 	        		alerta.Erro(getStage());
 	    		}
@@ -422,14 +449,14 @@ public class ReservaController extends ControllerDefault{
 	    			if(!validaQuarto()){
 	    				setItem_reservaValido(false);
 	    			}else{
-	    				Quarto quarto = getQuarto().exists();
+	    				Quarto quarto = getQuartoReference().exists();
 	    	    		
 	    	    		if(quarto != null){
 	    	    			setQuarto(quarto);
 	    	    		}
 	    	    		else{
 	    	    			setItem_reservaValido(false);
-	    	        		Alerta alerta = new Alerta("Cadastro de Reserva", getQuarto().getErrors());
+	    	        		Alerta alerta = new Alerta(getStage().getTitle(), getQuartoReference().getErrors());
 	    	        		
 	    	        		alerta.Erro(getStage());
 	    	    		}	    			}
@@ -445,7 +472,7 @@ public class ReservaController extends ControllerDefault{
 	    	if(txtCheckIn.getValue() == null){
 	    		setItem_reservaValido(false);
 	    		
-	    		Alerta alerta = new Alerta("Reservas", "Data do Check-In não informada!");
+	    		Alerta alerta = new Alerta(getStage().getTitle(), "Data do Check-In não informada!");
 	    		alerta.Erro(getStage());
 	    	}
     	});
@@ -471,8 +498,8 @@ public class ReservaController extends ControllerDefault{
 	    		if(txtValor.getText().isEmpty()) txtValor.setText("0");
 	    		double valor= Double.parseDouble(txtValor.getText());
 	    		
-	    		if(getQuarto() != null)
-	    			valor = diasDiferenca * getQuarto().getValorQuarto();
+	    		if(getQuartoReference() != null)
+	    			valor = diasDiferenca * getQuartoReference().getValorQuarto();
 	    		
 	    		txtValor.setText(Double.toString(valor));
 	    	}
@@ -543,12 +570,12 @@ public class ReservaController extends ControllerDefault{
 		Alerta alerta;
 		
 		if(reserva.cancelaReserva()){
-			alerta = new Alerta("Cadastro de Reserva", "Reserva cancelada.");
+			alerta = new Alerta(getStage().getTitle(), "Reserva cancelada.");
 			alerta.Mensagem(getStage());
 			
 			limpaTela();
 		}else{
-			alerta = new Alerta("Cadastro de Reserva", reserva.getErrors());
+			alerta = new Alerta(getStage().getTitle(), reserva.getErrors());
 			alerta.Erro(getStage());
 		}
 	}
@@ -558,7 +585,7 @@ public class ReservaController extends ControllerDefault{
 		if(txtCodigoPessoa.getText() == "0" || txtCodigoPessoa.getText().isEmpty()){
     		setReservaValida(false);
     		
-    		Alerta alerta = new Alerta("Reservas", "Pessoa não informada!");
+    		Alerta alerta = new Alerta(getStage().getTitle(), "Pessoa não informada!");
     		
     		alerta.Erro(getStage());
     	}
@@ -569,7 +596,7 @@ public class ReservaController extends ControllerDefault{
 		if(txtCodigoQuarto.getText() == "0" || txtCodigoQuarto.getText().isEmpty()){
     		setItem_reservaValido(false);
     		
-    		Alerta alerta = new Alerta("Reservas", "Quarto não informado!");
+    		Alerta alerta = new Alerta(getStage().getTitle(), "Quarto não informado!");
     		
     		alerta.Erro(getStage());
     	}
@@ -580,7 +607,7 @@ public class ReservaController extends ControllerDefault{
     	if(txtCheckOut.getValue() == null) return true;
     	
     	if(txtCheckIn.getValue().isAfter(txtCheckOut.getValue())){
-    		Alerta alerta = new Alerta("Reservas", "Data do Check-Out não pode ser menor que data do Check-In!");
+    		Alerta alerta = new Alerta(getStage().getTitle(), "Data do Check-Out não pode ser menor que data do Check-In!");
     		
     		alerta.Erro(getStage());
     		return false;
@@ -637,7 +664,7 @@ public class ReservaController extends ControllerDefault{
 			
 			Reserva reserva = getReserva();
 			if(reserva.getCodigoReserva() != 0){
-				Alerta alerta = new Alerta("Cadastro de Reserva", "Reserva não possui nenhum quarto reservado, deseja cancela-la?");
+				Alerta alerta = new Alerta(getStage().getTitle(), "Reserva não possui nenhum quarto reservado, deseja cancela-la?");
 				
 				if(alerta.Confirm(getStage())){
 					cancelaReserva();

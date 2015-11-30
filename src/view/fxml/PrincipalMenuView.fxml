@@ -18,16 +18,17 @@
                     <items>
                     <MenuItem fx:id="mntmPessoas" mnemonicParsing="false" text="Pessoas" />
                     <MenuItem fx:id="mntmProdutos" mnemonicParsing="false" text="Produtos" />
+                    <MenuItem fx:id="mntmQuartos" mnemonicParsing="false" text="Quartos" />
                     <MenuItem fx:id="mntmEstados" mnemonicParsing="false" text="Estados" />
                     <MenuItem fx:id="mntmPredios" mnemonicParsing="false" text="Prédios" />
-                    <MenuItem fx:id="mntmQuartos" mnemonicParsing="false" text="Quartos" />
                     </items>
                   </Menu>
               <SeparatorMenuItem mnemonicParsing="false" />
                   <Menu mnemonicParsing="false" text="Processos">
                     <items>
-                    <MenuItem fx:id="mntmReservas" mnemonicParsing="false" text="Reservas" />
-                      <MenuItem fx:id="mntmFaturamento" mnemonicParsing="false" text="Faturamento" />
+                    	<MenuItem fx:id="mntmReservas" mnemonicParsing="false" text="Reservas" />
+                    	<MenuItem fx:id="mntmServicos" mnemonicParsing="false" text="Serviços" />
+                    	<MenuItem fx:id="mntmFaturamento" mnemonicParsing="false" text="Faturamento" />
                     </items>
                   </Menu>
             </items>

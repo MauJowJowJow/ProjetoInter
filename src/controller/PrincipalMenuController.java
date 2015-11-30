@@ -20,6 +20,7 @@ import view.PredioView;
 import view.ProdutoView;
 import view.QuartoView;
 import view.ReservaView;
+import view.ServicoView;
 import view.ConsultaPredioView;
 import view.ConsultaProdutoView;
 import view.ConsultaQuartoView;
@@ -27,16 +28,19 @@ import view.ConsultaQuartoView;
 
 public class PrincipalMenuController implements Initializable{
 	// Controllers filhos
+	private EstadoController estadoController;
 	private PessoaController pessoaController;
 	private ProdutoController produtoController;
-	private ReservaController reservaController;
-	private ConsultaPessoaController consultaPessoaController;
-	private EstadoController estadoController;
+	private PredioController predioController;	
 	private QuartoController quartoController;
+	
+	private ConsultaPessoaController consultaPessoaController;	
 	private ConsultaQuartoController consultaQuartosController;
 	private ConsultaPredioController consultaPredioController;
-	private PredioController predioController;
 	private ConsultaProdutoController consultaProdutoController;
+	
+	private ReservaController reservaController;
+	private ServicoController servicoController;
 	private FaturamentoController faturamentoController;
 	
 	private Scene scene;
@@ -49,6 +53,9 @@ public class PrincipalMenuController implements Initializable{
 	
 	@FXML
 	private MenuItem mntmReservas;
+	
+	@FXML
+	private MenuItem mntmServicos;
 	
 	@FXML
 	private MenuItem mntmFaturamento;
@@ -145,6 +152,24 @@ public class PrincipalMenuController implements Initializable{
 				}
             }
         });
+		
+		mntmServicos.setOnAction(evt -> {
+        	if(servicoController != null){
+            	if(servicoController.getStatusScene() == StatusScene.Aberto){
+					Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
+					alerta.Alertar( (Stage) scene.getWindow());
+					return;
+            	}
+        	}
+        	
+    		try {
+    			ServicoView view = new ServicoView();
+				view.iniciaTela(scene);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	});
 		
 		mntmFaturamento.setOnAction(evt -> {
             	if(faturamentoController != null){

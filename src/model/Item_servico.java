@@ -16,11 +16,11 @@ public class Item_servico extends ModelDefault {
 	@Column(name="qtdVen")
 	private int quantidadeVendido;
 	
-	@Column(name="vlrUni", length=12)
-	private int valorUnitario;
+	@Column(name="vlrUni", length=12, precision = 2)
+	private double valorUnitario;
 	
-	@Column(name="vlrTot", length=12)
-	private int valorTotal;
+	@Column(name="vlrTot", length=12, precision = 2)
+	private double valorTotal;
 
 	public void setPK(Item_servicoPK pk) {
 		this.pk = pk;
@@ -38,19 +38,19 @@ public class Item_servico extends ModelDefault {
 		this.quantidadeVendido = quantidadeVendido;
 	}
 
-	public int getValorUnitario() {
+	public double getValorUnitario() {
 		return valorUnitario;
 	}
 
-	public void setValorUnitario(int valorUnitario) {
+	public void setValorUnitario(double valorUnitario) {
 		this.valorUnitario = valorUnitario;
 	}
 
-	public int getValorTotal() {
+	public double getValorTotal() {
 		return valorTotal;
 	}
 
-	public void setValorTotal(int valorTotal) {
+	public void setValorTotal(double valorTotal) {
 		this.valorTotal = valorTotal;
 	}
 }
