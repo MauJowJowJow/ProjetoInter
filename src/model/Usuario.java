@@ -11,7 +11,6 @@ import javax.persistence.Transient;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import model.bean.formatters.encrypted;
 import model.dao.GenericDAOImpl;
 
 @Entity
@@ -19,7 +18,7 @@ import model.dao.GenericDAOImpl;
 public class Usuario extends ModelDefault{
 	
 	@Id
-	@Column(name="chaUsu", length=7)
+	@Column(name="codUsu", length=7)
 	private int codigo;
 	
 	@Column(name="nomUsu", length=50)
@@ -30,9 +29,6 @@ public class Usuario extends ModelDefault{
 	
 	@Transient
 	private String senha;
-	
-	@Column(name="senUsu", length=10)
-	private byte[] hashPass;
 	
 	@Column(name="chaAce", length=10)
 	private String chaveHash;
@@ -69,14 +65,6 @@ public class Usuario extends ModelDefault{
 		this.senha = senha;
 	}
 
-	public byte[] getHashPass() {
-		return hashPass;
-	}
-
-	public void setHashPass(byte[] hashPass) {
-		this.hashPass = hashPass;
-	}
-
 	public String getChaveHash() {
 		return chaveHash;
 	}
@@ -85,39 +73,26 @@ public class Usuario extends ModelDefault{
 		this.chaveHash = chaveHash;
 	}
 
-	static public Usuario geraHash(Usuario usuario){
+	public void geraHash(){
 		GenericDAOImpl<Integer, Usuario> dao = new GenericDAOImpl<Integer, Usuario>();
 		EntityManager em = dao.getEntityManager();
 		EntityManagerFactory emf = dao.getEntityManagerFactory();
 		
-		try {	
-			/*DataReadQuery databaseQuery = new DataReadQuery();
-			databaseQuery.setResultType(DataReadQuery.VALUE);
-			PLSQLrecord record = new PLSQLrecord();
-			record.setTypeName("ENCRYPTED_KEY.get_ups");
-			record.setCompatibleType("encrypted_type");
-			record.setJavaType(Hash.class);
-			record.addField("v_hash", JDBCTypes.BINARY_TYPE, 150);
-			record.addField("v_key", JDBCTypes.VARCHAR_TYPE, 10);
-			PLSQLStoredFunctionCall call = new PLSQLStoredFunctionCall(record);
-			call.setProcedureName("ENCRYPTED_KEY.get_ups");
-			databaseQuery.setCall(call);*/
-			 
-			//Query query = ((JpaEntityManager) em).createQuery(databaseQuery);
+		try {
+			
+			// Feito com query padrão, Hibernate não coperou pra utilização de retornos do oracle TYPE por mapeamento 
 			em.getTransaction().begin();
 			Session session = ((Session) em.getDelegate()); 
-			Query query =  session.createSQLQuery("select v_hash, v_key from table (ENCRYPTED_KEY.get_ups(:senha))"
-					).addEntity(encrypted.class)
-					.setParameter("senha", usuario.getSenha());
+			Query query =  session.createSQLQuery("SELECT CRIPTOGRAFAR(:senha) FROM DUAL")
+					.setParameter("senha", getSenha());
 			
 		
 			java.util.List result = query.list();
 		
 			if(result != null){
-				encrypted hash = (encrypted) result.get(0);
+				String hash = (String) result.get(0);
 				
-				usuario.setHashPass(hash.getHash());
-				usuario.setChaveHash(hash.getChave());
+				setChaveHash(hash);
 			}
 			
 	    } catch (Exception e) {       
@@ -125,8 +100,5 @@ public class Usuario extends ModelDefault{
 	    }
 		
 		dao.closeEntity();
-		
-		return usuario;
-
 	}
 }
