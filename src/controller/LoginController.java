@@ -1,6 +1,8 @@
 package controller;
 
+import java.util.List;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -11,6 +13,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.Usuario;
+import model.dao.UsuarioDAO;
+import util.Alerta;
 
 public class LoginController extends ControllerDefault{
 	private boolean logou;
@@ -41,22 +45,51 @@ public class LoginController extends ControllerDefault{
 	    
 	    btnLogin.setOnAction(evt -> {
 	    	Usuario usuario = new Usuario();
-	    	this.logou = true;
+	    	UsuarioDAO dao = new UsuarioDAO();
 	    	
 	    	usuario.setLogin(txtLogin.getText());
 	    	usuario.setSenha(txtSenha.getText());
 	    	
-	    	//usuario.geraHash(usuario);
+	    	usuario.geraHash();
 	    	
-	    	Stage stage = (Stage) getScene().getWindow();
-	    	stage.close();
+	    	HashMap<String, Object> parametros = new HashMap<String, Object>();
+	    	parametros.put("login", usuario.getLogin());
+	    	
+	    	List<Usuario> usuarios = dao.query("Select u FROM Usuario u WHERE u.login = :login", parametros);
+	    	Usuario usuarioDB = null;
+	    	Alerta alerta;
+	    	switch(usuarios.size()){
+		    	case 0:
+		    		alerta = new Alerta(getStage().getTitle(), "Usuário não encontrado!");
+		    		alerta.Erro(getStage());
+		    		txtLogin.requestFocus();
+		    		break;
+		    	case 1:
+		    		usuarioDB = usuarios.get(0);
+			    	
+			    	if(usuarioDB.getChaveHash().equals(usuario.getChaveHash())){
+			    		this.logou = true;
+			    	
+			    		getStage().close();
+			    	}else{
+			    		alerta = new Alerta(getStage().getTitle(), "Senha informada inválida!");
+			    		alerta.Erro(getStage());
+			    		
+			    		txtSenha.requestFocus();
+			    	}
+			    	
+		    		break;
+	    		default:
+	    			alerta = new Alerta(getStage().getTitle(), "Usuário não encontrado!");
+	    			alerta.Erro(getStage());
+	    			System.exit(0);
+	    	}
 	    });
 	    
 	    btnCancel.setOnAction(evt -> {
 	    	this.logou = false;
 	    	
-	    	Stage stage = (Stage) getScene().getWindow();
-	    	stage.close();
+	    	getStage().close();
 	    });
 	    
 	    btnLogin.setDisable(true);
