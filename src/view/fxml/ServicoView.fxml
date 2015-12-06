@@ -14,13 +14,13 @@
             <Label layoutX="319.0" layoutY="35.0" text="Data Emissão" />            
             <DatePicker fx:id="txtDataEmissao" focusTraversable="false" layoutX="398.0" layoutY="31.0" prefHeight="25.0" prefWidth="113.0" promptText="Data Emissão" />
             <Label layoutX="33.0" layoutY="95.0" text="Cliente" />
-            <TextField fx:id="txtCodigoQuarto" layoutX="84.0" layoutY="61.0" prefHeight="20.0" prefWidth="85.0" promptText="Cód. Quarto" />
+            <TextField fx:id="txtCodigoPessoa" layoutX="84.0" layoutY="61.0" prefHeight="20.0" prefWidth="85.0" promptText="Cód. Pessoa" />
             <Label layoutX="32.0" layoutY="65.0" text="Quarto" />
-            <Button fx:id="btnPesquisaQuarto" layoutX="172.0" layoutY="61.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
-            <TextField fx:id="txtNomeQuarto" editable="false" focusTraversable="false" layoutX="200.0" layoutY="61.0" prefHeight="25.0" prefWidth="311.0" promptText="Nome Quarto" />
-            <TextField fx:id="txtCodigoPessoa" layoutX="84.0" layoutY="91.0" prefHeight="20.0" prefWidth="85.0" promptText="Cód. Cliente" />
-            <TextField fx:id="txtNomePessoa" editable="false" focusTraversable="false" layoutX="200.0" layoutY="91.0" prefHeight="25.0" prefWidth="311.0" promptText="Nome Cliente" />            
-            <Button fx:id="btnPesquisaPessoa" layoutX="172.0" layoutY="91.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />                        
+            <Button fx:id="btnPesquisaPessoa" layoutX="172.0" layoutY="61.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
+            <TextField fx:id="txtNomePessoa" editable="false" focusTraversable="false" layoutX="200.0" layoutY="61.0" prefHeight="25.0" prefWidth="311.0" promptText="Nome Pessoa" />
+            <TextField fx:id="txtCodigoQuarto" layoutX="84.0" layoutY="91.0" prefHeight="20.0" prefWidth="85.0" promptText="Cód. Quarto" />
+            <TextField fx:id="txtNomeQuarto" editable="false" focusTraversable="false" layoutX="200.0" layoutY="91.0" prefHeight="25.0" prefWidth="311.0" promptText="Nome Quarto" />            
+            <Button fx:id="btnPesquisaQuarto" layoutX="172.0" layoutY="91.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />                        
             <TextField fx:id="txtCodigoProduto" layoutX="84.0" layoutY="123.0" prefHeight="25.0" prefWidth="85.0" promptText="Cód. Produto" />
             <Button fx:id="btnPesquisaProduto" layoutX="172.0" layoutY="123.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
             <TextField fx:id="txtNomeProduto" editable="false" focusTraversable="false" layoutX="200.0" layoutY="123.0" prefHeight="25.0" prefWidth="265.0" promptText="Nome Produto" />

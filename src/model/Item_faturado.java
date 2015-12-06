@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 import javax.persistence.*;
 import model.pk.Item_faturadoPK;
 
@@ -51,5 +53,16 @@ public class Item_faturado extends ModelDefault {
 	
 	public void setPK(Item_faturadoPK pk){
 		this.pk = pk;
+	}
+	
+	public int existeNaLista(List<Item_faturado> lista){
+		int index = -1;
+		for(Item_faturado itf : lista){
+			if(getPK().equals(itf.getPK())){
+				index = lista.indexOf(itf);
+				break;
+			}
+		}
+		return index;
 	}
 }

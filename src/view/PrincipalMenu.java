@@ -37,7 +37,7 @@ public class PrincipalMenu extends Application{
 		window = primaryStage;
 		window.getIcons().add(new Image(Thread.currentThread().getContextClassLoader().getResource("HotelDM.png").toString()));
 		
-		fxmlLoader = new FXMLLoader(getClass().getResource("fxml/PrincipalMenuView.fxml"));
+		fxmlLoader = new FXMLLoader(getClass().getResource("/view/fxml/PrincipalMenuView.fxml"));
 		Parent root = fxmlLoader.load();
 
 		root.autosize();

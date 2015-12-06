@@ -9,7 +9,7 @@ public class PredioView extends ViewDefault {
 	
 	public void start(Scene parent){
 		try{
-			start(parent,"fxml/PredioView.fxml","Cadastro de Prédio", Modality.NONE);
+			start(parent,"/view/fxml/PredioView.fxml","Cadastro de Prédio", Modality.NONE);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

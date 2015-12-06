@@ -10,7 +10,7 @@ public class LoginView extends ViewDefault{
 
 	public void iniciaTela(Scene parent){
 		try {
-			start(parent, "fxml/LoginView.fxml", "Login", Modality.APPLICATION_MODAL);
+			start(parent, "/view/fxml/LoginView.fxml", "Login", Modality.APPLICATION_MODAL);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

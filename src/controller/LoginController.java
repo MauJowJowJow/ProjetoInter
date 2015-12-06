@@ -41,7 +41,7 @@ public class LoginController extends ControllerDefault{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-	    imgLogin.setImage(new Image(classLoader.getResource("Login.png").toString()));
+	    imgLogin.setImage(new Image(classLoader.getResource("login.png").toString()));
 	    
 	    btnLogin.setOnAction(evt -> {
 	    	Usuario usuario = new Usuario();
@@ -85,7 +85,7 @@ public class LoginController extends ControllerDefault{
 	    			System.exit(0);
 	    	}
 	    });
-	    
+
 	    btnCancel.setOnAction(evt -> {
 	    	this.logou = false;
 	    	

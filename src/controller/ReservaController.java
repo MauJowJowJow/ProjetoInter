@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -15,6 +16,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -48,6 +51,7 @@ public class ReservaController extends ControllerDefault{
 	
 	private boolean reservaValida;
 	private boolean item_reservaValido;
+	private ObservableList<Item_reserva> tableViewData;
 	
 	@FXML
 	private TextField txtCodigo;
@@ -112,6 +116,9 @@ public class ReservaController extends ControllerDefault{
 	private TableColumn<Item_reserva, Integer> colDiasEstadia;	
 	@FXML
 	private TableColumn<Item_reserva, Double> colValor;
+	
+	@FXML
+	private TextField txtValorReserva;
 	
 	public Reserva getReserva(){
 		if(getModel() == null)
@@ -304,7 +311,7 @@ public class ReservaController extends ControllerDefault{
     			alerta.Erro(getStage());
     		}else{
     			tbvItemReserva.getItems().add(item_reserva);
-    			setQuarto(null);
+    			setQuarto(new Quarto());
     		}
 	    });
 	
@@ -331,6 +338,7 @@ public class ReservaController extends ControllerDefault{
 	    	ReservaDAO reservaDAO = new ReservaDAO();
 	    	
 	    	reserva.setPessoa(getPessoa());
+	    	reserva.setValorTotal(Double.parseDouble(txtValorReserva.getText()));
 	    	
 	    	if(reserva.getCodigoReserva() == 0){
 	    		reserva.setEmissaoReserva(new Date(new java.util.Date().getTime()));
@@ -516,6 +524,24 @@ public class ReservaController extends ControllerDefault{
 		colValor.setCellValueFactory(
 			    new PropertyValueFactory<Item_reserva, Double>("valorReserva")
 			);
+		
+		// Lista observavel de itens na table view
+		List<Item_reserva> lista = new ArrayList<Item_reserva>();
+		tableViewData = FXCollections.observableList(lista);
+		
+		// Adiciona listener pra somar total
+		tableViewData.addListener((ListChangeListener<Item_reserva>) pChange -> {
+			ObservableList<? extends Item_reserva> list = pChange.getList();
+		    
+			double valorReserva=0;
+			for(Item_reserva itr : list){
+				valorReserva += itr.getValorReserva();
+			}
+			
+			txtValorReserva.setText(Double.toString(valorReserva));
+		});
+		
+		tbvItemReserva.setItems(tableViewData);		
 	}
 
 	private boolean quartoJaExiste(Item_reserva item_reserva){
@@ -639,7 +665,7 @@ public class ReservaController extends ControllerDefault{
 		while(isReservaValida() && countAux < count){
 			switch(countAux){
 				case 1:
-					Event.fireEvent(txtCodigoPessoa, new ActionEvent());
+					validaPessoa();
 					break;
 				case 2:
 					setReservaValida(validaNivel2());

@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.*;
 
 @Entity
@@ -11,23 +11,53 @@ public class Faturamento extends ModelDefault {
 	@Id
 	@Column(name="codFat", length=7)
 	@SequenceGenerator(name="FaturamentoSequence", sequenceName="hotel.faturamento_sequence", allocationSize=1)
-	@GeneratedValue(generator="PredioSequence", strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(generator="FaturamentoSequence", strategy=GenerationType.SEQUENCE)
 	private int codigo;
 	
 	@Column(name="datEmi")
-	private Date dataEmissao;
+	private LocalDate dataEmissao;
 	
-	@Column(name="codRes", length=7)
-	private int codigoReserva;
+	@ManyToOne
+	@JoinColumn(name="codRes")
+	private Reserva reserva = new Reserva();
+	public Reserva getReserva() {
+		return reserva;
+	}
 	
-	@Column(name="codPes", length=7)
-	private int codigoPessoa;
+	public void setReserva(Reserva reserva){
+		this.reserva = reserva;
+	}
 	
-	@Column(name="codQua", length=7)
-	private int codigoQuarto;
+	@ManyToOne
+	@JoinColumn(name="codPes")
+	private Pessoa pessoa = new Pessoa();
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+	
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+	
+	@ManyToOne//(cascade=CascadeType.PERSIST)
+	@JoinColumn(name="codQua")
+	private Quarto quarto = new Quarto();
+	public Quarto getQuarto() {
+		return quarto;
+	}
+	
+	public void setQuarto(Quarto quarto){
+		this.quarto = quarto;
+	}
+	
+	@Column(name="vlrRes", length=12)
+	private double valorReserva;
+	
+	@Column(name="vlrSer", length=12)
+	private double valorServico;
 	
 	@Column(name="vlrTot", length=12)
-	private int valorTotal;
+	private double valorTotal;
 	
 	@Column(name="obsFat", length=70)
 	private String observacao;
@@ -40,48 +70,36 @@ public class Faturamento extends ModelDefault {
 		this.codigo = codigo;
 	}
 
-	public int getCodigoReserva() {
-		return codigoReserva;
-	}
-
-	public void setCodigoReserva(int codigoReserva) {
-		this.codigoReserva = codigoReserva;
-	}
-
-	public void setCodigoQuarto(int codigoQuarto) {
-		this.codigoQuarto = codigoQuarto;
-	}
-
-	public Date getDataEmissao() {
+	public LocalDate getDataEmissao() {
 		return dataEmissao;
 	}
 
-	public void setDataEmissao(Date dataEmissao) {
+	public void setDataEmissao(LocalDate dataEmissao) {
 		this.dataEmissao = dataEmissao;
 	}
 
-	public int getCodigoPessoa() {
-		return codigoPessoa;
-	}
-
-	public void setCodigoPessoa(int codigoPessoa) {
-		this.codigoPessoa = codigoPessoa;
-	}
-
-	public int getCodigoQuarto() {
-		return codigoQuarto;
-	}
-
-	public void setCodigoQua(int codigoQuarto) {
-		this.codigoQuarto = codigoQuarto;
-	}
-
-	public int getValorTotal() {
+	public double getValorTotal() {
 		return valorTotal;
 	}
 
-	public void setValorTotal(int valorTotal) {
+	public void setValorTotal(double valorTotal) {
 		this.valorTotal = valorTotal;
+	}
+
+	public double getValorReserva() {
+		return valorReserva;
+	}
+
+	public void setValorReserva(double valorReserva) {
+		this.valorReserva = valorReserva;
+	}
+
+	public double getValorServico() {
+		return valorServico;
+	}
+
+	public void setValorServico(double valorServico) {
+		this.valorServico = valorServico;
 	}
 
 	public String getObservacao() {

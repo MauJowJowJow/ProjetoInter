@@ -42,11 +42,11 @@
                   <TableColumn fx:id="tbcValorTotal" prefWidth="75.0" text="Vlr. Total" />
               </columns>
             </TableView>          
-            <TextField fx:id="txtValorReserva" layoutX="213.0" layoutY="423.0" prefHeight="20.0" prefWidth="85.0" promptText="Total Reserva" />
+            <TextField fx:id="txtValorReserva" editable="false" focusTraversable="false" layoutX="213.0" layoutY="423.0" prefHeight="20.0" prefWidth="85.0" promptText="Total Reserva" />
             <Label layoutX="316.0" layoutY="427.0" text="Valor Serviço" />
-            <TextField fx:id="txtValorServico" layoutX="391.0" layoutY="423.0" prefHeight="20.0" prefWidth="85.0" promptText="Total Serviços" />
+            <TextField fx:id="txtValorServico" editable="false" focusTraversable="false" layoutX="391.0" layoutY="423.0" prefHeight="20.0" prefWidth="85.0" promptText="Total Serviços" />
             <Label layoutX="491.0" layoutY="427.0" text="Valor Total" />
-            <TextField fx:id="txtValorFaturado" layoutX="553.0" layoutY="423.0" prefHeight="20.0" prefWidth="85.0" promptText="Valor Faturado" />            
+            <TextField fx:id="txtValorFaturado" editable="false" focusTraversable="false" layoutX="553.0" layoutY="423.0" prefHeight="20.0" prefWidth="85.0" promptText="Valor Faturado" />            
             <Button fx:id="btnSalvar" layoutX="232.0" layoutY="462.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" text="Salvar" />
             <Button fx:id="btnCarregarServico" layoutX="347.0" layoutY="462.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Carregar Serviços" />
          </children>

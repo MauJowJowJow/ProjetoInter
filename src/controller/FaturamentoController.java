@@ -3,6 +3,7 @@ package controller;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,8 @@ import org.apache.commons.beanutils.BeanUtils;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -24,6 +27,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.util.converter.NumberStringConverter;
+import model.Faturamento;
 import model.Item_faturado;
 import model.Item_reserva;
 import model.Item_servico;
@@ -31,6 +35,8 @@ import model.Pessoa;
 import model.Produto;
 import model.Quarto;
 import model.Reserva;
+import model.dao.FaturamentoDAO;
+import model.dao.Item_faturadoDAO;
 import model.dao.Item_reservaDAO;
 import model.dao.Item_servicoDAO;
 import model.enums.StatusReserva;
@@ -48,6 +54,7 @@ public class FaturamentoController extends ControllerDefault{
 	
 	private boolean faturamentoValido;
 	private boolean item_faturadoValido;
+	private ObservableList<Item_faturado> tableViewData;
 	
 	@FXML
 	private TextField txtCodigo;
@@ -198,6 +205,14 @@ public class FaturamentoController extends ControllerDefault{
 	public Produto getProduto(){
 		return produto;
 	}
+	
+	
+	public Faturamento getFaturamento(){
+		if(getModel() == null)
+			setModel(new Faturamento());
+		
+		return (Faturamento) getModel();
+	}
 		
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -225,6 +240,26 @@ public class FaturamentoController extends ControllerDefault{
 		// Binda Produto
 		txtCodigoProduto.textProperty().bindBidirectional(getProduto().getCodigoProperty(), new NumberStringConverter());
 		txtNomeProduto.textProperty().bindBidirectional(getProduto().getDescProdutoProperty());
+		
+		// Lista observavel de itens na table view
+		List<Item_faturado> lista = new ArrayList<Item_faturado>();
+		tableViewData = FXCollections.observableList(lista);
+		
+		// Adiciona listener pra somar total
+		tableViewData.addListener((ListChangeListener<Item_faturado>) pChange -> {
+			ObservableList<? extends Item_faturado> list = pChange.getList();
+		    
+			double valorServico=0;
+			for(Item_faturado its : list){
+				valorServico += its.getValorTotal();
+			}
+			
+			double valorReserva = Double.parseDouble(txtValorReserva.getText());
+			txtValorServico.setText(Double.toString(valorServico));
+			txtValorFaturado.setText(Double.toString(valorServico + valorReserva));
+		});
+		
+		tbvItem_faturado.setItems(tableViewData);
 	}
 	
 	private void imagensBotoes(){
@@ -308,9 +343,91 @@ public class FaturamentoController extends ControllerDefault{
 	    			Alerta alerta = new Alerta("Faturamento", "Produto já foi inserido!");
 	    			alerta.Erro(getStage());
 	    		}else{
-	    			tbvItem_faturado.getItems().add(item_faturado);
-	    			setProduto(null);
+	    			tableViewData.add(item_faturado);
+	    			setProduto(new Produto());
 	    		}
+		    });
+		 
+			btnSalvar.setOnAction(evt -> {
+		    	if(!validaFaturamento()){
+		    		return;
+		    	}
+		    	Alerta alerta;
+		    	
+		    	// Nivel 1
+		    	Faturamento faturamento = getFaturamento();
+		    	FaturamentoDAO faturamentoDAO = new FaturamentoDAO();
+
+		    	if(getReserva().getCodigoReserva() != 0)
+		    		faturamento.setReserva(getReserva());
+		    	else{
+		    		faturamento.setQuarto(null);
+		    	}
+		    	
+		    	faturamento.setPessoa(getPessoa());
+		    	
+		    	if(getQuarto().getCodigo() != 0)
+		    		faturamento.setQuarto(getQuarto());
+		    	else{
+		    		faturamento.setQuarto(null);
+		    	}
+		    	faturamento.setDataEmissao(txtDataEmissao.getValue());
+
+		    	faturamento.setValorReserva(Double.parseDouble(txtValorReserva.getText()));		    	
+		    	faturamento.setValorServico(Double.parseDouble(txtValorServico.getText()));
+		    	faturamento.setValorTotal(Double.parseDouble(txtValorFaturado.getText()));
+		    	if(faturamento.getCodigo() == 0){
+		    		
+		    		faturamento = faturamentoDAO.insert(faturamento);
+		    		alerta = new Alerta(getStage().getTitle(), "Código do faturamento cadastrado " + faturamento.getCodigo());
+		    	}else{
+		    		faturamento = faturamentoDAO.update(faturamento);
+		    		alerta = new Alerta(getStage().getTitle(), "Faturamento " + faturamento.getCodigo() + " atualizado!");
+		    	}
+		    	
+		    	if(faturamento.getCodigo() != 0){
+			    	// Nivel 2
+			    	Item_faturadoDAO item_faturadoDAO = new Item_faturadoDAO();
+			    	Item_faturadoPK pk;
+		    		pk = new Item_faturadoPK();
+		    		pk.setFaturamento(faturamento);
+		    		
+		    		HashMap<String, Object> parametros = new HashMap<String, Object>();
+		    		parametros.put("faturamento", pk.getServico().getCodigo());
+		    		
+		    		List<Item_faturado> listaBD = item_faturadoDAO.query("SELECT itf FROM Item_faturado itf" 
+		    										+ " WHERE itf.pk.faturamento.codigo = :faturamento", parametros);
+		    		
+		    		int index;
+			    	for(Item_faturado item_faturado : tableViewData){
+			    		pk.setServico(item_faturado.getPK().getServico());
+			    		pk.setProduto(item_faturado.getPK().getProduto());
+			    		
+			    		item_faturado.getPK().setFaturamento(faturamento);		    		
+			    		index = item_faturado.existeNaLista(listaBD);
+			    		
+			    		if(index == -1){
+			    			item_faturadoDAO.insert(item_faturado);
+			    		}else{
+			    			item_faturadoDAO.update(item_faturado);
+			    			listaBD.remove(index);
+			    		}
+			    	}
+			    	
+			    	// Se sobrou itens, exclui, não estão mais na tabela.
+			    	for(Item_faturado itf : listaBD){
+			    		item_faturadoDAO.delete(itf);
+			    	}
+			    	
+			    	setModel(faturamento);
+			    	txtCodigo.setText(Integer.toString(faturamento.getCodigo()));
+		    		
+		    		alerta.Mensagem(getStage());
+		    		
+		    	}else{
+		    		alerta = new Alerta(getStage().getTitle(), "Erro ao cadastrar o faturamento.");
+		    		alerta.Erro(getStage());
+		    	}
 		    });
 		
 		    btnDelLinha.setOnAction(evt -> {
@@ -320,7 +437,7 @@ public class FaturamentoController extends ControllerDefault{
 		    			Alerta alerta = new Alerta("Faturamento", "Deseja mesmo excluir este(s) produto(s) do faturamento?");
 		
 		    			if(alerta.Confirm(getStage()))
-		    				tbvItem_faturado.getItems().removeAll(list);
+		    				tableViewData.removeAll(list);
 		    		}
 		        }
 		    );
@@ -337,80 +454,24 @@ public class FaturamentoController extends ControllerDefault{
 			
     		txtCodigoQuarto.setDisable(false);			
 			
-			if(txtCodigoReserva.getText().isEmpty()){
-				txtCodigoReserva.setText("0");
-				return;
-			}
-			
-			int codigo = Integer.parseInt(txtCodigoReserva.getText());
-			getReserva().setCodigoReserva(codigo);
-			
-			Reserva reserva = getReserva().exists();
-    		
-    		if(reserva != null){
-    			setReserva(reserva);
-    			
-    			txtValorReserva.setText(Double.toString(reserva.getValorTotal()));
-    			
-    			setPessoa(getReserva().getPessoa());
-    			atualizaValorTotal();
-    			
-    			setQuarto(new Quarto());
-    			txtCodigoQuarto.setDisable(true);
-    		}
-    		else{
-    			setFaturamentoValido(false);
-        		Alerta alerta = new Alerta("Faturamento", getReserva().getErrors());
-        		
-        		alerta.Erro(getStage());
-    		}
+			validaReserva();
 		
 		});
 		
 		txtCodigoPessoa.focusedProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
 			// Só executa quanto perde o foco
-			if(newValue) return;
-			
-			setFaturamentoValido(true);
-    		
-			if(!validaPessoa()){
-				setItem_faturadoValido(false);
-			}else{
-				Pessoa pessoa = getPessoa().exists();
-	    		
-	    		if(pessoa != null){
-	    			setPessoa(pessoa);
-	    		}
-	    		else{
-	    			setFaturamentoValido(false);
-	        		Alerta alerta = new Alerta("Faturamento", getPessoa().getErrors());
-	        		
-	        		alerta.Erro(getStage());
-	    		}
-			}
+			if (newValue)
+				return;
+
+			validaPessoa();
 		});
-		
+
 		txtCodigoQuarto.focusedProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
 			// Só executa quanto perde o foco
-			if(newValue) return;
-			
-			setFaturamentoValido(true);
-    		
-			if(!validaQuarto()){
-				setFaturamentoValido(false);
-			}else{
-				Quarto quarto = getQuarto().exists();
-	    		
-	    		if(quarto != null){
-	    			setQuarto(quarto);
-	    		}
-	    		else{
-	    			setFaturamentoValido(false);
-	        		Alerta alerta = new Alerta("Faturamento", getQuarto().getErrors());
-	        		
-	        		alerta.Erro(getStage());
-	    		}
-			}
+			if (newValue)
+				return;
+
+			validaQuarto();
 		});
 		
 		txtCodigoProduto.focusedProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
@@ -494,10 +555,8 @@ public class FaturamentoController extends ControllerDefault{
     private void buscaServicosAbertos(){
     	// Se Não tem reserva, pega pelo Quarto. Se não varre todos os quartos reservados
     	if(getReserva().getCodigoReserva()== 0){
-    		if(validaPessoa()){
-    			if(validaQuarto()){
-    				adicionaServicos(getPessoa(), getQuarto());
-    			}
+    		if(getPessoa().getCodigo() != 0 && getQuarto().getCodigo() != 0){
+   				adicionaServicos(getPessoa(), getQuarto());
     		}
     	}else{
     		Item_reservaDAO item_reservaDAO = new Item_reservaDAO();
@@ -518,6 +577,7 @@ public class FaturamentoController extends ControllerDefault{
     	}
     }
     
+    // Busca os serviços do quarto ou reserva e adiciona no tableview
     private void adicionaServicos(Pessoa pessoa, Quarto quarto){
 		Item_servicoDAO item_servicoDAO = new Item_servicoDAO();
 		
@@ -547,62 +607,109 @@ public class FaturamentoController extends ControllerDefault{
 				item_faturado.setValorTotal(its.getValorTotal());
 				
 				if(!produtoJaExiste(item_faturado)){
-	    			tbvItem_faturado.getItems().add(item_faturado);
-	    			setProduto(null);
+					tableViewData.add(item_faturado);
 	    		}
 			}
 		}
 
     }
     
-    /* Validações especificas*/
-	private boolean validaPessoa(){
-		if(txtCodigoPessoa.getText() == "0" || txtCodigoPessoa.getText().isEmpty()){
-    		setFaturamentoValido(false);
-    		
-    		Alerta alerta = new Alerta("Faturamento", "Pessoa não informada!");
-    		
-    		alerta.Erro(getStage());
-    	}
-		return true;
-	}
-
-	private boolean validaQuarto(){
-		if(txtCodigoQuarto.getText() == "0" || txtCodigoQuarto.getText().isEmpty()){
+    /* Validações especificas */
+    
+    private void validaReserva(){
+    	setFaturamentoValido(true);
+    	if(txtCodigoReserva.getText().isEmpty()){
+			txtCodigoReserva.setText("0");
+		}
+		
+		int codigo = Integer.parseInt(txtCodigoReserva.getText());
+		getReserva().setCodigoReserva(codigo);
+		
+		Reserva reserva = getReserva().exists();
+		
+		if(reserva != null){
+			setReserva(reserva);
+			
+			txtValorReserva.setText(Double.toString(reserva.getValorTotal()));
+			
+			setPessoa(getReserva().getPessoa());
+			atualizaValorTotal();
+			
+			setQuarto(new Quarto());
+			txtCodigoQuarto.setDisable(true);
+		}
+		else{
 			setFaturamentoValido(false);
-    		
-    		Alerta alerta = new Alerta("Faturamento", "Quarto não informado!");
+    		Alerta alerta = new Alerta(getStage().getTitle(), getReserva().getErrors());
     		
     		alerta.Erro(getStage());
-    	}
-		return true;
+		}
+    }
+    
+	private void validaPessoa() {
+		setFaturamentoValido(true);
+		Pessoa pessoa = getPessoa(); 
+				
+		if (pessoa.getCodigo() == 0){
+			setFaturamentoValido(false);
+			setPessoa(new Pessoa());
+		}else{
+			pessoa = getPessoa().exists();
+
+			if (pessoa != null) {
+				setPessoa(pessoa);
+			} else {
+				setFaturamentoValido(false);
+				Alerta alerta = new Alerta(getStage().getTitle(), getPessoa().getErrors());
+
+				alerta.Erro(getStage());
+			}
+		}
 	}
 
+	private void validaQuarto() {
+		setFaturamentoValido(true);
+		Quarto quarto = getQuarto();
+		
+		if (quarto.getCodigo() == 0) {
+			if(getReserva().getCodigoReserva() == 0)
+				setFaturamentoValido(false);
+			
+			setQuarto(new Quarto());
+		}else{
+			quarto = getQuarto().exists();
+
+			if (quarto != null) {
+				setQuarto(quarto);
+			} else {
+				setFaturamentoValido(false);
+				Alerta alerta = new Alerta(getStage().getTitle(), getQuarto().getErrors());
+
+				alerta.Erro(getStage());
+			}
+		}
+	}
 	private void validaProduto(){
 		setItem_faturadoValido(true);	
+		Produto produto = getProduto();
 		
-		if(txtCodigoProduto.getText() == "0" || txtCodigoProduto.getText().isEmpty()){
+		if(produto.getCodigo() == 0){
 			setItem_faturadoValido(false);
-    		
-    		Alerta alerta = new Alerta(getStage().getTitle(), "Produto não informado!");
-    		
-    		alerta.Erro(getStage());
+			setProduto(new Produto());
     	}
 		else{
-			Produto produto = getProduto().exists();
-    		
+			produto = getProduto().exists();
+			
     		if(produto != null){
     			setProduto(produto);
     			
-    			if(txtValorUnitario.getText().isEmpty())
-    				txtValorUnitario.setText(getProduto().getValorProduto().toString());
+    			txtValorUnitario.setText(getProduto().getValorProduto().toString());
     			
-    			if(!txtQuantidade.getText().isEmpty() && !txtQuantidade.getText().isEmpty()){
+    			if(!txtQuantidade.getText().isEmpty() && !txtValorUnitario.getText().isEmpty()){
     				double valorTotal = Integer.parseInt(txtQuantidade.getText()) * Double.parseDouble(txtValorUnitario.getText());
     				
     				txtValorTotal.setText(Double.toString(valorTotal));
     			}
-    				
     		}
     		else{
     			setItem_faturadoValido(false);
@@ -611,6 +718,29 @@ public class FaturamentoController extends ControllerDefault{
         		alerta.Erro(getStage());
     		}
     	}
+	}
+	
+	private boolean validaFaturamento(){
+		int count = 3; // numero de Validações
+		int countAux = 1;
+		
+		setFaturamentoValido(true);
+		while(isFaturamentoValido() && countAux < count){
+			switch(countAux){
+				case 1:
+					validaPessoa();
+					break;
+				case 2:
+					validaReserva();
+					break;
+				case 3:
+					validaQuarto();
+					break;					
+			}
+			countAux++;
+		}
+		
+		return isFaturamentoValido();
 	}
 	
 	private boolean validaItemFaturamento(){

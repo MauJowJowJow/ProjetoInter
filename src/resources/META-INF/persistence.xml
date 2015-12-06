@@ -4,7 +4,7 @@
 	
     <persistence-unit name="ProjetoInter">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		
+
 		<class>model.Pessoa</class>
 		<class>model.Estado</class>
 		<class>model.Predio</class>
@@ -18,6 +18,8 @@
 		<class>model.Estoque_produto</class>
 		<class>model.Servico</class>
 		<class>model.Item_servico</class>
+		<class>model.Faturamento</class>
+		<class>model.Item_faturado</class>
 		
         <properties>	  
             <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />

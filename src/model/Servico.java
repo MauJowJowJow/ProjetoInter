@@ -1,10 +1,8 @@
 package model;
 
 import java.time.LocalDate;
-import java.util.Date;
 import javax.persistence.*;
 
-import model.enums.StatusQuartoConverter;
 import model.enums.StatusServico;
 import model.enums.StatusServicoConverter;
 
@@ -28,7 +26,6 @@ public class Servico extends ModelDefault {
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
-	
 		
 	@ManyToOne
 	@JoinColumn(name="codQua")

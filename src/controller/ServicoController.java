@@ -123,9 +123,7 @@ public class ServicoController extends ControllerDefault {
 	@FXML
 	private Button btnSair;
 	
-	ObservableList<Item_servico> data;
-	
-	private ObservableList<? extends Item_servico> list;
+	private ObservableList<Item_servico> tableViewData;
 
 	public boolean isServicoValido() {
 		return servicoValido;
@@ -313,7 +311,7 @@ public class ServicoController extends ControllerDefault {
 				alerta.Erro(getStage());
 			} else {
 				//tbvItem_servico.getItems().add(item_servico);
-				data.add(item_servico);
+				tableViewData.add(item_servico);
 				setProduto(new Produto());
 				txtQuantidade.setText("0");
 				txtValorUnitario.setText("0");
@@ -341,7 +339,7 @@ public class ServicoController extends ControllerDefault {
 	    	if(servico.getCodigo() == 0){
 	    		
 	    		servico = servicoDAO.insert(servico);
-	    		alerta = new Alerta(getStage().getTitle(), "Código da servico cadastrado " + servico.getCodigo());
+	    		alerta = new Alerta(getStage().getTitle(), "Código do servico cadastrado " + servico.getCodigo());
 	    	}else{
 	    		servico = servicoDAO.update(servico);
 	    		alerta = new Alerta(getStage().getTitle(), "Servico " + servico.getCodigo() + " atualizado!");
@@ -386,7 +384,7 @@ public class ServicoController extends ControllerDefault {
 	    		alerta.Mensagem(getStage());
 	    		
 	    	}else{
-	    		alerta = new Alerta(getStage().getTitle(), "Erro ao cadastrar a servico.");
+	    		alerta = new Alerta(getStage().getTitle(), "Erro ao cadastrar o servico.");
 	    		alerta.Erro(getStage());
 	    	}
 	    });
@@ -400,7 +398,7 @@ public class ServicoController extends ControllerDefault {
 
 				if (alerta.Confirm(getStage()))
 					//tbvItem_servico.getItems().removeAll(list);
-					data.removeAll(list);
+					tableViewData.removeAll(list);
 			}
 		});
 		
@@ -473,11 +471,11 @@ public class ServicoController extends ControllerDefault {
 
 		// Lista observavel de itens na table view
 		List<Item_servico> lista = new ArrayList<Item_servico>();
-		data = FXCollections.observableList(lista);
+		tableViewData = FXCollections.observableList(lista);
 		
 		// Adiciona listener pra somar total
-		data.addListener((ListChangeListener<Item_servico>) pChange -> {
-			list = pChange.getList();
+		tableViewData.addListener((ListChangeListener<Item_servico>) pChange -> {
+			ObservableList<? extends Item_servico> list = pChange.getList();
 		    
 			double valorServico=0;
 			for(Item_servico its : list){
@@ -486,7 +484,7 @@ public class ServicoController extends ControllerDefault {
 			txtValorServico.setText(Double.toString(valorServico));
 		});
 		
-		tbvItem_servico.setItems(data);
+		tbvItem_servico.setItems(tableViewData);
 	}
 
 	private boolean produtoJaExiste(Item_servico item_servico) {
