@@ -6,16 +6,16 @@
 <?import javafx.scene.layout.BorderPane?>
 
 <BorderPane prefHeight="465.0" prefWidth="745.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ServicoController">
-   <center>
+   <top>
       <Pane fx:id="PanePrincipal" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="33.0" layoutY="35.0" text="Código" />
             <TextField fx:id="txtCodigo" disable="true" layoutX="84.0" layoutY="31.0" prefHeight="25.0" prefWidth="85.0" promptText="Código" />
             <Label layoutX="319.0" layoutY="35.0" text="Data Emissão" />            
             <DatePicker fx:id="txtDataEmissao" focusTraversable="false" layoutX="398.0" layoutY="31.0" prefHeight="25.0" prefWidth="113.0" promptText="Data Emissão" />
-            <Label layoutX="33.0" layoutY="95.0" text="Cliente" />
+            <Label layoutX="33.0" layoutY="65.0" text="Cliente" />
             <TextField fx:id="txtCodigoPessoa" layoutX="84.0" layoutY="61.0" prefHeight="20.0" prefWidth="85.0" promptText="Cód. Pessoa" />
-            <Label layoutX="32.0" layoutY="65.0" text="Quarto" />
+            <Label layoutX="33.0" layoutY="95.0" text="Quarto" />
             <Button fx:id="btnPesquisaPessoa" layoutX="172.0" layoutY="61.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
             <TextField fx:id="txtNomePessoa" editable="false" focusTraversable="false" layoutX="200.0" layoutY="61.0" prefHeight="25.0" prefWidth="311.0" promptText="Nome Pessoa" />
             <TextField fx:id="txtCodigoQuarto" layoutX="84.0" layoutY="91.0" prefHeight="20.0" prefWidth="85.0" promptText="Cód. Quarto" />
@@ -44,5 +44,5 @@
             <Button fx:id="btnSair" layoutX="375.0" layoutY="432.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Sair" />
          </children>
       </Pane>
-   </center>
+   </top>
 </BorderPane>
