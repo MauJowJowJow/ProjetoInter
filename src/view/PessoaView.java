@@ -10,7 +10,7 @@ public class PessoaView extends ViewDefault{
 	
 	public void iniciaTela(Scene parent){
 		try {
-			start(parent, "fxml/PessoaView.fxml", "Cadastro de Pessoas", Modality.NONE);
+			start(parent, "/view/fxml/PessoaView.fxml", "Cadastro de Pessoas", Modality.NONE);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

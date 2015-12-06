@@ -93,7 +93,7 @@ public class QuartoController extends ControllerDefault implements Initializable
 		txtNomePredio.textProperty().bindBidirectional(getQuarto().getPredio().getDescricaoProperty());
 		
 		cbStatus.getItems().addAll(StatusQuarto.values());
-		cbStatus.setValue(StatusQuarto.Ativo);
+		cbStatus.setValue(StatusQuarto.Disponivel);
 		
 		imagensBotoes();
 		

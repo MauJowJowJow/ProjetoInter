@@ -11,16 +11,16 @@
          <children>
             <Label layoutX="33.0" layoutY="35.0" text="Código" />
             <TextField fx:id="txtCodigo" disable="true" layoutX="84.0" layoutY="31.0" prefHeight="25.0" prefWidth="85.0" promptText="Código" />
+            <Label layoutX="319.0" layoutY="35.0" text="Data Emissão" />            
             <DatePicker fx:id="txtDataEmissao" focusTraversable="false" layoutX="398.0" layoutY="31.0" prefHeight="25.0" prefWidth="113.0" promptText="Data Emissão" />
             <Label layoutX="33.0" layoutY="95.0" text="Cliente" />
-            <TextField fx:id="txtCodigoPessoa" layoutX="84.0" layoutY="91.0" prefHeight="20.0" prefWidth="85.0" promptText="Cód. Cliente" />
-            <Button fx:id="btnPesquisaPessoa" layoutX="172.0" layoutY="91.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
-            <TextField fx:id="txtNomePessoa" editable="false" focusTraversable="false" layoutX="200.0" layoutY="91.0" prefHeight="25.0" prefWidth="311.0" promptText="Nome Cliente" />
-            <TextField fx:id="txtCodigoQuarto" layoutX="84.0" layoutY="61.0" prefHeight="20.0" prefWidth="85.0" promptText="Cód. Quarto" />
+            <TextField fx:id="txtCodigoPessoa" layoutX="84.0" layoutY="61.0" prefHeight="20.0" prefWidth="85.0" promptText="Cód. Pessoa" />
             <Label layoutX="32.0" layoutY="65.0" text="Quarto" />
-            <Button fx:id="btnPesquisaQuarto" layoutX="172.0" layoutY="61.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
-            <TextField fx:id="txtNomeQuarto" editable="false" focusTraversable="false" layoutX="200.0" layoutY="61.0" prefHeight="25.0" prefWidth="311.0" promptText="Nome Quarto" />
-            <Label layoutX="319.0" layoutY="35.0" text="Data Emissão" />
+            <Button fx:id="btnPesquisaPessoa" layoutX="172.0" layoutY="61.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
+            <TextField fx:id="txtNomePessoa" editable="false" focusTraversable="false" layoutX="200.0" layoutY="61.0" prefHeight="25.0" prefWidth="311.0" promptText="Nome Pessoa" />
+            <TextField fx:id="txtCodigoQuarto" layoutX="84.0" layoutY="91.0" prefHeight="20.0" prefWidth="85.0" promptText="Cód. Quarto" />
+            <TextField fx:id="txtNomeQuarto" editable="false" focusTraversable="false" layoutX="200.0" layoutY="91.0" prefHeight="25.0" prefWidth="311.0" promptText="Nome Quarto" />            
+            <Button fx:id="btnPesquisaQuarto" layoutX="172.0" layoutY="91.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />                        
             <TextField fx:id="txtCodigoProduto" layoutX="84.0" layoutY="123.0" prefHeight="25.0" prefWidth="85.0" promptText="Cód. Produto" />
             <Button fx:id="btnPesquisaProduto" layoutX="172.0" layoutY="123.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
             <TextField fx:id="txtNomeProduto" editable="false" focusTraversable="false" layoutX="200.0" layoutY="123.0" prefHeight="25.0" prefWidth="265.0" promptText="Nome Produto" />
@@ -29,7 +29,7 @@
             <TextField fx:id="txtValorTotal" layoutX="627.0" layoutY="123.0" prefHeight="25.0" prefWidth="72.0" promptText="Vlr. Total" />
             <Button fx:id="btnAddLinha" layoutX="703.0" layoutY="123.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
             <Button fx:id="btnDelLinha" layoutX="703.0" layoutY="152.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />            
-            <TableView fx:id="tbvItem_faturado" layoutX="20.0" layoutY="152.0" prefHeight="234.0" prefWidth="679.0">
+            <TableView fx:id="tbvItem_servico" layoutX="20.0" layoutY="152.0" prefHeight="234.0" prefWidth="679.0">
               <columns>
                 <TableColumn fx:id="tbcCodProduto" prefWidth="89.0" text="Produto" />
                 <TableColumn fx:id="tbcNomeProduto" prefWidth="360.0" text="Descrição" />
@@ -39,7 +39,7 @@
               </columns>
             </TableView>
             <Label layoutX="548.0" layoutY="397.0" text="Valor Total" />
-            <TextField fx:id="txtValorServico" layoutX="614.0" layoutY="393.0" prefHeight="20.0" prefWidth="85.0" promptText="Valor Serviço" />            
+            <TextField fx:id="txtValorServico" editable="false" focusTraversable="false" layoutX="614.0" layoutY="393.0" prefHeight="20.0" prefWidth="85.0" promptText="Valor Serviço" />            
             <Button fx:id="btnSalvar" layoutX="258.0" layoutY="432.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" text="Salvar" />
             <Button fx:id="btnSair" layoutX="375.0" layoutY="432.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Sair" />
          </children>

@@ -9,7 +9,7 @@ public class EstadoView extends ViewDefault {
 	
 	public void start(Scene parent){
 		try{
-			start(parent, "fxml/EstadoView.fxml","Cadastro de estado", Modality.NONE);
+			start(parent, "/view/fxml/EstadoView.fxml","Cadastro de estado", Modality.NONE);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

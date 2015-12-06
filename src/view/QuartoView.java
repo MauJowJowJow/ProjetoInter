@@ -9,7 +9,7 @@ public class QuartoView extends ViewDefault {
 	
 	public void start(Scene parent){
 		try{
-			start(parent,"fxml/QuartoView.fxml","Cadastro de Quarto", Modality.NONE);
+			start(parent,"/view/fxml/QuartoView.fxml","Cadastro de Quarto", Modality.NONE);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

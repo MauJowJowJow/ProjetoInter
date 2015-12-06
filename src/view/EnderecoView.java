@@ -11,7 +11,7 @@ public class EnderecoView extends ViewDefault {
 	
 	public void iniciaTela(Scene parent, Endereco model){
 		try {
-			carrega(parent, "fxml/EnderecoView.fxml", "Cadastro de Endereços", Modality.WINDOW_MODAL);
+			carrega(parent, "/view/fxml/EnderecoView.fxml", "Cadastro de Endereços", Modality.WINDOW_MODAL);
 			
 			EnderecoController Controller = getFxmlLoader().<EnderecoController>getController();
 			Controller.setModel(model);

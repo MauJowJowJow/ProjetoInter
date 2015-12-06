@@ -9,7 +9,7 @@ public class ProdutoView extends ViewDefault{
 
 	public void iniciaTela(Scene parent){
 		try {
-			start(parent, "fxml/ProdutoView.fxml", "Cadastro de Produtos", Modality.NONE);
+			start(parent, "/view/fxml/ProdutoView.fxml", "Cadastro de Produtos", Modality.NONE);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	

@@ -1,7 +1,7 @@
 package model.enums;
 
 public enum StatusQuarto {
-	Ativo("A"), Inativo("I");
+	Disponivel("D"), Reservado("R"), Inativo("I");
 	
 	public String statusQuarto;
 	StatusQuarto(String statusQuarto){
@@ -17,8 +17,10 @@ public enum StatusQuarto {
 	@Override
 	public String toString(){
 		switch(statusQuarto){
-			case "A":
-				return "Ativo";
+			case "D":
+				return "Disponível";
+			case "R":
+				return "Reservado";
 			case "I":
 				return "Inativo";
 			default:

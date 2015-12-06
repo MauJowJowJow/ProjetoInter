@@ -37,8 +37,8 @@ public class Produto extends ModelDefault {
 	}
 	
 	Estoque_produto estoque_produto = new Estoque_produto();	
-	@OneToOne
-	@JoinColumn(name="codPro")	
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="codPro")
 	public Estoque_produto getEstoque_produto() {
 		return estoque_produto;
 	}

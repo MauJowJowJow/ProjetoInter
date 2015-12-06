@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="423.0" prefWidth="819.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReservaController">
+<BorderPane prefHeight="433.0" prefWidth="819.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReservaController">
    <top>
-      <Pane prefHeight="423.0" prefWidth="800.0" BorderPane.alignment="CENTER" fx:id="PanePrincipal">
+      <Pane fx:id="PanePrincipal" prefHeight="423.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
             <Label contentDisplay="RIGHT" layoutX="40.0" layoutY="37.0" text="Código" />
             <Label contentDisplay="RIGHT" layoutX="40.0" layoutY="71.0" text="Pessoa" />
@@ -17,7 +17,7 @@
             <Button fx:id="btnPesquisaPessoa" layoutX="171.0" layoutY="67.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
             <TextField fx:id="txtNomePessoa" editable="false" focusTraversable="false" layoutX="201.0" layoutY="67.0" prefHeight="25.0" prefWidth="309.0" promptText="Nome Pessoa" />
             
-            <TextField fx:id="txtCodigoQuarto" layoutX="37.0" layoutY="113.0" prefWidth="78.0" promptText="Cód Quarto"/>
+            <TextField fx:id="txtCodigoQuarto" layoutX="37.0" layoutY="113.0" prefWidth="78.0" promptText="Cód Quarto" />
             <Button fx:id="btnPesquisaQuarto" layoutX="121.0" layoutY="113.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
             <TextField fx:id="txtDescricaoQuarto" editable="false" focusTraversable="false" layoutX="154.0" layoutY="113.0" prefHeight="25.0" prefWidth="223.0" promptText="Descrição Quarto" />
             <DatePicker fx:id="txtCheckIn" layoutX="381.0" layoutY="113.0" prefHeight="25.0" prefWidth="118.0" promptText="Check In" />
@@ -39,9 +39,11 @@
               </columns>
             </TableView>
             
-            <Button fx:id="btnSalvar" layoutX="298.0" layoutY="386.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Salvar" />
-            <Button fx:id="btnNovo" layoutX="367.5" layoutY="386.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Novo" />
-            <Button fx:id="btnCancelar" layoutX="436.0" layoutY="386.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Cancelar" />
+            <Button fx:id="btnSalvar" layoutX="298.0" layoutY="394.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Salvar" />
+            <Button fx:id="btnNovo" layoutX="367.5" layoutY="394.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Novo" />
+            <Button fx:id="btnCancelar" layoutX="436.0" layoutY="394.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Cancelar" />
+            <Label contentDisplay="RIGHT" layoutX="639.0" layoutY="381.0" text="Vlr. Total" />
+            <TextField fx:id="txtValorReserva" editable="false" focusTraversable="false" layoutX="693.0" layoutY="377.0" prefWidth="78.0" promptText="Vlr. Total" />
          </children>
       </Pane>
    </top>

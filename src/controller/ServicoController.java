@@ -2,6 +2,9 @@ package controller;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -9,6 +12,8 @@ import java.lang.reflect.InvocationTargetException;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -24,6 +29,11 @@ import model.Item_servico;
 import model.Pessoa;
 import model.Produto;
 import model.Quarto;
+import model.Servico;
+import model.enums.StatusServico;
+import model.dao.Item_servicoDAO;
+import model.dao.ServicoDAO;
+import model.pk.Item_servicoPK;
 import util.Alerta;
 import view.ConsultaPessoaView;
 import view.ConsultaQuartoView;
@@ -33,7 +43,7 @@ public class ServicoController extends ControllerDefault {
 	private Quarto quarto = new Quarto();
 	private Produto produto = new Produto();
 
-	private boolean faturamentoValido;
+	private boolean servicoValido;
 	private boolean item_servicoValido;
 
 	@FXML
@@ -43,7 +53,7 @@ public class ServicoController extends ControllerDefault {
 	private DatePicker txtDataEmissao;
 
 	@FXML
-	private TextField txtCodigoReserva;
+	private TextField txtCodigoServico;
 
 	@FXML
 	private TextField txtCodigoPessoa;
@@ -102,26 +112,25 @@ public class ServicoController extends ControllerDefault {
 	private TableColumn<Item_servico, Double> tbcValorTotal;
 
 	@FXML
-	private TextField txtValorReserva;
-
-	@FXML
 	private TextField txtValorServico;
-
-	@FXML
-	private TextField txtValorFaturado;
 
 	@FXML
 	private Button btnSalvar;
 
 	@FXML
 	private Button btnCarregarServico;
+	
+	@FXML
+	private Button btnSair;
+	
+	private ObservableList<Item_servico> tableViewData;
 
 	public boolean isServicoValido() {
-		return faturamentoValido;
+		return servicoValido;
 	}
 
-	public void setServicoValido(boolean faturamentoValido) {
-		this.faturamentoValido = faturamentoValido;
+	public void setServicoValido(boolean servicoValido) {
+		this.servicoValido = servicoValido;
 	}
 
 	public boolean isItem_servicoValido() {
@@ -130,6 +139,13 @@ public class ServicoController extends ControllerDefault {
 
 	public void setItem_servicoValido(boolean item_servicoValido) {
 		this.item_servicoValido = item_servicoValido;
+	}
+	
+	public Servico getServico(){
+		if(getModel() == null)
+			setModel(new Servico());
+		
+		return (Servico) getModel();
 	}
 
 	public void setPessoa(Pessoa pessoa) {
@@ -165,6 +181,17 @@ public class ServicoController extends ControllerDefault {
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public Produto getProdutoReference() {
+		Produto produto = new Produto();
+		// Copia Propriedades para não perder os binbings com um novo objeto
+		try {
+			BeanUtils.copyProperties(produto, this.produto);
+		} catch (IllegalAccessException | InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		return produto;
 	}
 
 	public Produto getProduto() {
@@ -259,10 +286,10 @@ public class ServicoController extends ControllerDefault {
 			if (txtCodigoProduto.getText().isEmpty())
 				txtCodigoProduto.setText("0");
 
-			// if(!validaItemReserva())
-			// return;
+			if(!validaItemServico())
+				return;
 
-			item_servico.getPK().setProduto(getProduto());
+			item_servico.getPK().setProduto(getProdutoReference());
 
 			if (txtQuantidade.getText().isEmpty())
 				txtQuantidade.setText("0");
@@ -283,10 +310,84 @@ public class ServicoController extends ControllerDefault {
 				Alerta alerta = new Alerta(getStage().getTitle(), "Produto já foi inserido!");
 				alerta.Erro(getStage());
 			} else {
-				tbvItem_servico.getItems().add(item_servico);
-				setProduto(null);
+				//tbvItem_servico.getItems().add(item_servico);
+				tableViewData.add(item_servico);
+				setProduto(new Produto());
+				txtQuantidade.setText("0");
+				txtValorUnitario.setText("0");
+				txtValorTotal.setText("0");
+				
+				txtCodigoProduto.requestFocus();
 			}
 		});
+		
+		btnSalvar.setOnAction(evt -> {
+	    	if(!validaServico()){
+	    		return;
+	    	}
+	    	Alerta alerta;
+	    	
+	    	// Nivel 1
+	    	Servico servico = getServico();
+	    	ServicoDAO servicoDAO = new ServicoDAO();
+
+	    	servico.setPessoa(getPessoa());	    	
+	    	servico.setQuarto(getQuarto());
+	    	servico.setStatusServico(StatusServico.Aberto);
+    		servico.setDataServico(txtDataEmissao.getValue());
+	    	
+	    	if(servico.getCodigo() == 0){
+	    		
+	    		servico = servicoDAO.insert(servico);
+	    		alerta = new Alerta(getStage().getTitle(), "Código do servico cadastrado " + servico.getCodigo());
+	    	}else{
+	    		servico = servicoDAO.update(servico);
+	    		alerta = new Alerta(getStage().getTitle(), "Servico " + servico.getCodigo() + " atualizado!");
+	    	}
+	    	
+	    	if(servico.getCodigo() != 0){
+		    	// Nivel 2
+		    	Item_servicoDAO item_servicoDAO = new Item_servicoDAO();
+		    	Item_servicoPK pk;
+	    		pk = new Item_servicoPK();
+	    		pk.setServico(servico);
+	    		
+	    		HashMap<String, Object> parametros = new HashMap<String, Object>();
+	    		parametros.put("servico", pk.getServico().getCodigo());
+	    		
+	    		List<Item_servico> listaBD = item_servicoDAO.query("SELECT its FROM Item_servico its" 
+	    										+ " WHERE its.pk.servico.codigo = :servico", parametros);
+	    		
+	    		int index;
+		    	for(Item_servico item_servico : tbvItem_servico.getItems()){
+		    		pk.setProduto(item_servico.getPK().getProduto());
+		    		
+		    		item_servico.getPK().setServico(servico);		    		
+		    		index = item_servico.existeNaLista(listaBD);
+		    		
+		    		if(index == -1){
+		    			item_servicoDAO.insert(item_servico);
+		    		}else{
+		    			item_servicoDAO.update(item_servico);
+		    			listaBD.remove(index);
+		    		}
+		    	}
+		    	
+		    	// Se sobrou itens, exclui, não estão mais na tabela.
+		    	for(Item_servico its : listaBD){
+		    		item_servicoDAO.delete(its);
+		    	}
+		    	
+		    	setModel(servico);
+		    	txtCodigo.setText(Integer.toString(servico.getCodigo()));
+	    		
+	    		alerta.Mensagem(getStage());
+	    		
+	    	}else{
+	    		alerta = new Alerta(getStage().getTitle(), "Erro ao cadastrar o servico.");
+	    		alerta.Erro(getStage());
+	    	}
+	    });
 
 		btnDelLinha.setOnAction(evt -> {
 			ObservableList<Item_servico> list = tbvItem_servico.getSelectionModel().getSelectedItems();
@@ -296,8 +397,13 @@ public class ServicoController extends ControllerDefault {
 						"Deseja mesmo excluir este(s) produto(s) do serviço?");
 
 				if (alerta.Confirm(getStage()))
-					tbvItem_servico.getItems().removeAll(list);
+					//tbvItem_servico.getItems().removeAll(list);
+					tableViewData.removeAll(list);
 			}
+		});
+		
+		btnSair.setOnAction(evt -> {
+			getStage().close();
 		});
 	}
 
@@ -307,22 +413,7 @@ public class ServicoController extends ControllerDefault {
 			if (newValue)
 				return;
 
-			setServicoValido(true);
-
-			if (!validaPessoa()) {
-				setItem_servicoValido(false);
-			} else {
-				Pessoa pessoa = getPessoa().exists();
-
-				if (pessoa != null) {
-					setPessoa(pessoa);
-				} else {
-					setServicoValido(false);
-					Alerta alerta = new Alerta(getStage().getTitle(), getPessoa().getErrors());
-
-					alerta.Erro(getStage());
-				}
-			}
+			validaPessoa();
 		});
 
 		txtCodigoQuarto.focusedProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
@@ -330,48 +421,15 @@ public class ServicoController extends ControllerDefault {
 			if (newValue)
 				return;
 
-			setServicoValido(true);
-
-			if (!validaQuarto()) {
-				setServicoValido(false);
-			} else {
-				Quarto quarto = getQuarto().exists();
-
-				if (quarto != null) {
-					setQuarto(quarto);
-				} else {
-					setServicoValido(false);
-					Alerta alerta = new Alerta(getStage().getTitle(), getQuarto().getErrors());
-
-					alerta.Erro(getStage());
-				}
-			}
+			validaQuarto();
 		});
 
 		txtCodigoProduto.focusedProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
 			// Só executa quanto perde o foco
 			if (newValue)
 				return;
-
-			setItem_servicoValido(true);
-
-			if (!validaProduto()) {
-				setItem_servicoValido(false);
-			} else {
-				Produto produto = getProduto().exists();
-
-				if (produto != null) {
-					setProduto(produto);
-
-					if (txtValorUnitario.getText().isEmpty())
-						txtValorUnitario.setText(getProduto().getValorProduto().toString());
-				} else {
-					setItem_servicoValido(false);
-					Alerta alerta = new Alerta(getStage().getTitle(), getProduto().getErrors());
-
-					alerta.Erro(getStage());
-				}
-			}
+			
+			validaProduto();
 		});
 
 		txtQuantidade.focusedProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
@@ -410,6 +468,23 @@ public class ServicoController extends ControllerDefault {
 		tbcQuantidade.setCellValueFactory(new PropertyValueFactory<Item_servico, Integer>("quantidadeVendido"));
 		tbcValorUnitario.setCellValueFactory(new PropertyValueFactory<Item_servico, Double>("valorUnitario"));
 		tbcValorTotal.setCellValueFactory(new PropertyValueFactory<Item_servico, Double>("valorTotal"));
+
+		// Lista observavel de itens na table view
+		List<Item_servico> lista = new ArrayList<Item_servico>();
+		tableViewData = FXCollections.observableList(lista);
+		
+		// Adiciona listener pra somar total
+		tableViewData.addListener((ListChangeListener<Item_servico>) pChange -> {
+			ObservableList<? extends Item_servico> list = pChange.getList();
+		    
+			double valorServico=0;
+			for(Item_servico its : list){
+				valorServico += its.getValorTotal();
+			}
+			txtValorServico.setText(Double.toString(valorServico));
+		});
+		
+		tbvItem_servico.setItems(tableViewData);
 	}
 
 	private boolean produtoJaExiste(Item_servico item_servico) {
@@ -423,48 +498,114 @@ public class ServicoController extends ControllerDefault {
 		return false;
 	}
 
-	private void atualizaValorTotal() {
-		if (txtValorReserva.getText().isEmpty())
-			txtValorReserva.setText("0");
-
-		if (txtValorServico.getText().isEmpty())
-			txtValorServico.setText("0");
-
-		txtValorFaturado.setText(Double.toString(
-				Double.parseDouble(txtValorReserva.getText()) + Double.parseDouble(txtValorServico.getText())));
-	}
-
 	/* Validações especificas */
-	private boolean validaPessoa() {
-		if (txtCodigoPessoa.getText() == "0" || txtCodigoPessoa.getText().isEmpty()) {
+	private void validaPessoa() {
+		setServicoValido(true);
+		Pessoa pessoa = getPessoa(); 
+				
+		if (pessoa.getCodigo() == 0){
 			setServicoValido(false);
+			setPessoa(new Pessoa());
+		}else{
+			pessoa = getPessoa().exists();
 
-			Alerta alerta = new Alerta(getStage().getTitle(), "Pessoa não informada!");
+			if (pessoa != null) {
+				setPessoa(pessoa);
+			} else {
+				setServicoValido(false);
+				Alerta alerta = new Alerta(getStage().getTitle(), getPessoa().getErrors());
 
-			alerta.Erro(getStage());
+				alerta.Erro(getStage());
+			}
 		}
-		return true;
 	}
 
-	private boolean validaQuarto() {
-		if (txtCodigoQuarto.getText() == "0" || txtCodigoQuarto.getText().isEmpty()) {
+	private void validaQuarto() {
+		setServicoValido(true);
+		Quarto quarto = getQuarto();
+		
+		if (quarto.getCodigo() == 0) {
 			setServicoValido(false);
+			setQuarto(new Quarto());
+		}else{
+			quarto = getQuarto().exists();
 
-			Alerta alerta = new Alerta(getStage().getTitle(), "Quarto não informado!");
+			if (quarto != null) {
+				setQuarto(quarto);
+			} else {
+				setServicoValido(false);
+				Alerta alerta = new Alerta(getStage().getTitle(), getQuarto().getErrors());
 
-			alerta.Erro(getStage());
+				alerta.Erro(getStage());
+			}
 		}
-		return true;
 	}
 
-	private boolean validaProduto() {
-		if (txtCodigoProduto.getText() == "0" || txtCodigoProduto.getText().isEmpty()) {
+	private void validaProduto(){
+		setItem_servicoValido(true);	
+		Produto produto = getProduto();
+		
+		if(produto.getCodigo() == 0){
 			setItem_servicoValido(false);
-
-			Alerta alerta = new Alerta(getStage().getTitle(), "Produto não informado!");
-
-			alerta.Erro(getStage());
+			setProduto(new Produto());
+    	}
+		else{
+			produto = getProduto().exists();
+			
+    		if(produto != null){
+    			setProduto(produto);
+    			
+    			txtValorUnitario.setText(getProduto().getValorProduto().toString());
+    			
+    			if(!txtQuantidade.getText().isEmpty() && !txtValorUnitario.getText().isEmpty()){
+    				double valorTotal = Integer.parseInt(txtQuantidade.getText()) * Double.parseDouble(txtValorUnitario.getText());
+    				
+    				txtValorTotal.setText(Double.toString(valorTotal));
+    			}
+    		}
+    		else{
+    			setItem_servicoValido(false);
+        		Alerta alerta = new Alerta(getStage().getTitle(), getProduto().getErrors());
+        		
+        		alerta.Erro(getStage());
+    		}
+    	}
+	}
+	
+	private boolean validaServico(){
+		int count = 2; // numero de Validações
+		int countAux = 1;
+		
+		setServicoValido(true);
+		while(isServicoValido() && countAux < count){
+			switch(countAux){
+				case 1:
+					validaPessoa();
+					break;
+				case 2:
+					validaQuarto();
+					break;				
+			}
+			countAux++;
 		}
-		return true;
+		
+		return isServicoValido();
+	}
+	
+	private boolean validaItemServico(){
+		int count = 3; // Número de validações
+		int countAux = 1;
+		
+		setItem_servicoValido(true);
+		while(isItem_servicoValido() && countAux < count){
+			switch(countAux){
+				case 1:
+					validaProduto();
+					break;
+			}
+			countAux++;
+		}
+		
+		return isItem_servicoValido();
 	}
 }

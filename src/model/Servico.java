@@ -1,39 +1,35 @@
 package model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.*;
 
-import model.enums.StatusQuartoConverter;
 import model.enums.StatusServico;
 import model.enums.StatusServicoConverter;
 
 @Entity
 @Table(name="servico")
-
 public class Servico extends ModelDefault {
 
 	@Id
 	@Column(name="codSer", length=7)
+	@SequenceGenerator(name="ServicoSequence", sequenceName="hotel.servico_sequence", allocationSize=1)
+	@GeneratedValue(generator="ServicoSequence", strategy=GenerationType.SEQUENCE)
 	private int codigo;
 	
 	@ManyToOne
 	@JoinColumn(name="codPes")
-	@MapsId("codPes")
 	private Pessoa pessoa = new Pessoa();
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
 	
-	public void setPessoa(Pessoa pessoa){
+	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
-	}	
-	
+	}
 		
 	@ManyToOne
 	@JoinColumn(name="codQua")
-	@MapsId("codQua")
 	private Quarto quarto = new Quarto();
-	
 	public Quarto getQuarto() {
 		return quarto;
 	}
@@ -43,7 +39,7 @@ public class Servico extends ModelDefault {
 	}
 	
 	@Column(name="datSer")
-	private Date dataServico;
+	private LocalDate dataServico;
 	
 	@Column(name="staSer")
 	@Convert(converter = StatusServicoConverter.class)
@@ -57,11 +53,11 @@ public class Servico extends ModelDefault {
 		this.codigo = codigo;
 	}
 
-	public Date getDataServico() {
+	public LocalDate getDataServico() {
 		return dataServico;
 	}
 
-	public void setDataServico(Date dataServico) {
+	public void setDataServico(LocalDate dataServico) {
 		this.dataServico = dataServico;
 	}
 

@@ -11,7 +11,7 @@ public class Estoque_produtoView extends ViewDefault {
 	
 	public void iniciaTela(Scene parent, Estoque_produto model){
 		try{
-			carrega(parent,"fxml/Estoque_produtoView.fxml","Cadastro de Estoque", Modality.NONE);
+			carrega(parent,"/view/fxml/Estoque_produtoView.fxml","Cadastro de Estoque", Modality.NONE);
 			
 			Estoque_produtoController Controller = getFxmlLoader().<Estoque_produtoController>getController();
 			Controller.setEstoque(model);

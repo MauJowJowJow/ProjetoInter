@@ -9,7 +9,7 @@ public class ConsultaPredioView extends ViewDefault{
 	
 	public void iniciaTela(Scene parent, Modality modality){
 		try {
-			start(parent, "fxml/ConsultaPredio.fxml", "Consulta de Predios", modality);
+			start(parent, "/view/fxml/ConsultaPredio.fxml", "Consulta de Predios", modality);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
