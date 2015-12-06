@@ -9,8 +9,10 @@ public class StatusQuartoConverter implements AttributeConverter<StatusQuarto, S
 	@Override
 	public String convertToDatabaseColumn(StatusQuarto statusQuarto) {
 		switch (statusQuarto) {
-			case Ativo:
-				return "A";
+			case Disponivel:
+				return "D";
+			case Reservado:
+				return "R";				
 			case Inativo:
 				return "I";
 			default:
@@ -21,8 +23,10 @@ public class StatusQuartoConverter implements AttributeConverter<StatusQuarto, S
 	@Override
 	public StatusQuarto convertToEntityAttribute(String dbData) {
 		switch (dbData) {
-			case "A":
-				return StatusQuarto.Ativo;
+			case "D":
+				return StatusQuarto.Disponivel;
+			case "R":
+				return StatusQuarto.Reservado;				
 			case "I":
 				return StatusQuarto.Inativo;
 			default:

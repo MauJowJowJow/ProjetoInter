@@ -284,8 +284,8 @@ public class FaturamentoController extends ControllerDefault{
 	    		if(txtCodigoProduto.getText().isEmpty())
 	    			txtCodigoProduto.setText("0");    		
 	    		
-	    		//if(!validaItemReserva())
-	    		//	return;
+	    		if(!validaItemFaturamento())
+	    			return;
 	    		
 	    		item_faturado.getPK().setProduto(getProduto());
 	    		
@@ -417,26 +417,7 @@ public class FaturamentoController extends ControllerDefault{
 			// Só executa quanto perde o foco
 			if(newValue) return;
 			
-			setItem_faturadoValido(true);
-    		
-			if(!validaProduto()){
-				setItem_faturadoValido(false);
-			}else{
-				Produto produto = getProduto().exists();
-	    		
-	    		if(produto != null){
-	    			setProduto(produto);
-	    			
-	    			if(txtValorUnitario.getText().isEmpty())
-	    				txtValorUnitario.setText(getProduto().getValorProduto().toString());
-	    		}
-	    		else{
-	    			setItem_faturadoValido(false);
-	        		Alerta alerta = new Alerta("Faturamento", getProduto().getErrors());
-	        		
-	        		alerta.Erro(getStage());
-	    		}
-			}
+			validaProduto();
 		});
 		
 		txtQuantidade.focusedProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
@@ -597,14 +578,55 @@ public class FaturamentoController extends ControllerDefault{
 		return true;
 	}
 
-	private boolean validaProduto(){
+	private void validaProduto(){
+		setItem_faturadoValido(true);	
+		
 		if(txtCodigoProduto.getText() == "0" || txtCodigoProduto.getText().isEmpty()){
 			setItem_faturadoValido(false);
     		
-    		Alerta alerta = new Alerta("Faturamento", "Produto não informado!");
+    		Alerta alerta = new Alerta(getStage().getTitle(), "Produto não informado!");
     		
     		alerta.Erro(getStage());
     	}
-		return true;
+		else{
+			Produto produto = getProduto().exists();
+    		
+    		if(produto != null){
+    			setProduto(produto);
+    			
+    			if(txtValorUnitario.getText().isEmpty())
+    				txtValorUnitario.setText(getProduto().getValorProduto().toString());
+    			
+    			if(!txtQuantidade.getText().isEmpty() && !txtQuantidade.getText().isEmpty()){
+    				double valorTotal = Integer.parseInt(txtQuantidade.getText()) * Double.parseDouble(txtValorUnitario.getText());
+    				
+    				txtValorTotal.setText(Double.toString(valorTotal));
+    			}
+    				
+    		}
+    		else{
+    			setItem_faturadoValido(false);
+        		Alerta alerta = new Alerta(getStage().getTitle(), getProduto().getErrors());
+        		
+        		alerta.Erro(getStage());
+    		}
+    	}
+	}
+	
+	private boolean validaItemFaturamento(){
+		int count = 1; // Número de validações
+		int countAux = 1;
+		
+		setItem_faturadoValido(true);
+		while(isItem_faturadoValido() && countAux < count){
+			switch(countAux){
+				case 1:
+					validaProduto();
+					break;
+			}
+			countAux++;
+		}
+		
+		return isItem_faturadoValido();
 	}
 }

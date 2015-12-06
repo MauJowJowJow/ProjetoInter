@@ -4,6 +4,7 @@ import controller.ControllerDefault;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -39,6 +40,7 @@ public class ViewDefault {
 	
 	private void carregaScene(Scene parent, String caminhoFXML, String title, Modality modality) throws Exception{
 		window = new Stage();
+		window.getIcons().add(new Image(Thread.currentThread().getContextClassLoader().getResource("HotelDM.png").toString()));
 		
 		if (parent != null) 
 			window.initOwner(parent.getWindow());
@@ -57,7 +59,7 @@ public class ViewDefault {
 		window.setTitle(title);
 		
 		Scene scene = new Scene(root);
-		
+
 		if(controller != null){
 			controller.setView(this);
 			controller.setScene(scene);

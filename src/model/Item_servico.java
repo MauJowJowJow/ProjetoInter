@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import model.pk.Item_servicoPK;
@@ -52,5 +54,16 @@ public class Item_servico extends ModelDefault {
 
 	public void setValorTotal(double valorTotal) {
 		this.valorTotal = valorTotal;
+	}
+	
+	public int existeNaLista(List<Item_servico> lista){
+		int index = -1;
+		for(Item_servico its : lista){
+			if(getPK().equals(its.getPK())){
+				index = lista.indexOf(its);
+				break;
+			}
+		}
+		return index;
 	}
 }

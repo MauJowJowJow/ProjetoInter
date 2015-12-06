@@ -63,7 +63,7 @@ public class Predio extends ModelDefault{
 		Predio predio = dao.getById(getCodigoPredio());
 	
 		if(predio == null){
-			setErrors("Quarto não cadastrado");
+			setErrors("Prédio não cadastrado");
 		}
 		return predio;
 	}

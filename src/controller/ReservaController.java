@@ -6,14 +6,11 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.hibernate.Hibernate;
-
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -29,11 +26,9 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.util.Callback;
-import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.NumberStringConverter;
 import model.Item_reserva;
 import model.Pessoa;
@@ -56,8 +51,11 @@ public class ReservaController extends ControllerDefault{
 	
 	@FXML
 	private TextField txtCodigo;
+	
 	@FXML
 	private TextField txtCodigoPessoa;
+	private String oldCodigoPessoa;
+	
 	@FXML
 	private TextField txtNomePessoa;
 	
@@ -414,56 +412,19 @@ public class ReservaController extends ControllerDefault{
 	    });
 	}
 	
-	public void eventosCampos(){
+	public void eventosCampos(){		
 	    txtCodigoPessoa.focusedProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
-	    	if(newValue) return;
-	    	
-	    	setReservaValida(true);
-			
-			if(!validaPessoa()){
-				setReservaValida(false);
-			}else{
-				Pessoa pessoa = getPessoa().exists();
-	    		
-	    		if(pessoa != null){
-	    			setPessoa(pessoa);
-	    		}
-	    		else{
-	    			setReservaValida(false);
-	        		Alerta alerta = new Alerta(getStage().getTitle(), getPessoa().getErrors());
-	        		
-	        		alerta.Erro(getStage());
-	    		}
-			}
-			
-			if(!isReservaValida()){
-	    		txtNomePessoa.setText("");
-			}
-	    });
+			if(newValue || txtCodigoPessoa.getText().equals(oldCodigoPessoa)) return;
 
+			validaPessoa();
+			
+			oldCodigoPessoa = txtCodigoPessoa.getText();
+	    });
+		
 	    txtCodigoQuarto.focusedProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
-	    			if(newValue) return;
-	    			
-	    			setItem_reservaValido(true);
-		    		
-	    			if(!validaQuarto()){
-	    				setItem_reservaValido(false);
-	    			}else{
-	    				Quarto quarto = getQuartoReference().exists();
-	    	    		
-	    	    		if(quarto != null){
-	    	    			setQuarto(quarto);
-	    	    		}
-	    	    		else{
-	    	    			setItem_reservaValido(false);
-	    	        		Alerta alerta = new Alerta(getStage().getTitle(), getQuartoReference().getErrors());
-	    	        		
-	    	        		alerta.Erro(getStage());
-	    	    		}	    			}
-	    			
-	    			if(!isItem_reservaValido()){
-	    				txtDescricaoQuarto.setText("");
-	    			}
+			if(newValue) return;
+			
+			validaQuarto();
 		});
 	    
 	    txtCheckIn.focusedProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
@@ -580,27 +541,59 @@ public class ReservaController extends ControllerDefault{
 		}
 	}
 	
-	/* Validações especificas*/
-	private boolean validaPessoa(){
-		if(txtCodigoPessoa.getText() == "0" || txtCodigoPessoa.getText().isEmpty()){
-    		setReservaValida(false);
-    		
-    		Alerta alerta = new Alerta(getStage().getTitle(), "Pessoa não informada!");
-    		
-    		alerta.Erro(getStage());
-    	}
-		return true;
+	/* Validações especificas */
+	private void validaPessoa() {
+		setReservaValida(true);
+		Pessoa pessoa = getPessoa(); 
+				
+		if (pessoa.getCodigo() == 0){
+			setReservaValida(false);
+			setPessoa(new Pessoa());
+		}else{
+			pessoa = getPessoa().exists();
+
+			if (pessoa != null) {
+				setPessoa(pessoa);
+			} else {
+				setReservaValida(false);
+				Alerta alerta = new Alerta(getStage().getTitle(), getPessoa().getErrors());
+
+				alerta.Erro(getStage());
+			}
+		}
 	}
 
-	private boolean validaQuarto(){
-		if(txtCodigoQuarto.getText() == "0" || txtCodigoQuarto.getText().isEmpty()){
-    		setItem_reservaValido(false);
+	private void validaQuarto(){
+		setItem_reservaValido(true);
+		Quarto quarto = getQuarto();
+		
+		if (quarto.getCodigo() == 0) {
+			setItem_reservaValido(false);
+			setQuarto(new Quarto());
+		}else{
+			quarto = getQuarto().exists();
     		
-    		Alerta alerta = new Alerta(getStage().getTitle(), "Quarto não informado!");
-    		
-    		alerta.Erro(getStage());
-    	}
-		return true;
+    		if(quarto != null){
+    			setQuarto(quarto);
+
+	    		if(!getQuartoReference().disponivel()){
+	    			setItem_reservaValido(false);
+	    			
+	        		Alerta alerta = new Alerta(getStage().getTitle(), getQuartoReference().getErrors());
+	        		alerta.Erro(getStage());
+	    		}
+    		}
+    		else{
+    			setItem_reservaValido(false);
+        		Alerta alerta = new Alerta(getStage().getTitle(), getQuartoReference().getErrors());
+        		
+        		alerta.Erro(getStage());
+	    	}   	    		
+			
+			if(!isItem_reservaValido()){
+				txtDescricaoQuarto.setText("");
+			}
+		}
 	}
 	
 	private boolean validaCheckOut(){
@@ -623,13 +616,12 @@ public class ReservaController extends ControllerDefault{
 		while(isItem_reservaValido() && countAux < count){
 			switch(countAux){
 				case 1:
-					Event.fireEvent(txtCodigoQuarto, new ActionEvent());
+					validaQuarto();
 					break;
 				case 2:
 					Event.fireEvent(txtCheckIn, new ActionEvent());
 					break;				
 				case 3:
-					//Event.fireEvent(txtCheckOut, new ActionEvent());
 					setItem_reservaValido(validaCheckOut());
 					break;
 			}

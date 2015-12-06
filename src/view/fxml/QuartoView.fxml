@@ -21,7 +21,7 @@
 				<TextField fx:id="txtCodigo" disable="true" editable="false" layoutX="126.0" layoutY="27.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="70.0" promptText="Código" />
 				<TextField fx:id="txtPredio" layoutX="126.0" layoutY="63.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="70.0" promptText="Código" />
 				<Button fx:id="btnProcurar" layoutX="200.0" layoutY="63.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" />
-				<TextField fx:id="txtNomePredio" editable="false" layoutX="230.0" layoutY="63.0" prefHeight="25.0" prefWidth="241.0" promptText="Nome do prédio" />
+				<TextField fx:id="txtNomePredio" editable="false" focusTraversable="false" layoutX="230.0" layoutY="63.0" prefHeight="25.0" prefWidth="241.0" promptText="Nome do prédio" />
 				<TextField fx:id="txtAndar" layoutX="521.0" layoutY="63.0" prefHeight="25.0" prefWidth="30.0" />
 				<TextField fx:id="txtNome" layoutX="127.0" layoutY="100.0" prefHeight="25.0" prefWidth="346.0" promptText="Nome do quarto" />
 				<TextField fx:id="txtDormitorios" layoutX="126.0" layoutY="136.0" prefHeight="25.0" prefWidth="30.0" />

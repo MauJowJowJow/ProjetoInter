@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -34,6 +35,7 @@ public class PrincipalMenu extends Application{
 		if(!loginUsuario()) System.exit(0);
 
 		window = primaryStage;
+		window.getIcons().add(new Image(Thread.currentThread().getContextClassLoader().getResource("HotelDM.png").toString()));
 		
 		fxmlLoader = new FXMLLoader(getClass().getResource("fxml/PrincipalMenuView.fxml"));
 		Parent root = fxmlLoader.load();

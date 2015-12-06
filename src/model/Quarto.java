@@ -148,4 +148,19 @@ public class Quarto extends ModelDefault{
 		}
 		return quarto;
 	}
+	
+	public boolean disponivel(){
+		switch(getStatusQuarto()){
+			case Disponivel:
+				return true;
+			case Reservado:
+				setErrors("Quarto já reservado!");
+				return false;
+			case Inativo:
+				setErrors("Quarto inativo!");
+				return false;
+		default:
+			return false;
+		}
+	}
 }
