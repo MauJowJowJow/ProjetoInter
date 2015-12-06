@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -44,6 +45,9 @@ public class PrincipalMenuController implements Initializable{
 	private FaturamentoController faturamentoController;
 	
 	private Scene scene;
+	
+	@FXML
+	private BorderPane PanePrincipal;
 	
 	@FXML
 	private MenuItem mntmPessoas;
@@ -84,6 +88,14 @@ public class PrincipalMenuController implements Initializable{
 	@FXML
 	private MenuItem mntmPredios;
 	
+	public BorderPane getPanePrincipal() {
+		return PanePrincipal;
+	}
+
+	public void setPanePrincipal(BorderPane panePrincipal) {
+		PanePrincipal = panePrincipal;
+	}
+
 	public void setScene(Scene scene) { 
 		this.scene = scene; 
 	}
