@@ -6,21 +6,72 @@
 	<parameter name="codigoPessoa" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="codigoQuarto" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<parameter name="codigoFaturamento" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT vlrRes FROM faturamento WHERE codFat = $P{codigoFaturamento}]]>
+		<![CDATA[select nomPes, vlrRes, vlrSer, t1.vlrTot, codpro, desPro, qtdite, t3.vlrUni, t3.vlrTot as VlrTot2 from faturamento t1
+LEFT JOIN pessoa t2 using(codPes)
+LEFT JOIN item_faturado t3 using(codFat)
+LEFT JOIN produto t4 using(codPro)
+WHERE codFat = $P{codigoFaturamento}]]>
 	</queryString>
+	<field name="NOMPES" class="java.lang.String"/>
 	<field name="VLRRES" class="java.math.BigDecimal"/>
+	<field name="VLRSER" class="java.math.BigDecimal"/>
+	<field name="VLRTOT" class="java.math.BigDecimal"/>
+	<field name="CODPRO" class="java.math.BigDecimal"/>
+	<field name="DESPRO" class="java.lang.String"/>
+	<field name="QTDITE" class="java.math.BigDecimal"/>
+	<field name="VLRUNI" class="java.math.BigDecimal"/>
+	<field name="VLRTOT2" class="java.math.BigDecimal"/>
 	<group name="Group1">
 		<groupHeader>
 			<band height="33">
 				<staticText>
-					<reportElement x="234" y="13" width="100" height="20" uuid="873ce59c-f576-498d-a16d-4d8c71c4769d"/>
+					<reportElement x="0" y="13" width="125" height="20" uuid="1c26efb2-1a51-477c-bb53-46ff73823364"/>
+					<textElement>
+						<font size="11"/>
+					</textElement>
+					<text><![CDATA[Valor Total dos Serviços]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="159" y="13" width="100" height="20" uuid="29a2213a-f413-49f6-b39b-db1cd03108bd"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{VLRSER}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group2">
+		<groupHeader>
+			<band height="32">
+				<staticText>
+					<reportElement x="0" y="12" width="137" height="20" uuid="01eaac16-9b4c-412f-b833-60351667c911"/>
+					<textElement>
+						<font size="11"/>
+					</textElement>
+					<text><![CDATA[Valor Total do Faturamento]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="159" y="12" width="100" height="20" uuid="0eea6afd-ab79-4a22-b964-c6f5648432b6"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{VLRTOT}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group3">
+		<groupHeader>
+			<band height="32">
+				<staticText>
+					<reportElement x="234" y="9" width="100" height="20" uuid="873ce59c-f576-498d-a16d-4d8c71c4769d"/>
 					<textElement textAlignment="Center">
 						<font size="15" isBold="true"/>
 					</textElement>
@@ -32,25 +83,45 @@
 			<band/>
 		</groupFooter>
 	</group>
-	<group name="Group2">
-		<groupHeader>
-			<band height="32"/>
-		</groupHeader>
-		<groupFooter>
-			<band/>
-		</groupFooter>
-	</group>
-	<group name="Group3">
-		<groupHeader>
-			<band height="32"/>
-		</groupHeader>
-		<groupFooter>
-			<band/>
-		</groupFooter>
-	</group>
 	<group name="Group4">
 		<groupHeader>
-			<band height="32"/>
+			<band height="32">
+				<staticText>
+					<reportElement x="0" y="12" width="100" height="20" uuid="4a67540a-7415-4d63-97bc-86cf5e4669e9"/>
+					<textElement textAlignment="Left">
+						<font size="11" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Cód. Produto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="100" y="12" width="100" height="20" uuid="75756285-5ec4-4ea7-aae4-e74e7eef55c2"/>
+					<textElement textAlignment="Left">
+						<font size="11" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Nome Produto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="286" y="12" width="94" height="20" uuid="a78591aa-2240-4f5d-8c86-6d56f0380924"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Qtd. Vendida]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="379" y="12" width="100" height="20" uuid="adfb8538-cdad-4cc6-85be-5f3f284cfc7e"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Vlr. Unitário]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="479" y="12" width="77" height="20" uuid="84dde5d7-89d7-49d7-9acb-4650cf8b4b68"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Vlr. Total]]></text>
+				</staticText>
+			</band>
 		</groupHeader>
 		<groupFooter>
 			<band/>
@@ -64,7 +135,7 @@
 			<frame>
 				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="1a6c86ac-6d42-4d6f-93e5-c79d70908206"/>
 				<staticText>
-					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="250cba5d-d3aa-4c9b-86fa-cd7f43eb6978"/>
+					<reportElement x="20" y="20" width="178" height="43" forecolor="#FFFFFF" uuid="250cba5d-d3aa-4c9b-86fa-cd7f43eb6978"/>
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
@@ -75,6 +146,13 @@
 					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA[$F{NOMPES}]]></textFieldExpression>
 				</textField>
+				<textField>
+					<reportElement x="206" y="20" width="62" height="43" forecolor="#FFFFFF" uuid="af23b6ef-4028-45ea-88f7-a2719a762b5b"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{codigoFaturamento}]]></textFieldExpression>
+				</textField>
 			</frame>
 		</band>
 	</title>
@@ -84,7 +162,7 @@
 	<columnHeader>
 		<band height="21">
 			<textField>
-				<reportElement x="115" y="0" width="100" height="20" uuid="ac1a8491-5e0a-44b3-894f-7b7d549ef04a"/>
+				<reportElement x="159" y="0" width="100" height="20" uuid="ac1a8491-5e0a-44b3-894f-7b7d549ef04a"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{VLRRES}]]></textFieldExpression>
 			</textField>
@@ -98,7 +176,31 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20"/>
+		<band height="20">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="42fad94e-26ff-4386-ab91-5ebd42a19f1b"/>
+				<textFieldExpression><![CDATA[$F{CODPRO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="159" height="20" uuid="513923c2-bfcb-4682-b0fb-d41920ce5e31"/>
+				<textFieldExpression><![CDATA[$F{DESPRO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="286" y="0" width="62" height="20" uuid="050aef2d-7cab-4f5e-b0c9-abac466eabec"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{QTDITE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="0" width="76" height="20" uuid="87594002-0b51-4139-a73b-ebd79e461a4c"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{VLRUNI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="479" y="0" width="76" height="20" uuid="392c6924-0a09-470b-8bdf-1e3da04bfa90"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{VLRTOT2}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
 	<columnFooter>
 		<band/>

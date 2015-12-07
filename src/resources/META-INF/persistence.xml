@@ -35,4 +35,15 @@
             <property name="javax.persistence.validation.mode" value="none"/>
         </properties>
     </persistence-unit>
+	
+	<persistence-unit name="ProjetoInterOPENJPA">
+		<provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>		
+        <properties>	  
+            <property name="openjpa.ConnectionDriverName" value="oracle.jdbc.OracleDriver" />
+            <property name="openjpa.ConnectionUserName" value="hotel" />
+            <property name="openjpa.ConnectionPassword" value="hotel" />
+            <property name="openjpa.ConnectionURL" value="jdbc:oracle:thin:@localhost:1521:XE" />
+            <property name="openjpa.Log" value="none"/>
+        </properties>
+    </persistence-unit>
 </persistence>

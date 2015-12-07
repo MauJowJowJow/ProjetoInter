@@ -2,6 +2,7 @@ package controller;
 
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,8 +10,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.persistence.Persistence;
 import org.apache.commons.beanutils.BeanUtils;
-
+import org.apache.openjpa.persistence.OpenJPAEntityManager;
+import org.apache.openjpa.persistence.OpenJPAEntityManagerFactory;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -42,8 +45,15 @@ import model.dao.Item_servicoDAO;
 import model.enums.StatusReserva;
 import model.enums.StatusServico;
 import model.pk.Item_faturadoPK;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 import util.Alerta;
 import view.ConsultaPessoaView;
+import view.ConsultaProdutoView;
 import view.ConsultaQuartoView;
 
 public class FaturamentoController extends ControllerDefault{
@@ -137,6 +147,9 @@ public class FaturamentoController extends ControllerDefault{
 	
 	@FXML
 	private Button btnCarregarServico;
+	
+	@FXML
+	private Button btnImprimir;
 	
 	public boolean isFaturamentoValido() {
 		return faturamentoValido;
@@ -322,7 +335,19 @@ public class FaturamentoController extends ControllerDefault{
 	    });
 	    
 	    btnPesquisaProduto.setOnAction(evt -> {
-	    	
+			ConsultaProdutoView consultaProdutoView = new ConsultaProdutoView();
+
+			try {
+				consultaProdutoView.iniciaTela(getScene(), Modality.WINDOW_MODAL);
+
+				ConsultaProdutoController controller = consultaProdutoView.getFxmlLoader()
+						.<ConsultaProdutoController> getController();
+				if (controller.getModel() != null) {
+					setProduto((Produto) controller.getModel());
+				}
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 	    });
 	}
 	
@@ -463,6 +488,10 @@ public class FaturamentoController extends ControllerDefault{
 		    btnCarregarServico.setOnAction(evt -> {
 		    	buscaServicosAbertos();
 		    });
+		    
+		    btnImprimir.setOnAction(evt ->{
+		    	imprimeFaturamento();
+		    });
 	}
 	
 	private void eventosCampos(){
@@ -592,6 +621,45 @@ public class FaturamentoController extends ControllerDefault{
     		for(Item_reserva item_reserva : arr){
     			adicionaServicos(item_reserva.getPK().getReserva().getPessoa(), item_reserva.getPK().getQuarto());
     		}
+    	}
+    }
+    
+    private void imprimeFaturamento(){
+    	if(getFaturamento().getCodigo() == 0){
+    		Alerta alerta = new Alerta(getStage().getTitle(), "Nenhum faturamento selecionado!");
+    		alerta.Erro(getStage());
+    	}else{
+    		JasperReport jasperReport;
+    		try {    			
+    			OpenJPAEntityManagerFactory emf = (OpenJPAEntityManagerFactory) Persistence
+    	                .createEntityManagerFactory("ProjetoInterOPENJPA");
+    			
+    			OpenJPAEntityManager em = emf.createEntityManager();
+    		    OpenJPAEntityManager oem = em.unwrap(OpenJPAEntityManager.class);
+    		    Connection jdbcConnection = (Connection) oem.getConnection();
+    			
+    		    java.io.File file = new java.io.File("CheckOut.jrxml");
+    	        String path = file.getAbsolutePath();
+    	        String only_path = path.substring(0,path.lastIndexOf('\\'));
+ 
+    			jasperReport = JasperCompileManager.compileReport(only_path + "/src/view/relatorios/CheckOut.jrxml");
+				
+				Map<String, Object> parametersMap = new HashMap<String, Object>();
+
+				parametersMap.put("codigoFaturamento",getFaturamento().getCodigo());				
+				parametersMap.put("codigoPessoa",getFaturamento().getPessoa().getCodigo());
+				
+				JasperPrint jasperPrint = JasperFillManager.fillReport(
+						jasperReport, parametersMap, jdbcConnection);
+				
+				JasperViewer.viewReport(jasperPrint);
+				
+			} catch (JRException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		
+    		
     	}
     }
     
