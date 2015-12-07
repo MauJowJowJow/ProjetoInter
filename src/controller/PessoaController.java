@@ -173,13 +173,13 @@ public class PessoaController extends ControllerDefault implements Initializable
         });
 		
 		btnEnderecos.setOnAction(evt -> {
-					Pessoa pessoa = (Pessoa) getModel();
+					Pessoa pessoa = getPessoa();
 					
 					if(pessoa.getCodigo() != 0){
 						EnderecoView enderecoView = new EnderecoView();
 						
 						EnderecoPK enderecoPK = new EnderecoPK();
-						enderecoPK.setCodigoPessoa(pessoa.getCodigo());
+						enderecoPK.setPessoa(pessoa);
 						
 						Endereco endereco = new Endereco(enderecoPK);
 						
@@ -189,7 +189,7 @@ public class PessoaController extends ControllerDefault implements Initializable
 							e1.printStackTrace();
 						}
 					} else{
-						Alerta alerta = new Alerta("Cadastro de Pessoas", "Uma pessoa já cadastrada deve ser selecionada para alteração de seus endereços!");
+						Alerta alerta = new Alerta(getStage().getTitle(), "Uma pessoa já cadastrada deve ser selecionada para alteração de seus endereços!");
 	            		
 	            		alerta.Erro(getView().getStage());
 					}

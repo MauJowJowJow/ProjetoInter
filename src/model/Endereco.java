@@ -103,7 +103,7 @@ public class Endereco extends ModelDefault {
 		
 		try {	
 			Query query = em.createNativeQuery("select serializaEndereco(?) from dual");
-			query.setParameter(1, getPk().getCodigoPessoa());
+			query.setParameter(1, getPk().getPessoa().getCodigo());
 			
 			java.util.List list = query.getResultList();
 			

@@ -15,6 +15,7 @@ public class EnderecoView extends ViewDefault {
 			
 			EnderecoController Controller = getFxmlLoader().<EnderecoController>getController();
 			Controller.setModel(model);
+			Controller.setPessoa(model.getPk().getPessoa());
 			
 			show(Modality.WINDOW_MODAL);
 		} catch (Exception e) {
