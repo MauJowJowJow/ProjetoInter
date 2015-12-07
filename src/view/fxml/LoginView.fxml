@@ -12,7 +12,7 @@
    <center>
       <Pane fx:id="PanePrincipal" prefHeight="249.0" prefWidth="360.0" BorderPane.alignment="CENTER">
          <children>
-         	<Text fill="#fffefe" layoutX="23.0" layoutY="42.0" stroke="#0d0000" strokeLineJoin="BEVEL" strokeType="OUTSIDE" strokeWidth="4.0" text="Hotel DM" wrappingWidth="130.275390625">
+         	<Text fill="#fffefe" layoutX="23.0" layoutY="42.0" stroke="#0d0000c3" strokeLineJoin="BEVEL" strokeType="OUTSIDE" strokeWidth="4.0" text="DM Hotel" wrappingWidth="130.275390625">
                <font>
                   <Font size="26.0" />
                </font></Text>

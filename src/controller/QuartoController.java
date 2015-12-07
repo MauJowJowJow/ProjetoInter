@@ -23,14 +23,18 @@ import model.dao.QuartoDAO;
 import util.Alerta;
 import view.QuartoView;
 import view.ConsultaPredioView;
+import view.ConsultaQuartoView;
 import model.enums.StatusQuarto;
 
 
 public class QuartoController extends ControllerDefault implements Initializable  {
 	private Quarto quarto = new Quarto();
+	private Predio predio = new Predio();
 	
 	@FXML
 	private Button btnSalvar;
+	@FXML
+	private Button btnProcurarQuarto;
 	@FXML
 	private Button btnProcurar;
 	@FXML
@@ -55,6 +59,7 @@ public class QuartoController extends ControllerDefault implements Initializable
 	public void setQuarto(Quarto quarto){
 		try{
 			BeanUtils.copyProperties(this.quarto, quarto);
+			setPredio(quarto.getPredio());
 		}catch (IllegalAccessException | InvocationTargetException e){
 			e.printStackTrace();
 		}
@@ -66,14 +71,14 @@ public class QuartoController extends ControllerDefault implements Initializable
 	
 	public void setPredio(Predio predio){
 		try{
-			BeanUtils.copyProperties(this.quarto.getPredio(), predio);
+			BeanUtils.copyProperties(this.predio, predio);
 		}catch (IllegalAccessException | InvocationTargetException e){
 			e.printStackTrace();
 		}
 	}
 	
 	public Predio getPredio(){
-		return quarto.getPredio();
+		return predio;
 	}
 	
 	public QuartoController(){}
@@ -89,8 +94,8 @@ public class QuartoController extends ControllerDefault implements Initializable
 		txtValorDiaria.textProperty().bindBidirectional(getQuarto().getValorQuartoProperty(),new NumberStringConverter());
 		txtDescricao.textProperty().bindBidirectional(getQuarto().getDescricaoProperty());
 		cbStatus.valueProperty().bindBidirectional(getQuarto().getStatusQuartoProperty());
-		txtPredio.textProperty().bindBidirectional(getQuarto().getPredio().getCodigoPredioProperty(),new NumberStringConverter());
-		txtNomePredio.textProperty().bindBidirectional(getQuarto().getPredio().getDescricaoProperty());
+		txtPredio.textProperty().bindBidirectional(getPredio().getCodigoPredioProperty(),new NumberStringConverter());
+		txtNomePredio.textProperty().bindBidirectional(getPredio().getDescricaoProperty());
 		
 		cbStatus.getItems().addAll(StatusQuarto.values());
 		cbStatus.setValue(StatusQuarto.Disponivel);
@@ -111,6 +116,25 @@ public class QuartoController extends ControllerDefault implements Initializable
         		alerta.Erro(getStage());
     		}
 	    });
+	    
+	    btnProcurarQuarto.setOnAction(new EventHandler<ActionEvent>(){
+			
+			@Override
+            public void handle(ActionEvent event) {
+				ConsultaQuartoView consultaQuartoView = new ConsultaQuartoView();
+				
+				try {
+					consultaQuartoView.iniciaTela(getScene(), Modality.WINDOW_MODAL);
+					
+					ConsultaQuartoController controller = consultaQuartoView.getFxmlLoader().<ConsultaQuartoController>getController();
+					if(controller.getModel() != null){
+						setQuarto((Quarto)controller.getModel());
+					} 
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+            }
+        });
 		
 		btnProcurar.setOnAction(new EventHandler<ActionEvent>(){
 			
@@ -142,6 +166,7 @@ public class QuartoController extends ControllerDefault implements Initializable
 			QuartoDAO dao = new QuartoDAO();
 			
 			if(model.getCodigo() == 0){
+				quarto.setPredio(getPredio());
     			setQuarto(dao.insert(model));
     			
     			Alerta alerta = new Alerta("Inserção", "Quarto inserido com o código " + model.getCodigo() + "!");
@@ -156,7 +181,8 @@ public class QuartoController extends ControllerDefault implements Initializable
 	}
 	
 	private void imagensBotoes(){
-		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();	
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		btnProcurarQuarto.setGraphic(new ImageView(classLoader.getResource("Search.png").toString()));
 		btnProcurar.setGraphic(new ImageView(classLoader.getResource("Search.png").toString()));
 	}
 }

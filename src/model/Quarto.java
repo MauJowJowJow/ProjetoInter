@@ -17,12 +17,13 @@ import model.dao.QuartoDAO;
 @Entity
 @Table(name="quarto")
 public class Quarto extends ModelDefault{
+	private Predio predio = new Predio();
 	
 	private final IntegerProperty codigo = new SimpleIntegerProperty(this, "codigo");
 	@Id
 	@Column(name="codQua", length=7)
 	@SequenceGenerator(name="QuartoSequence", sequenceName="hotel.quarto_sequence", allocationSize=1)
-	@GeneratedValue(generator="QuartoSequence", strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(generator="QuartoSequence", strategy=GenerationType.AUTO)
 	public int getCodigo() {
 		return codigo.get();
 	}
@@ -104,9 +105,8 @@ public class Quarto extends ModelDefault{
 		return statusQuarto;
 	}
 	
-	private Predio predio = new Predio();	
 	@ManyToOne
-	@JoinColumn(name="codPre")	
+	@JoinColumn(name="codPre")
 	public Predio getPredio() {
 		return predio;
 	}
@@ -127,15 +127,6 @@ public class Quarto extends ModelDefault{
 	@Transient
 	public StringProperty getDescricaoProperty() {
 		return descricao;
-	}
-	
-	@Transient
-	private IntegerProperty codigoPredio;
-	
-	@Transient
-	public IntegerProperty getCodigoPredio(){
-		codigoPredio = getPredio().getCodigoPredioProperty(); 
-		return codigoPredio;
 	}
 	
 	public Quarto exists(){

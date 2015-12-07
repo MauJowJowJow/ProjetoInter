@@ -12,8 +12,8 @@ public class Servico extends ModelDefault {
 
 	@Id
 	@Column(name="codSer", length=7)
-	@SequenceGenerator(name="ServicoSequence", sequenceName="hotel.servico_sequence", allocationSize=1)
-	@GeneratedValue(generator="ServicoSequence", strategy=GenerationType.SEQUENCE)
+	@SequenceGenerator(name="ServicoSequence", sequenceName="hotel.servico_sequence", allocationSize = 1, initialValue= 1)
+	@GeneratedValue(generator="ServicoSequence", strategy=GenerationType.AUTO)
 	private int codigo;
 	
 	@ManyToOne

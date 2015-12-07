@@ -16,7 +16,7 @@ public class Predio extends ModelDefault{
 	@Id
 	@Column(name="codPre", length=7)
 	@SequenceGenerator(name="PredioSequence", sequenceName="hotel.predio_sequence", allocationSize=1)
-	@GeneratedValue(generator="PredioSequence", strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(generator="PredioSequence", strategy=GenerationType.AUTO)
 	public int getCodigoPredio() {
 		return codigoPredio.get();
 	}

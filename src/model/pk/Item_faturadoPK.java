@@ -6,6 +6,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import model.Faturamento;
 import model.Produto;
 import model.Servico;
@@ -24,11 +27,11 @@ public class Item_faturadoPK implements Serializable{
 	
 	public void setFaturamento(Faturamento faturamento){
 		this.faturamento = faturamento;
-	}	
+	}
 	
-	@MapsId("codSer")
 	@ManyToOne
 	@JoinColumn(name="codSer")
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Servico servico = new Servico();
 	
 	public Servico getServico() {
@@ -57,7 +60,6 @@ public class Item_faturadoPK implements Serializable{
 	@Override
 	public boolean equals(Object o){
 		return o instanceof Item_faturadoPK &&
-				((Item_faturadoPK)o).getServico().getCodigo() == this.getServico().getCodigo() &&
 				((Item_faturadoPK)o).getFaturamento().getCodigo() == this.getFaturamento().getCodigo() &&
 				((Item_faturadoPK)o).getProduto().getCodigo() == this.getProduto().getCodigo();
 	}

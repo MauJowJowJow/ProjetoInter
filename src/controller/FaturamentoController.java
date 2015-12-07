@@ -201,6 +201,17 @@ public class FaturamentoController extends ControllerDefault{
 			e.printStackTrace();
 		}
 	}
+	
+	public Produto getProdutoReference(){
+		Produto produto = new Produto();
+		// Copia Propriedades para não perder os binbings com um novo objeto
+		try{
+			BeanUtils.copyProperties(produto, getProduto());
+		}catch (IllegalAccessException | InvocationTargetException e){
+			e.printStackTrace();
+		}
+		return produto;
+	}
 
 	public Produto getProduto(){
 		return produto;
@@ -253,6 +264,9 @@ public class FaturamentoController extends ControllerDefault{
 			for(Item_faturado its : list){
 				valorServico += its.getValorTotal();
 			}
+			
+			if(txtValorReserva.getText().isEmpty())
+				txtValorReserva.setText("0");
 			
 			double valorReserva = Double.parseDouble(txtValorReserva.getText());
 			txtValorServico.setText(Double.toString(valorServico));
@@ -322,7 +336,7 @@ public class FaturamentoController extends ControllerDefault{
 	    		if(!validaItemFaturamento())
 	    			return;
 	    		
-	    		item_faturado.getPK().setProduto(getProduto());
+	    		item_faturado.getPK().setProduto(getProdutoReference());
 	    		
 	    		if(txtQuantidade.getText().isEmpty())
 	    			txtQuantidade.setText("0");
@@ -361,7 +375,7 @@ public class FaturamentoController extends ControllerDefault{
 		    	if(getReserva().getCodigoReserva() != 0)
 		    		faturamento.setReserva(getReserva());
 		    	else{
-		    		faturamento.setQuarto(null);
+		    		faturamento.setReserva(null);
 		    	}
 		    	
 		    	faturamento.setPessoa(getPessoa());
@@ -393,17 +407,21 @@ public class FaturamentoController extends ControllerDefault{
 		    		pk.setFaturamento(faturamento);
 		    		
 		    		HashMap<String, Object> parametros = new HashMap<String, Object>();
-		    		parametros.put("faturamento", pk.getServico().getCodigo());
+		    		parametros.put("faturamento", pk.getFaturamento().getCodigo());
 		    		
 		    		List<Item_faturado> listaBD = item_faturadoDAO.query("SELECT itf FROM Item_faturado itf" 
 		    										+ " WHERE itf.pk.faturamento.codigo = :faturamento", parametros);
 		    		
 		    		int index;
 			    	for(Item_faturado item_faturado : tableViewData){
-			    		pk.setServico(item_faturado.getPK().getServico());
+			    		if(item_faturado.getPK().getServico().getCodigo() != 0)
+			    			pk.setServico(item_faturado.getPK().getServico());
+			    		else{
+			    			pk.setServico(null);
+			    		}
 			    		pk.setProduto(item_faturado.getPK().getProduto());
 			    		
-			    		item_faturado.getPK().setFaturamento(faturamento);		    		
+			    		item_faturado.setPK(pk);		    		
 			    		index = item_faturado.existeNaLista(listaBD);
 			    		
 			    		if(index == -1){
@@ -615,7 +633,6 @@ public class FaturamentoController extends ControllerDefault{
     }
     
     /* Validações especificas */
-    
     private void validaReserva(){
     	setFaturamentoValido(true);
     	if(txtCodigoReserva.getText().isEmpty()){
@@ -625,24 +642,26 @@ public class FaturamentoController extends ControllerDefault{
 		int codigo = Integer.parseInt(txtCodigoReserva.getText());
 		getReserva().setCodigoReserva(codigo);
 		
-		Reserva reserva = getReserva().exists();
-		
-		if(reserva != null){
-			setReserva(reserva);
+		if(codigo != 0){
+			Reserva reserva = getReserva().exists();
 			
-			txtValorReserva.setText(Double.toString(reserva.getValorTotal()));
-			
-			setPessoa(getReserva().getPessoa());
-			atualizaValorTotal();
-			
-			setQuarto(new Quarto());
-			txtCodigoQuarto.setDisable(true);
-		}
-		else{
-			setFaturamentoValido(false);
-    		Alerta alerta = new Alerta(getStage().getTitle(), getReserva().getErrors());
-    		
-    		alerta.Erro(getStage());
+			if(reserva != null){
+				setReserva(reserva);
+				
+				txtValorReserva.setText(Double.toString(reserva.getValorTotal()));
+				
+				setPessoa(getReserva().getPessoa());
+				atualizaValorTotal();
+				
+				setQuarto(new Quarto());
+				txtCodigoQuarto.setDisable(true);
+			}
+			else{
+				setFaturamentoValido(false);
+	    		Alerta alerta = new Alerta(getStage().getTitle(), getReserva().getErrors());
+	    		
+	    		alerta.Erro(getStage());
+			}
 		}
     }
     

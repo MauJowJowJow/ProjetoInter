@@ -31,7 +31,7 @@ public class Pessoa extends ModelDefault{
 	@Id
 	@Column(name="codPes", length=7)
     @SequenceGenerator(name = "PessoaSequence", sequenceName = "hotel.pessoa_sequence", allocationSize=1)
-	@GeneratedValue(generator = "PessoaSequence", strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(generator = "PessoaSequence", strategy = GenerationType.AUTO)
 	public int getCodigo() {
 		return codigo.get();
 	}

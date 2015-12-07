@@ -36,6 +36,7 @@ import model.dao.ServicoDAO;
 import model.pk.Item_servicoPK;
 import util.Alerta;
 import view.ConsultaPessoaView;
+import view.ConsultaProdutoView;
 import view.ConsultaQuartoView;
 
 public class ServicoController extends ControllerDefault {
@@ -275,7 +276,19 @@ public class ServicoController extends ControllerDefault {
 		});
 
 		btnPesquisaProduto.setOnAction(evt -> {
+			ConsultaProdutoView consultaProdutoView = new ConsultaProdutoView();
 
+			try {
+				consultaProdutoView.iniciaTela(getScene(), Modality.WINDOW_MODAL);
+
+				ConsultaProdutoController controller = consultaProdutoView.getFxmlLoader()
+						.<ConsultaProdutoController> getController();
+				if (controller.getModel() != null) {
+					setProduto((Produto) controller.getModel());
+				}
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 		});
 	}
 

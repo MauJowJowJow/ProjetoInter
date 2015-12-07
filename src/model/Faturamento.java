@@ -11,7 +11,7 @@ public class Faturamento extends ModelDefault {
 	@Id
 	@Column(name="codFat", length=7)
 	@SequenceGenerator(name="FaturamentoSequence", sequenceName="hotel.faturamento_sequence", allocationSize=1)
-	@GeneratedValue(generator="FaturamentoSequence", strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(generator="FaturamentoSequence", strategy=GenerationType.AUTO)
 	private int codigo;
 	
 	@Column(name="datEmi")
@@ -39,7 +39,7 @@ public class Faturamento extends ModelDefault {
 		this.pessoa = pessoa;
 	}
 	
-	@ManyToOne//(cascade=CascadeType.PERSIST)
+	@ManyToOne
 	@JoinColumn(name="codQua")
 	private Quarto quarto = new Quarto();
 	public Quarto getQuarto() {

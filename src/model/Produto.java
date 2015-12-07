@@ -19,11 +19,13 @@ import javafx.beans.property.DoubleProperty;
 
 public class Produto extends ModelDefault {
 	
+	Estoque_produto estoque_produto = new Estoque_produto();	
+	
 	private final IntegerProperty codigo = new SimpleIntegerProperty(this, "codigo");
 	@Id
 	@Column(name="codPro", length=7)
-	@SequenceGenerator(name="ProdutoSequence", sequenceName="hotel.produto_sequence", allocationSize=1)
-	@GeneratedValue(generator="ProdutoSequence", strategy=GenerationType.SEQUENCE)
+	@SequenceGenerator(name="ProdutoSequence", sequenceName="hotel.produto_sequence", allocationSize = 1, initialValue= 1)
+	@GeneratedValue(generator="ProdutoSequence", strategy=GenerationType.AUTO)
 	public int getCodigo() {
 		return codigo.get();
 	}
@@ -36,9 +38,7 @@ public class Produto extends ModelDefault {
 		return codigo;
 	}
 	
-	Estoque_produto estoque_produto = new Estoque_produto();	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="codPro")
+	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="produto")
 	public Estoque_produto getEstoque_produto() {
 		return estoque_produto;
 	}

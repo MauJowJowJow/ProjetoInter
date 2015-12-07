@@ -13,7 +13,7 @@ public class Reserva extends ModelDefault{
 	@Id
 	@Column(name="codRes", length=7)
 	@SequenceGenerator(name="ReservaSequence", sequenceName="hotel.reserva_sequence", allocationSize=1)
-	@GeneratedValue(generator="ReservaSequence", strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(generator="ReservaSequence", strategy=GenerationType.AUTO)
 	private int codigoReserva;
 	
 	@ManyToOne

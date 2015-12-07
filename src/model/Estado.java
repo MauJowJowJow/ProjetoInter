@@ -10,7 +10,7 @@ public class Estado extends ModelDefault{
 	@Id
 	@Column(name="codEst", length=7)
 	@SequenceGenerator(name="EstadoSequence", sequenceName="hotel.estado_sequence", allocationSize=1)
-	@GeneratedValue(generator="EstadoSequence", strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(generator="EstadoSequence", strategy=GenerationType.AUTO)
 	private int codigoEstado;
 	
 	@NotNull(message="Informe o nome do estado!")

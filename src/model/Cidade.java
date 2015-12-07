@@ -11,7 +11,7 @@ public class Cidade extends ModelDefault{
 	@Id
 	@Column(name="codCid", length=7)
 	@SequenceGenerator(name="CidadeSequence", sequenceName="hotel.cidade_sequence", allocationSize=1)
-	@GeneratedValue(generator="CidadeSequence", strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(generator="CidadeSequence", strategy=GenerationType.AUTO)
 	private int codigoCidade;
 	
 	@NotNull(message="Informe o nome da cidade!")

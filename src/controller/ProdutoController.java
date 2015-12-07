@@ -17,14 +17,11 @@ import model.Produto;
 import model.dao.Estoque_produtoDAO;
 import model.dao.ProdutoDAO;
 import util.Alerta;
-import view.ConsultaPredioView;
 import view.ConsultaProdutoView;
 import view.Estoque_produtoView;
 import view.ProdutoView;
 import model.enums.UniMedProduto;
-import model.Endereco;
 import model.Estoque_produto;
-import model.Predio;
 
 public class ProdutoController extends ControllerDefault implements Initializable{	
 	private Produto produto = new Produto();
@@ -118,6 +115,10 @@ public class ProdutoController extends ControllerDefault implements Initializabl
 			ProdutoDAO dao = new ProdutoDAO();
 			
 			if(model.getCodigo() == 0){
+				Estoque_produto estoque_produto = new Estoque_produto();
+				estoque_produto.setProduto(model);
+				
+				model.setEstoque_produto(estoque_produto);
     			setProduto(dao.insert(model));
     			
     			Alerta alerta = new Alerta("Inserção", "Produto inserido com o código " + model.getCodigo() + "!");
@@ -151,7 +152,7 @@ public class ProdutoController extends ControllerDefault implements Initializabl
 				
 				if(estoque == null){
 					estoque = new Estoque_produto();
-					estoque.setCodigo(produto.getCodigo());
+					estoque.setProduto(produto);
 				}
 				
 				try {

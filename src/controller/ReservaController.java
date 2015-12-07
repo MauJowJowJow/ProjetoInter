@@ -154,7 +154,7 @@ public class ReservaController extends ControllerDefault{
 		
 		// Copia Propriedades para não pegar a mesma referencia em memória
 		try{
-			BeanUtils.copyProperties(quarto, this.quarto);
+			BeanUtils.copyProperties(quarto, getQuartoReference());
 		}catch (IllegalAccessException | InvocationTargetException e){
 			e.printStackTrace();
 		}
@@ -591,13 +591,12 @@ public class ReservaController extends ControllerDefault{
 
 	private void validaQuarto(){
 		setItem_reservaValido(true);
-		Quarto quarto = getQuarto();
 		
-		if (quarto.getCodigo() == 0) {
+		if (getQuartoReference().getCodigo() == 0) {
 			setItem_reservaValido(false);
 			setQuarto(new Quarto());
 		}else{
-			quarto = getQuarto().exists();
+			Quarto quarto = getQuartoReference().exists();
     		
     		if(quarto != null){
     			setQuarto(quarto);
