@@ -384,6 +384,12 @@ public class FaturamentoController extends ControllerDefault{
 	    		}else{
 	    			tableViewData.add(item_faturado);
 	    			setProduto(new Produto());
+	    			
+					txtQuantidade.setText("0");
+					txtValorUnitario.setText("0");
+					txtValorTotal.setText("0");
+					
+					txtCodigoProduto.requestFocus();
 	    		}
 		    });
 		 
