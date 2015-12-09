@@ -20,6 +20,7 @@ import view.PessoaView;
 import view.PredioView;
 import view.ProdutoView;
 import view.QuartoView;
+import view.RelatorioCheckOutView;
 import view.ReservaView;
 import view.ServicoView;
 import view.ConsultaPredioView;
@@ -43,6 +44,8 @@ public class PrincipalMenuController implements Initializable{
 	private ReservaController reservaController;
 	private ServicoController servicoController;
 	private FaturamentoController faturamentoController;
+	
+	private RelatorioCheckOutController relatorioCheckOutController;
 	
 	private Scene scene;
 	
@@ -87,6 +90,9 @@ public class PrincipalMenuController implements Initializable{
 	
 	@FXML
 	private MenuItem mntmPredios;
+	
+	@FXML
+	private MenuItem mntmRelatorioCheckOut;
 	
 	public BorderPane getPanePrincipal() {
 		return PanePrincipal;
@@ -321,6 +327,24 @@ public class PrincipalMenuController implements Initializable{
 			try {
 				ConsultaPredioView view = new ConsultaPredioView();
 				view.iniciaTela(scene, Modality.NONE);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		
+		mntmRelatorioCheckOut.setOnAction(event -> {
+			if(relatorioCheckOutController != null){
+		    	if(relatorioCheckOutController.getStatusScene() == StatusScene.Aberto){
+					Alerta alerta = new Alerta("Menu Principal", "Tela já aberta!");
+					alerta.Alertar( (Stage) scene.getWindow());
+					return;
+		    	}
+			}
+			
+			try {
+				RelatorioCheckOutView view = new RelatorioCheckOutView();
+				view.start(scene);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

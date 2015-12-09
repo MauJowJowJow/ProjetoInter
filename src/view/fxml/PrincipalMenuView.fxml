@@ -41,7 +41,11 @@
                 <MenuItem fx:id="mntmConsultaProdutos" mnemonicParsing="false" text="Produtos" />
           	</items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Relatorios" />
+          <Menu mnemonicParsing="false" text="Relatorios">
+          	<items>
+          	<MenuItem fx:id="mntmRelatorioCheckOut" mnemonicParsing="false" text="Check-Out" />
+          	</items>
+          </Menu>
             <Menu mnemonicParsing="false" text="Sair">
                <items>
                   <MenuItem fx:id="mntmSair" mnemonicParsing="false" text="Sair" />

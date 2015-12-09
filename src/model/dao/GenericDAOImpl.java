@@ -33,6 +33,7 @@ public class GenericDAOImpl<PK, T> implements GenericDAO<PK, T> {
 		return entityManager;
 	}
 
+	// Cria o entity manager, gerenciador de classes no BD do JPA 
 	public void createEntity(String entity) {
 		if (emf != null)
 			if (emf.isOpen())
@@ -55,6 +56,7 @@ public class GenericDAOImpl<PK, T> implements GenericDAO<PK, T> {
 				entityManager.close();
 	}
 
+	// Retorna objeto completo pelo ID dele
 	@Override
 	public T getById(PK pk) {
 		createEntity("");
@@ -95,6 +97,7 @@ public class GenericDAOImpl<PK, T> implements GenericDAO<PK, T> {
 		return entity;
 	}
 
+	// Exclui dados do banco
 	@Override
 	public void delete(T entity) {
 		createEntity("");
@@ -110,6 +113,7 @@ public class GenericDAOImpl<PK, T> implements GenericDAO<PK, T> {
 		}
 	}
 
+	// retorna lista do tipo T
 	@Override
 	public List<T> query(String SQL, Map<String, Object> parametros) {
 		createEntity("");
@@ -126,6 +130,7 @@ public class GenericDAOImpl<PK, T> implements GenericDAO<PK, T> {
 		return query.getResultList();
 	}
 
+	// Reflection pra pegar o tipo da classe de forma genérica
 	private Class<?> getTypeClass() {
 		Class<?> clazz = (Class<?>) ((ParameterizedType) this.getClass().getGenericSuperclass())
 				.getActualTypeArguments()[1];

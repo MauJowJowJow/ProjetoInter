@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+
+<BorderPane prefHeight="90.0" prefWidth="256.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="controller.RelatorioCheckOutController">
+   <center>
+      <Pane prefHeight="90.0" prefWidth="237.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="18.0" layoutY="23.0" text="Cód. Faturamento" />
+            <TextField fx:id="txtCodigoFaturamento" layoutX="124.0" layoutY="20.0" prefHeight="25.0" prefWidth="113.0" promptText="Faturamento" />         
+            <Button fx:id="btnImprimir" layoutX="55.0" layoutY="59.0" mnemonicParsing="false" prefWidth="70.0" text="Imprimir" />
+            <Button fx:id="btnSair" layoutX="128.0" layoutY="59.0" mnemonicParsing="false" prefWidth="70.0" text="Sair" />
+         </children>
+      </Pane>
+   </center>
+</BorderPane>

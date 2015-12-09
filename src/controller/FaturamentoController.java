@@ -605,6 +605,15 @@ public class FaturamentoController extends ControllerDefault{
 				));
     }
     
+    private void imprimeFaturamento(){
+    	if(getFaturamento().getCodigo() == 0){
+    		Alerta alerta = new Alerta(getStage().getTitle(), "Nenhum faturamento selecionado!");
+    		alerta.Erro(getStage());
+    	}else{
+    		getFaturamento().imprimir();
+    	}
+    }
+    
     private void buscaServicosAbertos(){
     	// Se Não tem reserva, pega pelo Quarto. Se não varre todos os quartos reservados
     	if(getReserva().getCodigoReserva()== 0){
@@ -627,45 +636,6 @@ public class FaturamentoController extends ControllerDefault{
     		for(Item_reserva item_reserva : arr){
     			adicionaServicos(item_reserva.getPK().getReserva().getPessoa(), item_reserva.getPK().getQuarto());
     		}
-    	}
-    }
-    
-    private void imprimeFaturamento(){
-    	if(getFaturamento().getCodigo() == 0){
-    		Alerta alerta = new Alerta(getStage().getTitle(), "Nenhum faturamento selecionado!");
-    		alerta.Erro(getStage());
-    	}else{
-    		JasperReport jasperReport;
-    		try {    			
-    			OpenJPAEntityManagerFactory emf = (OpenJPAEntityManagerFactory) Persistence
-    	                .createEntityManagerFactory("ProjetoInterOPENJPA");
-    			
-    			OpenJPAEntityManager em = emf.createEntityManager();
-    		    OpenJPAEntityManager oem = em.unwrap(OpenJPAEntityManager.class);
-    		    Connection jdbcConnection = (Connection) oem.getConnection();
-    			
-    		    java.io.File file = new java.io.File("CheckOut.jrxml");
-    	        String path = file.getAbsolutePath();
-    	        String only_path = path.substring(0,path.lastIndexOf('\\'));
- 
-    			jasperReport = JasperCompileManager.compileReport(only_path + "/src/view/relatorios/CheckOut.jrxml");
-				
-				Map<String, Object> parametersMap = new HashMap<String, Object>();
-
-				parametersMap.put("codigoFaturamento",getFaturamento().getCodigo());				
-				parametersMap.put("codigoPessoa",getFaturamento().getPessoa().getCodigo());
-				
-				JasperPrint jasperPrint = JasperFillManager.fillReport(
-						jasperReport, parametersMap, jdbcConnection);
-				
-				JasperViewer.viewReport(jasperPrint);
-				
-			} catch (JRException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    		
-    		
     	}
     }
     

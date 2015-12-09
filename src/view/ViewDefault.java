@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+// View padrão com metodos para abertura de telas JAVAFX
 public class ViewDefault {
 	private Stage window;
 	private FXMLLoader fxmlLoader;
@@ -28,10 +29,12 @@ public class ViewDefault {
 		return controller;
 	}
 
+	// Permite carregar a tela sem abrir, utilizado pra setar valores no Controller antes de mostrar a tela
 	public void carrega(Scene parent, String caminhoFXML, String title, Modality modality) throws Exception{
 		carregaScene(parent, caminhoFXML, title, modality);
 	}
 	
+	// Carrega e ja abre a tela
 	public void start(Scene parent, String caminhoFXML, String title, Modality modality) throws Exception{
 		carregaScene(parent, caminhoFXML, title, modality);
 		

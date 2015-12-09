@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.ModelDefault;
 import view.ViewDefault;
-
+// Controller padrão, contem dados básicos para outros controllers.
 public class ControllerDefault implements Initializable {
 		private ModelDefault model;
 		private ViewDefault view;
@@ -66,7 +66,7 @@ public class ControllerDefault implements Initializable {
 			if(view == null) return;
 			
 			statusScene = StatusScene.Aberto;
-			
+			// Controle de tela aberta
 			this.view.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
 				@Override
 				public void handle(WindowEvent event) {
@@ -75,6 +75,8 @@ public class ControllerDefault implements Initializable {
 			});
 		}
 
+		// Solução para bugs em campos de datas. DatePicker do JavaFX só fica com o valor (getValue) caso seja escolhido ou pressionado enter
+		// Dessa forma fica também ao perder o foco com TAB.
 		@Override
 		public void initialize(URL arg0, ResourceBundle arg1) {
 			for (Node node : PanePrincipal.getChildren()) {
